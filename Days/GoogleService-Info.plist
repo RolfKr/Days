@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1064936717677-frb2oe901bjlgl18t9fclms04b1abmnp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1064936717677-frb2oe901bjlgl18t9fclms04b1abmnp</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCHQVIAfSXOYd__fmPSnIt156Bj2RrLAd0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1064936717677</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.RolfKA.Days</string>
+	<key>PROJECT_ID</key>
+	<string>days-ffb8e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>days-ffb8e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1064936717677:ios:e916691518b09e1f196e64</string>
+	<key>DATABASE_URL</key>
+	<string>https://days-ffb8e.firebaseio.com</string>
+</dict>
+</plist>
