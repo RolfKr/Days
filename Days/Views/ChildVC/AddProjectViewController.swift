@@ -18,6 +18,7 @@ class AddProjectViewController: UIViewController {
     var centerYConstant: NSLayoutConstraint!
     var heightConstant: CGFloat!
     var nameInputView: InputView!
+    var detailText: DetailTextView!
 
     var delegate: AddProjectDelegate?
     
@@ -26,16 +27,6 @@ class AddProjectViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 4
         return view
-    }()
-    
-    var detailText: UITextView = {
-        let textView = UITextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.layer.cornerRadius = 4
-        textView.backgroundColor = viewBackground
-        textView.textColor = .secondaryLabel
-        textView.text = "Enter details about your project"
-        return textView
     }()
     
     var addImagePhotoLibrary: EnterButton = {
@@ -85,6 +76,7 @@ class AddProjectViewController: UIViewController {
         nameInputView.becomeFirstResponder()
         containerView.addSubview(nameInputView)
         
+        detailText = DetailTextView("Enter details about your project", .secondaryLabel, 15)
         detailText.delegate = self
         containerView.addSubview(detailText)
         

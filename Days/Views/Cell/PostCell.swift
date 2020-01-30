@@ -11,7 +11,7 @@ import UIKit
 class PostCell: UITableViewCell {
     
     var collectionView: UICollectionView!
-    let images = [UIImage(named: "photo1"), UIImage(named: "photo2"), UIImage(named: "photo3")]
+    let images: [UIImage] = []
     
     var containerView: UIView = {
         let view = UIView()
@@ -74,13 +74,13 @@ class PostCell: UITableViewCell {
 extension PostCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PostCollectionViewCell
         let picture = images[indexPath.item]
-        cell.configureCollectionViewCell(picture!)
+        cell.configureCollectionViewCell(picture)
         return cell
     }
     
@@ -90,26 +90,5 @@ extension PostCell: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Tapped item \(indexPath.item + 1)")
-    }
-}
-
-class PostCollectionViewCell: UICollectionViewCell {
-    
-    func configureCollectionViewCell(_ image: UIImage) {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        layer.cornerRadius = 4
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        imageView.image = image
-        
-        addSubview(imageView)
-        
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: topAnchor),
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
     }
 }

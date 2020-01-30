@@ -25,6 +25,9 @@
 		B75EC2A323E0D4CD007C8B3A /* PostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75EC2A223E0D4CD007C8B3A /* PostsViewController.swift */; };
 		B75EC2A523E0DCB8007C8B3A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75EC2A423E0DCB8007C8B3A /* Constants.swift */; };
 		B75EC2A723E0DDD7007C8B3A /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75EC2A623E0DDD7007C8B3A /* PostCell.swift */; };
+		B770D07E23E36B9400E00B00 /* AddPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B770D07D23E36B9400E00B00 /* AddPostsViewController.swift */; };
+		B770D08023E36BB500E00B00 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B770D07F23E36BB500E00B00 /* PostCollectionViewCell.swift */; };
+		B770D08323E36BE000E00B00 /* DetailTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B770D08223E36BE000E00B00 /* DetailTextView.swift */; };
 		B7F013D023DF7B3800A209DA /* ProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F013CF23DF7B3800A209DA /* ProjectCell.swift */; };
 		B7F013D223DF922100A209DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7F013D123DF922100A209DA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -51,6 +54,9 @@
 		B75EC2A223E0D4CD007C8B3A /* PostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewController.swift; sourceTree = "<group>"; };
 		B75EC2A423E0DCB8007C8B3A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B75EC2A623E0DDD7007C8B3A /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		B770D07D23E36B9400E00B00 /* AddPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostsViewController.swift; sourceTree = "<group>"; };
+		B770D07F23E36BB500E00B00 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
+		B770D08223E36BE000E00B00 /* DetailTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTextView.swift; sourceTree = "<group>"; };
 		B7F013CF23DF7B3800A209DA /* ProjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCell.swift; sourceTree = "<group>"; };
 		B7F013D123DF922100A209DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CCD004EAD03A8A39C1498392 /* Pods_Days.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Days.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +162,7 @@
 				B757E14D23DF63BA0093DDB9 /* LoginViewController.swift */,
 				B757E14F23DF696C0093DDB9 /* ProjectsViewController.swift */,
 				B75EC2A223E0D4CD007C8B3A /* PostsViewController.swift */,
+				B770D07D23E36B9400E00B00 /* AddPostsViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -166,6 +173,7 @@
 				7E3D04C823E1206700E60345 /* ChildVC */,
 				B7F013CE23DF792F00A209DA /* Cell */,
 				B72B008523DF744200C45279 /* Textfields */,
+				B770D08123E36BC200E00B00 /* Textview */,
 				B72B008423DF743900C45279 /* Buttons */,
 				B72B008323DF742E00C45279 /* Labels */,
 			);
@@ -184,11 +192,20 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B770D08123E36BC200E00B00 /* Textview */ = {
+			isa = PBXGroup;
+			children = (
+				B770D08223E36BE000E00B00 /* DetailTextView.swift */,
+			);
+			path = Textview;
+			sourceTree = "<group>";
+		};
 		B7F013CE23DF792F00A209DA /* Cell */ = {
 			isa = PBXGroup;
 			children = (
 				B7F013CF23DF7B3800A209DA /* ProjectCell.swift */,
 				B75EC2A623E0DDD7007C8B3A /* PostCell.swift */,
+				B770D07F23E36BB500E00B00 /* PostCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -325,6 +342,7 @@
 				7E3D04C523E118DC00E60345 /* Project.swift in Sources */,
 				7EB0A5D123DF309F00395F56 /* AppDelegate.swift in Sources */,
 				B75EC2A323E0D4CD007C8B3A /* PostsViewController.swift in Sources */,
+				B770D08023E36BB500E00B00 /* PostCollectionViewCell.swift in Sources */,
 				7E3D04CA23E1208000E60345 /* AddProjectViewController.swift in Sources */,
 				7EB0A5E523DF327E00395F56 /* InputView.swift in Sources */,
 				7E3D04C723E11EB500E60345 /* Post.swift in Sources */,
@@ -333,6 +351,8 @@
 				7EB0A5E723DF3AA700395F56 /* EnterButton.swift in Sources */,
 				B757E15023DF696C0093DDB9 /* ProjectsViewController.swift in Sources */,
 				B75EC2A523E0DCB8007C8B3A /* Constants.swift in Sources */,
+				B770D08323E36BE000E00B00 /* DetailTextView.swift in Sources */,
+				B770D07E23E36B9400E00B00 /* AddPostsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

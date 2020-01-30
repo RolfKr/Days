@@ -15,6 +15,15 @@ class PostsViewController: UIViewController {
     
     var project: Project!
     
+    var addButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "addPost"), for: .normal)
+        button.backgroundColor = backgroundColor
+        button.addTarget(self, action: #selector(addPostTapped), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print(project.name)
@@ -31,13 +40,20 @@ class PostsViewController: UIViewController {
         projectDetailLabel.adjustsFontSizeToFitWidth = true
 
         view.addSubview(titleLabel)
+        view.addSubview(addButton)
         view.addSubview(projectDetailLabel)
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
                    titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 50),
                    titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+                   titleLabel.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -20),
                    titleLabel.heightAnchor.constraint(equalToConstant: 44),
+                   
+                   addButton.topAnchor.constraint(equalTo: titleLabel.topAnchor),
+                   addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+                   addButton.heightAnchor.constraint(equalToConstant: 50),
+                   addButton.widthAnchor.constraint(equalToConstant: 50),
                    
                    projectDetailLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
                    projectDetailLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
@@ -61,7 +77,11 @@ class PostsViewController: UIViewController {
         tableView.register(PostCell.self, forCellReuseIdentifier: "Cell")
         tableView.backgroundColor = backgroundColor
         tableView.allowsSelection = false
-        
+    }
+    
+    @objc private func addPostTapped() {
+        present(AddPostViewController(), animated: true)
+
     }
 }
 
