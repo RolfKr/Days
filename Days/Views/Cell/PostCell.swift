@@ -33,6 +33,16 @@ class PostCell: UITableViewCell {
         
         let padding: CGFloat = 20
         
+        let collectionViewHeighConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
+        
+        if images.isEmpty {
+            collectionViewHeighConstraint.constant = 0
+        } else {
+            collectionViewHeighConstraint.constant = 100
+        }
+        
+        collectionViewHeighConstraint.isActive = true
+        
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
@@ -50,7 +60,6 @@ class PostCell: UITableViewCell {
             
             collectionView.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: bodyLabel.trailingAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 100),
             collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
             
         ])

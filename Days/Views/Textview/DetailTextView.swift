@@ -30,7 +30,7 @@ class DetailTextView: UITextView {
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         layer.cornerRadius = 4
-        textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5);
+        textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10);
         backgroundColor = viewBackground
     }
 }
