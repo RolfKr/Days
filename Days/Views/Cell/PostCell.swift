@@ -14,6 +14,7 @@ class PostCell: UITableViewCell {
     var collectionView: UICollectionView!
     var imageURLs: [String] = []
     var images: [UIImage] = []
+    var collectionViewHeight: NSLayoutConstraint!
     
     var containerView: UIView = {
         let view = UIView()
@@ -23,8 +24,8 @@ class PostCell: UITableViewCell {
     }()
     
     func configureCell(_ postedText: String, _ bodyText: String) {
-        createCollectionView()
         downloadPostImages(imageURL: imageURLs)
+        createCollectionView()
         let postedLabel = BodyLabel(postedText, 15, .left, .tertiaryLabel)
         let bodyLabel = BodyLabel(bodyText, 15, .left, .secondaryLabel)
         bodyLabel.numberOfLines = 0
@@ -35,6 +36,10 @@ class PostCell: UITableViewCell {
         containerView.addSubview(collectionView)
         
         let padding: CGFloat = 20
+        
+        collectionViewHeight = collectionView.heightAnchor.constraint(equalToConstant: 0)
+        collectionViewHeight.isActive = true
+
         
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
@@ -54,7 +59,7 @@ class PostCell: UITableViewCell {
             collectionView.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: bodyLabel.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
-            collectionView.heightAnchor.constraint(equalToConstant: 100)
+//            collectionView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -88,13 +93,12 @@ class PostCell: UITableViewCell {
                     if let downloadedImage = UIImage(data: data) {
                         print("Got image")
                         self.images.append(downloadedImage)
+                        self.collectionViewHeight.constant = 200
                         self.collectionView.reloadData()
-
                     }
                 }
             }
         }
-        
     }
 }
 
