@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class PostsViewController: UIViewController {
+class PostsViewController: UIViewController, AddPostDelegate {
 
     var tableView: UITableView!
     var selectedProject: String!
@@ -30,13 +30,8 @@ class PostsViewController: UIViewController {
         super.viewDidLoad()
         print(project.name)
         configureViews()
+        getPosts()
         
-        getPosts()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        getPosts()
     }
     
     private func getPosts() {
@@ -119,7 +114,12 @@ class PostsViewController: UIViewController {
     @objc private func addPostTapped() {
         let addPostVC = AddPostViewController()
         addPostVC.project = project
+        addPostVC.delegate = self
         present(addPostVC, animated: true)
+    }
+    
+    func didFinishAddingPost() {
+        getPosts()
     }
 }
 
@@ -138,6 +138,5 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configureCell(post.created, post.body)
         return cell
     }
-    
 }
 

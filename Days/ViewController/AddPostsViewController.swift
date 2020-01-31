@@ -9,9 +9,14 @@
 import UIKit
 import Firebase
 
+protocol AddPostDelegate {
+    func didFinishAddingPost()
+}
+
 class AddPostViewController: UIViewController {
     
     var project: Project!
+    var delegate: AddPostDelegate!
     
     var postText: DetailTextView!
     var collectionView: UICollectionView!
@@ -59,6 +64,7 @@ class AddPostViewController: UIViewController {
             "images" : imageURLs
         ])
         
+        delegate.didFinishAddingPost()
         dismiss(animated: true, completion: nil)
     }
     

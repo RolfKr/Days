@@ -26,6 +26,7 @@ class PostCell: UITableViewCell {
     func configureCell(_ postedText: String, _ bodyText: String) {
         downloadPostImages(imageURL: imageURLs)
         createCollectionView()
+                
         let postedLabel = BodyLabel(postedText, 15, .left, .tertiaryLabel)
         let bodyLabel = BodyLabel(bodyText, 15, .left, .secondaryLabel)
         bodyLabel.numberOfLines = 0
@@ -67,11 +68,9 @@ class PostCell: UITableViewCell {
         if imageURLs.isEmpty {
             collectionView.isHidden = true
             collectionViewHeight.constant = 0
-            print("Empty")
         } else {
             collectionView.isHidden = false
             collectionViewHeight.constant = 100
-            print("Not Empty")
         }
     }
     
@@ -91,6 +90,7 @@ class PostCell: UITableViewCell {
     private func downloadPostImages(imageURL: [String]) {
         
         for url in imageURL {
+            print("Hello")
             
             let storageRef = Storage.storage().reference(withPath: "posts/\(url)")
             
