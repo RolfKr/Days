@@ -14,6 +14,7 @@ class PostCell: UITableViewCell {
     var collectionView: UICollectionView!
     var imageURLs: [String] = []
     var images: [UIImage] = []
+    var imageCache = [String: UIImage]()
     var collectionViewHeight: NSLayoutConstraint!
     
     var containerView: UIView = {
@@ -91,23 +92,31 @@ class PostCell: UITableViewCell {
         images = []
         
         for url in imageURL {
-            print("Hello")
+            let downloadUrl = "posts/\(url)"
             
-            let storageRef = Storage.storage().reference(withPath: "posts/\(url)")
-            
-            storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                }
-                
-                if let data = data {
-                    if let downloadedImage = UIImage(data: data) {
-                        self.images.append(downloadedImage)
-                        self.collectionView.reloadData()
+            if let cachedImage = imageCache[downloadUrl] {
+                print("Got a cached image")
+                images.append(cachedImage)
+                collectionView.reloadData()
+            } else {
+                let storageRef = Storage.storage().reference(withPath: downloadUrl)
+                storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    
+                    if let data = data {
+                        if let downloadedImage = UIImage(data: data) {
+                            self.imageCache[downloadUrl] = downloadedImage
+                            self.images.append(downloadedImage)
+                            self.collectionView.reloadData()
+                        }
                     }
                 }
             }
+            
+
         }
     }
 }
