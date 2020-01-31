@@ -30,6 +30,7 @@
 		B770D08323E36BE000E00B00 /* DetailTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B770D08223E36BE000E00B00 /* DetailTextView.swift */; };
 		B7BCE5BD23E3A47B00B16323 /* AddPostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BCE5BC23E3A47B00B16323 /* AddPostImageCell.swift */; };
 		B7CD982623E48926005E8505 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CD982523E48926005E8505 /* Extensions.swift */; };
+		B7CD982823E48AC0005E8505 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CD982723E48AC0005E8505 /* TabBarController.swift */; };
 		B7F013D023DF7B3800A209DA /* ProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F013CF23DF7B3800A209DA /* ProjectCell.swift */; };
 		B7F013D223DF922100A209DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7F013D123DF922100A209DA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		B770D08223E36BE000E00B00 /* DetailTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTextView.swift; sourceTree = "<group>"; };
 		B7BCE5BC23E3A47B00B16323 /* AddPostImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostImageCell.swift; sourceTree = "<group>"; };
 		B7CD982523E48926005E8505 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		B7CD982723E48AC0005E8505 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B7F013CF23DF7B3800A209DA /* ProjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCell.swift; sourceTree = "<group>"; };
 		B7F013D123DF922100A209DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CCD004EAD03A8A39C1498392 /* Pods_Days.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Days.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,6 +166,7 @@
 			children = (
 				7EB0A5D423DF309F00395F56 /* WelcomeViewController.swift */,
 				B757E14D23DF63BA0093DDB9 /* LoginViewController.swift */,
+				B7CD982723E48AC0005E8505 /* TabBarController.swift */,
 				B757E14F23DF696C0093DDB9 /* ProjectsViewController.swift */,
 				B75EC2A223E0D4CD007C8B3A /* PostsViewController.swift */,
 				B770D07D23E36B9400E00B00 /* AddPostsViewController.swift */,
@@ -353,6 +356,7 @@
 				7E3D04CA23E1208000E60345 /* AddProjectViewController.swift in Sources */,
 				7EB0A5E523DF327E00395F56 /* InputView.swift in Sources */,
 				7E3D04C723E11EB500E60345 /* Post.swift in Sources */,
+				B7CD982823E48AC0005E8505 /* TabBarController.swift in Sources */,
 				B7CD982623E48926005E8505 /* Extensions.swift in Sources */,
 				7EB0A5D323DF309F00395F56 /* SceneDelegate.swift in Sources */,
 				B757E15223DF69F00093DDB9 /* TitleLabel.swift in Sources */,

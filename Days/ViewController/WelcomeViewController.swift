@@ -31,11 +31,11 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-//        if Auth.auth().currentUser != nil {
-//            print("We got a user")
-//            goToProjects()
-//            #warning("Perform this check in the appdelegate/scenedelegate?")
-//        }
+        if Auth.auth().currentUser != nil {
+            print("We got a user")
+            goToProjects()
+            #warning("Perform this check in the appdelegate/scenedelegate?")
+        }
     }
     
     private func createUser(username: String, password: String, email: String) {
@@ -150,7 +150,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func goToProjects() {
-        let navBar = UINavigationController(rootViewController: ProjectsViewController())
+        let navBar = UINavigationController(rootViewController: TabBarController())
         navBar.navigationBar.isHidden = true
         navBar.modalPresentationStyle = .fullScreen
         present(navBar, animated: true)

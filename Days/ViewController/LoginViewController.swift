@@ -89,7 +89,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
             
             if let _ = result {
-                let navBar = UINavigationController(rootViewController: ProjectsViewController())
+                let navBar = UINavigationController(rootViewController: TabBarController())
                 navBar.navigationBar.isHidden = true
                 navBar.modalPresentationStyle = .fullScreen
                 self.present(navBar, animated: true)
