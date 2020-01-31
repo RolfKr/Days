@@ -11,9 +11,11 @@ import Firebase
 
 class ProjectCell: UICollectionViewCell {
     
+    var titleLabel: TitleLabel!
+    
     var projectImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .systemBackground
+        imageView.backgroundColor = UIColor(named: "backgroundColor")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -24,6 +26,7 @@ class ProjectCell: UICollectionViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .black
+        view.isHidden = true
         view.alpha = 0.35
         return view
     }()
@@ -42,8 +45,9 @@ class ProjectCell: UICollectionViewCell {
         layer.cornerRadius = 6
         clipsToBounds = true
         downloadProjectImage(imageURL: imageURL)
-        let titleLabel = TitleLabel(title, 30, .left)
+        titleLabel = TitleLabel(title, 30, .left)
         titleLabel.textColor = .white
+        titleLabel.isHidden = true
         
         addSubview(projectImage)
         projectImage.addSubview(activityIndicator)
@@ -91,6 +95,9 @@ class ProjectCell: UICollectionViewCell {
                     self.projectImage.image = downloadedImage
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
+                    self.darkenView.isHidden = false
+                    self.titleLabel.isHidden = false
+
                 }
             }
         }
