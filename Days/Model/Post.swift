@@ -11,6 +11,6 @@ import UIKit
 struct Post {
     var created: String
     var body: String
-    var images: [UIImage]
+    var imageURLs: [String]
     var postID: String
 }

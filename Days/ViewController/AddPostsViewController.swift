@@ -38,16 +38,46 @@ class AddPostViewController: UIViewController {
         
         guard let postBody = postText.text else {return}
         let postID = UUID().uuidString
-        let post = Post(created: getTimeNow(), body: postBody, images: images, postID: postID)
+        var imageURLs: [String] = []
+        let post = Post(created: getTimeNow(), body: postBody, imageURLs: imageURLs, postID: postID)
+        
+        var index = 0
+        
+        for _ in images {
+            let imageURL = UUID().uuidString + ".jpg"
+            let image = images[index]
+            uploadImage(imageURL, image)
+            imageURLs.append(imageURL)
+            index += 1
+        }
         
         postsRef.document(postID).setData([
             "postID" : post.postID,
             "created" : post.created,
-            "postBody" : post.body
+            "postBody" : post.body,
+            "images" : imageURLs
         ])
         
         dismiss(animated: true, completion: nil)
     }
+    
+    
+    private func uploadImage(_ imageURL: String, _ image: UIImage) {
+        let storageRef = Storage.storage().reference().child("posts").child(imageURL)
+        guard let imageData = image.jpegData(compressionQuality: 0.75) else {return}
+        let uploadMetadata = StorageMetadata.init()
+        uploadMetadata.contentType = "image/jpeg"
+        
+        storageRef.putData(imageData, metadata: uploadMetadata) { (metaData, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+        }
+    }
+    
+    
+    
     
     private func getTimeNow() -> String {
         let timeNow = Date()

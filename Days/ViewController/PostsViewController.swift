@@ -30,12 +30,12 @@ class PostsViewController: UIViewController {
         super.viewDidLoad()
         print(project.name)
         configureViews()
+        
         getPosts()
     }
     
     private func getPosts() {
         posts = []
-//        guard let currentUserEmail = Auth.auth().currentUser?.email else {return}
         
         let projectRef = Firestore.firestore().collection("projects").document(project.projectID)
         let postRef = projectRef.collection("posts")
@@ -49,8 +49,9 @@ class PostsViewController: UIViewController {
                     let created = document.data()["created"] as? String ?? "Unkown"
                     let postID = document.data()["postID"] as? String ?? "Unknown"
                     let postBody = document.data()["postBody"] as? String ?? "Unkown"
+                    let images = document.data()["images"] as? [String] ?? []
                     
-                    let post = Post(created: created, body: postBody, images: [], postID: postID)
+                    let post = Post(created: created, body: postBody, imageURLs: images, postID: postID)
                     self.posts.append(post)
                 }
                 
@@ -58,25 +59,6 @@ class PostsViewController: UIViewController {
                 self.tableView.reloadData()
             }
         }
-        
-//        Firestore.firestore().collection("projects").whereField("addedBy", isEqualTo: currentUserEmail).getDocuments { (snapshot, error) in
-//            if let error = error {
-//                print(error.localizedDescription)
-//            } else {
-//
-//                for document in snapshot!.documents {
-//                    let created = document.data()["created"] as? String ?? "Unkown"
-//                    let postID = document.data()["postID"] as? String ?? "Unknown"
-//                    let postBody = document.data()["postBody"] as? String ?? "Unkown"
-//
-//                    let post = Post(created: created, body: <#T##String#>, images: [], postID: postID)
-//                    self.posts.append(post)
-//                }
-//
-//                // TODO: Add spinner here?
-//                self.tableView.reloadData()
-//            }
-//        }
     }
     
     private func configureViews() {
@@ -121,6 +103,7 @@ class PostsViewController: UIViewController {
         tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PostCell.self, forCellReuseIdentifier: "Cell")
@@ -141,13 +124,15 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
         return posts.count
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PostCell
         cell.backgroundColor = UIColor(named: "backgroundColor")
-        
         let post = posts[indexPath.row]
+        cell.imageURLs = post.imageURLs
         cell.configureCell(post.created, post.body)
         return cell
     }
     
 }
+

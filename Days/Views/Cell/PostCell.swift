@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class PostCell: UITableViewCell {
     
     var collectionView: UICollectionView!
-    let images: [UIImage] = []
+    var imageURLs: [String] = []
+    var images: [UIImage] = []
     
     var containerView: UIView = {
         let view = UIView()
@@ -22,6 +24,7 @@ class PostCell: UITableViewCell {
     
     func configureCell(_ postedText: String, _ bodyText: String) {
         createCollectionView()
+        downloadPostImages(imageURL: imageURLs)
         let postedLabel = BodyLabel(postedText, 15, .left, .tertiaryLabel)
         let bodyLabel = BodyLabel(bodyText, 15, .left, .secondaryLabel)
         bodyLabel.numberOfLines = 0
@@ -32,16 +35,6 @@ class PostCell: UITableViewCell {
         containerView.addSubview(collectionView)
         
         let padding: CGFloat = 20
-        
-        let collectionViewHeighConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
-        
-        if images.isEmpty {
-            collectionViewHeighConstraint.constant = 0
-        } else {
-            collectionViewHeighConstraint.constant = 100
-        }
-        
-        collectionViewHeighConstraint.isActive = true
         
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
@@ -60,8 +53,8 @@ class PostCell: UITableViewCell {
             
             collectionView.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: bodyLabel.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
-            
+            collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
+            collectionView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -76,6 +69,32 @@ class PostCell: UITableViewCell {
         collectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.dataSource = self
         collectionView.delegate = self
+    }
+    
+    private func downloadPostImages(imageURL: [String]) {
+        
+        for url in imageURL {
+            
+            let storageRef = Storage.storage().reference(withPath: "posts/\(url)")
+            
+            storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                
+                if let data = data {
+                    
+                    if let downloadedImage = UIImage(data: data) {
+                        print("Got image")
+                        self.images.append(downloadedImage)
+                        self.collectionView.reloadData()
+
+                    }
+                }
+            }
+        }
+        
     }
 }
 
