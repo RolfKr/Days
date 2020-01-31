@@ -79,14 +79,14 @@ class PostsViewController: UIViewController, AddPostDelegate {
                    titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 50),
                    titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
                    titleLabel.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -20),
-                   titleLabel.heightAnchor.constraint(equalToConstant: 44),
+                   titleLabel.heightAnchor.constraint(equalToConstant: 40),
                    
                    addButton.topAnchor.constraint(equalTo: titleLabel.topAnchor),
                    addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
                    addButton.heightAnchor.constraint(equalToConstant: 50),
                    addButton.widthAnchor.constraint(equalToConstant: 50),
                    
-                   projectDetailLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+                   projectDetailLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
                    projectDetailLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
                    projectDetailLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
                    projectDetailLabel.heightAnchor.constraint(equalToConstant: 75),

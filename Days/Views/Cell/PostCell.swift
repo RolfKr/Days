@@ -14,7 +14,7 @@ class PostCell: UITableViewCell {
     var collectionView: UICollectionView!
     var imageURLs: [String] = []
     var images: [UIImage] = []
-    var imageCache = [String: UIImage]()
+    var imageCache = NSCache<NSString, AnyObject>()
     var collectionViewHeight: NSLayoutConstraint!
     
     var containerView: UIView = {
@@ -94,7 +94,7 @@ class PostCell: UITableViewCell {
         for url in imageURL {
             let downloadUrl = "posts/\(url)"
             
-            if let cachedImage = imageCache[downloadUrl] {
+            if let cachedImage = imageCache.object(forKey: downloadUrl as NSString) as? UIImage {
                 print("Got a cached image")
                 images.append(cachedImage)
                 collectionView.reloadData()
@@ -108,14 +108,13 @@ class PostCell: UITableViewCell {
                     
                     if let data = data {
                         if let downloadedImage = UIImage(data: data) {
-                            self.imageCache[downloadUrl] = downloadedImage
+                            self.imageCache.setObject(downloadedImage, forKey: downloadUrl as NSString)
                             self.images.append(downloadedImage)
                             self.collectionView.reloadData()
                         }
                     }
                 }
             }
-            
 
         }
     }
