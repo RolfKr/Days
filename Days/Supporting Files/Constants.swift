@@ -10,3 +10,4 @@ import UIKit
 
 let backgroundColor = UIColor(named: "backgroundColor")
 let viewBackground = UIColor(named: "viewBackground")
+let cellBackground = UIColor(named: "cellBackground")

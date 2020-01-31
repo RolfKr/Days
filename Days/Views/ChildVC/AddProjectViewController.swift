@@ -19,7 +19,7 @@ class AddProjectViewController: UIViewController {
     var heightConstant: CGFloat!
     var nameInputView: InputView!
     var detailText: DetailTextView!
-
+    var selectedImage: UIImage!
     var delegate: AddProjectDelegate?
     
     var containerView: UIView = {
@@ -155,7 +155,7 @@ class AddProjectViewController: UIViewController {
         
         let uuid = UUID().uuidString
         let storageRef = Storage.storage().reference().child("projects").child("\(uuid).jpg")
-        guard let imageData = addImagePhotoLibrary.imageView?.image?.jpegData(compressionQuality: 0.75) else {return}
+        guard let imageData = selectedImage.jpegData(compressionQuality: 0.75) else {return}
         let uploadMetadata = StorageMetadata.init()
         uploadMetadata.contentType = "image/jpeg"
         
@@ -225,7 +225,13 @@ extension AddProjectViewController: UIImagePickerControllerDelegate, UINavigatio
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         let image = info[.editedImage] as! UIImage
-        addImagePhotoLibrary.setImage(image, for: .normal)
+        selectedImage = image
+        if picker.sourceType == .camera {
+            addImageCamera.setImage(image, for: .normal)
+        } else {
+            addImagePhotoLibrary.setImage(image, for: .normal)
+        }
+        
         addImagePhotoLibrary.backgroundColor = backgroundColor
         picker.dismiss(animated: true, completion: nil)
     }

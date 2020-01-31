@@ -10,6 +10,7 @@
 		7E3D04C523E118DC00E60345 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D04C423E118DC00E60345 /* Project.swift */; };
 		7E3D04C723E11EB500E60345 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D04C623E11EB500E60345 /* Post.swift */; };
 		7E3D04CA23E1208000E60345 /* AddProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D04C923E1208000E60345 /* AddProjectViewController.swift */; };
+		7E52E10E23E4A66B001B3F53 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E52E10D23E4A66B001B3F53 /* AccountViewController.swift */; };
 		7EB0A5D123DF309F00395F56 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D023DF309F00395F56 /* AppDelegate.swift */; };
 		7EB0A5D323DF309F00395F56 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D223DF309F00395F56 /* SceneDelegate.swift */; };
 		7EB0A5D523DF309F00395F56 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D423DF309F00395F56 /* WelcomeViewController.swift */; };
@@ -40,6 +41,7 @@
 		7E3D04C423E118DC00E60345 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		7E3D04C623E11EB500E60345 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		7E3D04C923E1208000E60345 /* AddProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectViewController.swift; sourceTree = "<group>"; };
+		7E52E10D23E4A66B001B3F53 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		7EB0A5CD23DF309F00395F56 /* Days.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Days.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EB0A5D023DF309F00395F56 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EB0A5D223DF309F00395F56 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				B757E14F23DF696C0093DDB9 /* ProjectsViewController.swift */,
 				B75EC2A223E0D4CD007C8B3A /* PostsViewController.swift */,
 				B770D07D23E36B9400E00B00 /* AddPostsViewController.swift */,
+				7E52E10D23E4A66B001B3F53 /* AccountViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				B7CD982823E48AC0005E8505 /* TabBarController.swift in Sources */,
 				B7CD982623E48926005E8505 /* Extensions.swift in Sources */,
 				7EB0A5D323DF309F00395F56 /* SceneDelegate.swift in Sources */,
+				7E52E10E23E4A66B001B3F53 /* AccountViewController.swift in Sources */,
 				B757E15223DF69F00093DDB9 /* TitleLabel.swift in Sources */,
 				7EB0A5E723DF3AA700395F56 /* EnterButton.swift in Sources */,
 				B757E15023DF696C0093DDB9 /* ProjectsViewController.swift in Sources */,

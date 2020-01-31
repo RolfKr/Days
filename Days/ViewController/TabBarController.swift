@@ -13,10 +13,14 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let projectsVC = ProjectsViewController()
+        let projectsVC = UINavigationController(rootViewController: ProjectsViewController())
+        projectsVC.navigationBar.isHidden = true
         projectsVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-
-        let tabBarList = [projectsVC]
+        
+        let accountVC = AccountViewController()
+        accountVC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 1)
+        
+        let tabBarList = [projectsVC, accountVC]
         viewControllers = tabBarList
     }
 

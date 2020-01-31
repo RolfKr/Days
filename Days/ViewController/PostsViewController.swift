@@ -34,6 +34,11 @@ class PostsViewController: UIViewController {
         getPosts()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getPosts()
+    }
+    
     private func getPosts() {
         posts = []
         

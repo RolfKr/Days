@@ -44,6 +44,7 @@ class AddPostViewController: UIViewController {
         var index = 0
         
         for _ in images {
+            print(index)
             let imageURL = UUID().uuidString + ".jpg"
             let image = images[index]
             uploadImage(imageURL, image)

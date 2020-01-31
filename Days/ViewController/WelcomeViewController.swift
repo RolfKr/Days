@@ -46,10 +46,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
                     }
                     
                     self.addUserToDatabase(email: email, username: username)
-                    let navBar = UINavigationController(rootViewController: ProjectsViewController())
-                    navBar.navigationBar.isHidden = true
-                    navBar.modalPresentationStyle = .fullScreen
-                    self.present(navBar, animated: true)
+                    self.goToProjects()
                 }
                 
             }

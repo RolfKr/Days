@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         var rootView: UIViewController!
         
         if Auth.auth().currentUser != nil {
-            rootView = ProjectsViewController()
+            rootView = TabBarController()
         } else {
             rootView = WelcomeViewController()
         }
