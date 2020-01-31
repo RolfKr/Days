@@ -83,6 +83,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func loginUser(email: String, password: String) {
+        showActivityIndicator(view: view)
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 print(error.localizedDescription)

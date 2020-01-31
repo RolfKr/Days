@@ -27,19 +27,10 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
         configureUI()
         tapGesture()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if Auth.auth().currentUser != nil {
-            print("We got a user")
-            goToProjects()
-            #warning("Perform this check in the appdelegate/scenedelegate?")
-        }
-    }
+
     
     private func createUser(username: String, password: String, email: String) {
-        #warning("add a spinner here")
+        showActivityIndicator(view: view)
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 print(error.localizedDescription)
@@ -55,7 +46,6 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
                     }
                     
                     self.addUserToDatabase(email: email, username: username)
-                    #warning("Remove spinner here")
                     let navBar = UINavigationController(rootViewController: ProjectsViewController())
                     navBar.navigationBar.isHidden = true
                     navBar.modalPresentationStyle = .fullScreen

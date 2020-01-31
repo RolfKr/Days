@@ -16,4 +16,19 @@ extension UIViewController {
         view.addGestureRecognizer(tap)
     }
     
+    func showActivityIndicator(view: UIView) {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.startAnimating()
+        indicator.color = .label
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(indicator)
+        
+        NSLayoutConstraint.activate([
+            indicator.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
+            indicator.centerXAnchor.constraint(equalToSystemSpacingAfter: view.centerXAnchor, multiplier: 0),
+            indicator.heightAnchor.constraint(equalToConstant: 50),
+            indicator.widthAnchor.constraint(equalToConstant: 50)
+        ])
+    }
 }
