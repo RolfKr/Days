@@ -88,6 +88,7 @@ class PostCell: UITableViewCell {
     }
     
     private func downloadPostImages(imageURL: [String]) {
+        images = []
         
         for url in imageURL {
             print("Hello")
