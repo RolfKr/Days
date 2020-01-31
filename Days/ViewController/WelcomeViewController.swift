@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class WelcomeViewController: UIViewController {
+class WelcomeViewController: UIViewController, UITextFieldDelegate {
     
     var usernameView: InputView!
     var emailView: InputView!
@@ -25,15 +25,17 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        tapGesture()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if Auth.auth().currentUser != nil {
-            print("We got a user")
-            goToProjects()
-        }
+//        if Auth.auth().currentUser != nil {
+//            print("We got a user")
+//            goToProjects()
+//            #warning("Perform this check in the appdelegate/scenedelegate?")
+//        }
     }
     
     private func createUser(username: String, password: String, email: String) {
@@ -41,17 +43,17 @@ class WelcomeViewController: UIViewController {
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 print(error.localizedDescription)
-                
-                
             }
             
             if let result = result {
                 let changeRequest = result.user.createProfileChangeRequest()
                 changeRequest.displayName = username
                 changeRequest.commitChanges { (error) in
+                    
                     if let error = error {
                         print(error.localizedDescription)
                     }
+                    
                     self.addUserToDatabase(email: email, username: username)
                     #warning("Remove spinner here")
                     let navBar = UINavigationController(rootViewController: ProjectsViewController())
@@ -77,11 +79,15 @@ class WelcomeViewController: UIViewController {
         view.backgroundColor = backgroundColor
         let titleText = TitleLabel("Welcome to Days", 32, .center)
         usernameView = InputView("Enter name")
+        usernameView.textField.delegate = self
         emailView = InputView("Enter email")
+        emailView.textField.delegate = self
         emailView.textField.keyboardType = .emailAddress
         passwordView = InputView("Enter password")
+        passwordView.textField.delegate = self
         passwordView.textField.isSecureTextEntry = true
         let secondPasswordView = InputView("Enter password again")
+        secondPasswordView.textField.delegate = self
         secondPasswordView.textField.isSecureTextEntry = true
         let registerButton = EnterButton(("Register"), 17, .label)
         let loginButton = EnterButton("Already have an account?", 12, .label)
@@ -149,5 +155,11 @@ class WelcomeViewController: UIViewController {
         navBar.modalPresentationStyle = .fullScreen
         present(navBar, animated: true)
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
 }
+
+
 

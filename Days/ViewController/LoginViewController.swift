@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     var emailView: InputView!
     var passwordView: InputView!
@@ -24,6 +24,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        tapGesture()
     }
     
     private func configureUI() {
@@ -31,7 +32,9 @@ class LoginViewController: UIViewController {
         
         let titleText = TitleLabel("Login to Days", 32, .center)
         emailView = InputView("Enter email")
+        emailView.textField.delegate = self
         passwordView = InputView("Enter password")
+        passwordView.textField.delegate = self
         let loginButton = EnterButton(("Login"), 17, .label)
         
         loginButton.addTarget(self, action: #selector(goToProjects), for: .touchUpInside)
@@ -92,5 +95,9 @@ class LoginViewController: UIViewController {
                 self.present(navBar, animated: true)
             }
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 }
