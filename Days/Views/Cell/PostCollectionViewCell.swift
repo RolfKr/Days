@@ -13,7 +13,7 @@ class PostCollectionViewCell: UICollectionViewCell {
     func configureCollectionViewCell(_ image: UIImage) {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        layer.cornerRadius = 4
+        layer.cornerRadius = 6
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.image = image

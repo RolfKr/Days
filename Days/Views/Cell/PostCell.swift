@@ -37,10 +37,6 @@ class PostCell: UITableViewCell {
         
         let padding: CGFloat = 20
         
-        collectionViewHeight = collectionView.heightAnchor.constraint(equalToConstant: 0)
-        collectionViewHeight.isActive = true
-
-        
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
@@ -59,7 +55,7 @@ class PostCell: UITableViewCell {
             collectionView.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: bodyLabel.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
-//            collectionView.heightAnchor.constraint(equalToConstant: 100)
+            collectionView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -89,11 +85,8 @@ class PostCell: UITableViewCell {
                 }
                 
                 if let data = data {
-                    
                     if let downloadedImage = UIImage(data: data) {
-                        print("Got image")
                         self.images.append(downloadedImage)
-                        self.collectionViewHeight.constant = 200
                         self.collectionView.reloadData()
                     }
                 }
@@ -121,6 +114,6 @@ extension PostCell: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Tapped item \(indexPath.item + 1)")
+        print("Tapped item \(indexPath.item)")
     }
 }
