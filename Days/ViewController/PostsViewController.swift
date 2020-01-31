@@ -7,6 +7,7 @@
 //*
 
 import UIKit
+import Firebase
 
 class PostsViewController: UIViewController {
 
@@ -14,6 +15,7 @@ class PostsViewController: UIViewController {
     var selectedProject: String!
     
     var project: Project!
+    var posts: [Post] = []
     
     var addButton: UIButton = {
         let button = UIButton()
@@ -28,6 +30,53 @@ class PostsViewController: UIViewController {
         super.viewDidLoad()
         print(project.name)
         configureViews()
+        getPosts()
+    }
+    
+    private func getPosts() {
+        posts = []
+//        guard let currentUserEmail = Auth.auth().currentUser?.email else {return}
+        
+        let projectRef = Firestore.firestore().collection("projects").document(project.projectID)
+        let postRef = projectRef.collection("posts")
+        
+        postRef.getDocuments { (snapshot, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                
+                for document in snapshot!.documents {
+                    let created = document.data()["created"] as? String ?? "Unkown"
+                    let postID = document.data()["postID"] as? String ?? "Unknown"
+                    let postBody = document.data()["postBody"] as? String ?? "Unkown"
+                    
+                    let post = Post(created: created, body: postBody, images: [], postID: postID)
+                    self.posts.append(post)
+                }
+                
+                // TODO: Add spinner here?
+                self.tableView.reloadData()
+            }
+        }
+        
+//        Firestore.firestore().collection("projects").whereField("addedBy", isEqualTo: currentUserEmail).getDocuments { (snapshot, error) in
+//            if let error = error {
+//                print(error.localizedDescription)
+//            } else {
+//
+//                for document in snapshot!.documents {
+//                    let created = document.data()["created"] as? String ?? "Unkown"
+//                    let postID = document.data()["postID"] as? String ?? "Unknown"
+//                    let postBody = document.data()["postBody"] as? String ?? "Unkown"
+//
+//                    let post = Post(created: created, body: <#T##String#>, images: [], postID: postID)
+//                    self.posts.append(post)
+//                }
+//
+//                // TODO: Add spinner here?
+//                self.tableView.reloadData()
+//            }
+//        }
     }
     
     private func configureViews() {
@@ -80,21 +129,24 @@ class PostsViewController: UIViewController {
     }
     
     @objc private func addPostTapped() {
-        present(AddPostViewController(), animated: true)
-
+        let addPostVC = AddPostViewController()
+        addPostVC.project = project
+        present(addPostVC, animated: true)
     }
 }
 
 extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PostCell
         cell.backgroundColor = UIColor(named: "backgroundColor")
-        cell.configureCell("Posted on 23.06.2019 at 17:49", "Ludum mutavit. Verbum est ex. Et ... sunt occidat. Videtur quod est super omne oppidum. Quis transfretavit tu iratus es  contudit cranium cum dolor apparatus. Qui curis! Modo nobis certamen est, qui non credunt at. ")
+        
+        let post = posts[indexPath.row]
+        cell.configureCell(post.created, post.body)
         return cell
     }
     

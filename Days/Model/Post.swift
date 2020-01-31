@@ -12,4 +12,5 @@ struct Post {
     var created: String
     var body: String
     var images: [UIImage]
+    var postID: String
 }

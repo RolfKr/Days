@@ -14,7 +14,6 @@ class AddPostImageCell: UICollectionViewCell {
         let button = UIButton()
         button.setImage(UIImage(named: "closeBtn"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .red
         return button
     }()
     

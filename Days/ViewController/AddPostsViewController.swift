@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import Firebase
 
 class AddPostViewController: UIViewController {
+    
+    var project: Project!
     
     var postText: DetailTextView!
     var collectionView: UICollectionView!
@@ -16,10 +19,43 @@ class AddPostViewController: UIViewController {
     var addFromLibrary: EnterButton!
     var addFromCamera: EnterButton!
 
+    var doneButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "doneBtn"), for: .normal)
+        button.addTarget(self, action: #selector(addBtnTapped), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
+        print(project.name)
     }
+    
+    @objc private func addBtnTapped() {
+        let postsRef = Firestore.firestore().collection("projects").document(project.projectID).collection("posts")
+        
+        guard let postBody = postText.text else {return}
+        let postID = UUID().uuidString
+        let post = Post(created: getTimeNow(), body: postBody, images: images, postID: postID)
+        
+        postsRef.document(postID).setData([
+            "postID" : post.postID,
+            "created" : post.created,
+            "postBody" : post.body
+        ])
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func getTimeNow() -> String {
+        let timeNow = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.string(from: timeNow)
+    }
+
     
     private func configureViews() {
         view.backgroundColor = backgroundColor
@@ -28,7 +64,10 @@ class AddPostViewController: UIViewController {
         let titleLabel = TitleLabel("Create Post", 38, .left)
         view.addSubview(titleLabel)
         
+        view.addSubview(doneButton)
+                
         postText = DetailTextView("Write here...", .secondaryLabel, 15)
+        postText.delegate = self
         view.addSubview(postText)
         
         setupButtons()
@@ -36,12 +75,17 @@ class AddPostViewController: UIViewController {
         NSLayoutConstraint.activate([
                    titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 50),
                    titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-                   titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+                   titleLabel.trailingAnchor.constraint(equalTo: doneButton.leadingAnchor, constant: -20),
                    titleLabel.heightAnchor.constraint(equalToConstant: 44),
+                   
+                   doneButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 30),
+                   doneButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+                   doneButton.widthAnchor.constraint(equalToConstant: 60),
+                   doneButton.heightAnchor.constraint(equalToConstant: 60),
                    
                    postText.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
                    postText.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 0),
-                   postText.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 0),
+                   postText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
                    postText.heightAnchor.constraint(equalToConstant: view.frame.size.height * 0.4),
                    
                    addFromLibrary.topAnchor.constraint(equalTo: postText.bottomAnchor, constant: 0),
@@ -139,3 +183,10 @@ extension AddPostViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 }
 
+extension AddPostViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == "Write here..." {
+            textView.text = ""
+        }
+    }
+}
