@@ -37,6 +37,10 @@ class PostCell: UITableViewCell {
         
         let padding: CGFloat = 20
         
+
+        
+//        collectionViewHeight = collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+        
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
@@ -55,8 +59,20 @@ class PostCell: UITableViewCell {
             collectionView.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: bodyLabel.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
-            collectionView.heightAnchor.constraint(equalToConstant: 100)
         ])
+        
+        collectionViewHeight = collectionView.heightAnchor.constraint(equalToConstant: 0)
+        collectionViewHeight.isActive = true
+        
+        if imageURLs.isEmpty {
+            collectionView.isHidden = true
+            collectionViewHeight.constant = 0
+            print("Empty")
+        } else {
+            collectionView.isHidden = false
+            collectionViewHeight.constant = 100
+            print("Not Empty")
+        }
     }
     
     private func createCollectionView() {
