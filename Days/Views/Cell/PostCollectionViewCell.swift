@@ -27,5 +27,4 @@ class PostCollectionViewCell: UICollectionViewCell {
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
 }

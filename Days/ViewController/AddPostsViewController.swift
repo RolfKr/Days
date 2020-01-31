@@ -63,10 +63,9 @@ class AddPostViewController: UIViewController {
     
     private func createCollectionView() {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 175, height: 110)
         layout.scrollDirection = .vertical
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.register(AddPostImageCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = backgroundColor
         collectionView.dataSource = self
@@ -104,17 +103,31 @@ class AddPostViewController: UIViewController {
     }
 }
 
-extension AddPostViewController: UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension AddPostViewController: UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PostCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! AddPostImageCell
         let image = images[indexPath.item]
         cell.configureCollectionViewCell(image)
+        cell.closeButton.tag = indexPath.item
+        cell.closeButton.addTarget(self, action: #selector(closeBtnTapped(_:)), for: .touchUpInside)
         return cell
+    }
+    
+    @objc private func closeBtnTapped(_ sender: UIButton) {
+        print("Remove image number \(sender.tag)")
+        let imageNumber = sender.tag
+        images.remove(at: imageNumber)
+        collectionView.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.frame.size.width / 2) - 5
+        return CGSize(width: width, height: 110)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

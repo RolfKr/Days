@@ -28,6 +28,7 @@
 		B770D07E23E36B9400E00B00 /* AddPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B770D07D23E36B9400E00B00 /* AddPostsViewController.swift */; };
 		B770D08023E36BB500E00B00 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B770D07F23E36BB500E00B00 /* PostCollectionViewCell.swift */; };
 		B770D08323E36BE000E00B00 /* DetailTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B770D08223E36BE000E00B00 /* DetailTextView.swift */; };
+		B7BCE5BD23E3A47B00B16323 /* AddPostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BCE5BC23E3A47B00B16323 /* AddPostImageCell.swift */; };
 		B7F013D023DF7B3800A209DA /* ProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F013CF23DF7B3800A209DA /* ProjectCell.swift */; };
 		B7F013D223DF922100A209DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7F013D123DF922100A209DA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 		B770D07D23E36B9400E00B00 /* AddPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostsViewController.swift; sourceTree = "<group>"; };
 		B770D07F23E36BB500E00B00 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 		B770D08223E36BE000E00B00 /* DetailTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTextView.swift; sourceTree = "<group>"; };
+		B7BCE5BC23E3A47B00B16323 /* AddPostImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostImageCell.swift; sourceTree = "<group>"; };
 		B7F013CF23DF7B3800A209DA /* ProjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCell.swift; sourceTree = "<group>"; };
 		B7F013D123DF922100A209DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CCD004EAD03A8A39C1498392 /* Pods_Days.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Days.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,6 +208,7 @@
 				B7F013CF23DF7B3800A209DA /* ProjectCell.swift */,
 				B75EC2A623E0DDD7007C8B3A /* PostCell.swift */,
 				B770D07F23E36BB500E00B00 /* PostCollectionViewCell.swift */,
+				B7BCE5BC23E3A47B00B16323 /* AddPostImageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				7E3D04C523E118DC00E60345 /* Project.swift in Sources */,
 				7EB0A5D123DF309F00395F56 /* AppDelegate.swift in Sources */,
 				B75EC2A323E0D4CD007C8B3A /* PostsViewController.swift in Sources */,
+				B7BCE5BD23E3A47B00B16323 /* AddPostImageCell.swift in Sources */,
 				B770D08023E36BB500E00B00 /* PostCollectionViewCell.swift in Sources */,
 				7E3D04CA23E1208000E60345 /* AddProjectViewController.swift in Sources */,
 				7EB0A5E523DF327E00395F56 /* InputView.swift in Sources */,
