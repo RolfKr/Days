@@ -35,14 +35,54 @@ extension UIViewController {
 
 extension UIView {
     
-    func showAlert() {
+    func shakeAnimation() {
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
         animation.repeatCount = 4
         animation.autoreverses = true
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 10, y: self.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 10, y: self.center.y))
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 5, y: self.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 5, y: self.center.y))
 
         self.layer.add(animation, forKey: "position")
+    }
+    
+    func showAlert(alertText: String) {
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.backgroundColor = .white
+        containerView.alpha = 1.0
+        addSubview(containerView)
+        
+        let alertLabel = BodyLabel(alertText, 16, .center, .red)
+        containerView.addSubview(alertLabel)
+        
+        let top = containerView.topAnchor.constraint(equalTo: topAnchor, constant: -50)
+        top.isActive = true
+        
+        NSLayoutConstraint.activate([
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            containerView.heightAnchor.constraint(equalToConstant: 50),
+            
+            alertLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            alertLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            alertLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            alertLabel.heightAnchor.constraint(equalToConstant: 16)
+        ])
+        
+        layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+            top.constant = 50
+            self.layoutIfNeeded()
+        }) { (finished) in
+            if finished {
+                
+                UIView.animate(withDuration: 3.0, delay: 2.5, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.4, options: .curveEaseInOut, animations: {
+                    containerView.alpha = 0
+                    self.layoutIfNeeded()
+                })
+            }
+        }
     }
 }

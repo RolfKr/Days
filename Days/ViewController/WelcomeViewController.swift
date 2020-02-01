@@ -33,7 +33,8 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
         showActivityIndicator(view: view)
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let _ = error {
-                self.usernameView.showAlert()
+                self.usernameView.shakeAnimation()
+                self.view.showAlert(alertText: "Something went wrong")
             }
             
             if let result = result {
