@@ -32,9 +32,9 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
     private func createUser(username: String, password: String, email: String) {
         showActivityIndicator(view: view)
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            if let _ = error {
+            if let error = error {
                 self.usernameView.shakeAnimation()
-                self.view.showAlert(alertText: "Something went wrong")
+                self.view.showAlert(alertText: error.localizedDescription)
             }
             
             if let result = result {
