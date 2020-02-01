@@ -32,8 +32,8 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
     private func createUser(username: String, password: String, email: String) {
         showActivityIndicator(view: view)
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            if let error = error {
-                print(error.localizedDescription)
+            if let _ = error {
+                self.usernameView.showAlert()
             }
             
             if let result = result {
