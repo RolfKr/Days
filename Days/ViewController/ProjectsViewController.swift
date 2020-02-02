@@ -29,8 +29,8 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     private func getProjects() {
         projects = []
         guard let currentUserEmail = Auth.auth().currentUser?.email else {return}
-        
-        Firestore.firestore().collection("projects").whereField("addedBy", isEqualTo: currentUserEmail).getDocuments { (snapshot, error) in
+
+        Firestore.firestore().collection("projects").whereField("addedBy", isEqualTo: currentUserEmail).order(by: "created", descending: true).getDocuments { (snapshot, error) in
             if let error = error {
                 print(error.localizedDescription)
             } else {

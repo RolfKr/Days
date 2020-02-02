@@ -15,10 +15,10 @@ class TabBarController: UITabBarController {
         
         let projectsVC = UINavigationController(rootViewController: ProjectsViewController())
         projectsVC.navigationBar.isHidden = true
-        projectsVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
+        projectsVC.tabBarItem = UITabBarItem(title: "Projects", image: UIImage(systemName: "list.dash"), selectedImage: UIImage(systemName: "list.dash"))
         
         let accountVC = AccountViewController()
-        accountVC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 1)
+        accountVC.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.crop.circle"), selectedImage: UIImage(systemName: "person.crop.circle.fill"))
         
         let tabBarList = [projectsVC, accountVC]
         viewControllers = tabBarList

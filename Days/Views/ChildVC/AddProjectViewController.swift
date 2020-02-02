@@ -29,27 +29,16 @@ class AddProjectViewController: UIViewController {
         return view
     }()
     
-    var addImagePhotoLibrary: EnterButton = {
+    var addImagebutton: EnterButton = {
         let button = EnterButton("", 17, .secondaryLabel)
         button.tag = 1
         button.contentHorizontalAlignment = .center
-        button.setImage(UIImage(systemName: "photo"), for: .normal)
+        button.setTitle("Add photo", for: .normal)
+//        button.setImage(UIImage(systemName: "photo"), for: .normal)
         button.tintColor = .label
         button.backgroundColor = viewBackground
         button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(presentImagePicker(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    var addImageCamera: EnterButton = {
-        let button = EnterButton("", 17, .secondaryLabel)
-        button.tag = 2
-        button.contentHorizontalAlignment = .center
-        button.setImage(UIImage(systemName: "camera"), for: .normal)
-        button.tintColor = .label
-        button.backgroundColor = viewBackground
-        button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(presentImagePicker(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(chooseImage), for: .touchUpInside)
         return button
     }()
 
@@ -80,12 +69,7 @@ class AddProjectViewController: UIViewController {
         detailText.delegate = self
         containerView.addSubview(detailText)
         
-        let buttonImageStackview = UIStackView(arrangedSubviews: [addImagePhotoLibrary, addImageCamera])
-        buttonImageStackview.translatesAutoresizingMaskIntoConstraints = false
-        buttonImageStackview.distribution = .fillEqually
-        buttonImageStackview.spacing = 20
-        
-        containerView.addSubview(buttonImageStackview)
+        containerView.addSubview(addImagebutton)
         
         let enterButton = EnterButton("Enter", 20, .label)
         enterButton.addTarget(self, action: #selector(createProject), for: .touchUpInside)
@@ -117,12 +101,12 @@ class AddProjectViewController: UIViewController {
             detailText.trailingAnchor.constraint(equalTo: nameInputView.trailingAnchor),
             detailText.heightAnchor.constraint(equalToConstant: 75),
             
-            buttonImageStackview.topAnchor.constraint(equalTo: detailText.bottomAnchor, constant: 15),
-            buttonImageStackview.leadingAnchor.constraint(equalTo: detailText.leadingAnchor, constant: 40),
-            buttonImageStackview.trailingAnchor.constraint(equalTo: detailText.trailingAnchor, constant: -40),
-            buttonImageStackview.heightAnchor.constraint(equalToConstant: 35),
+            addImagebutton.topAnchor.constraint(equalTo: detailText.bottomAnchor, constant: 15),
+            addImagebutton.leadingAnchor.constraint(equalTo: detailText.leadingAnchor, constant: 50),
+            addImagebutton.trailingAnchor.constraint(equalTo: detailText.trailingAnchor, constant: -50),
+            addImagebutton.heightAnchor.constraint(equalToConstant: 45),
             
-            buttonStack.topAnchor.constraint(equalTo: buttonImageStackview.bottomAnchor, constant: 20),
+            buttonStack.topAnchor.constraint(equalTo: addImagebutton.bottomAnchor, constant: 20),
             buttonStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 50),
             buttonStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -50),
             buttonStack.heightAnchor.constraint(equalToConstant: 30)
@@ -205,12 +189,31 @@ class AddProjectViewController: UIViewController {
         }
     }
     
-    @objc private func presentImagePicker(_ sender: UIButton) {
+    @objc private func chooseImage() {
+        let alertController = UIAlertController(title: "From what source?", message: "", preferredStyle: .actionSheet)
+        let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            self.presentImagePicker("Library")
+        }
+        let camera = UIAlertAction(title: "Camera", style: .default) { (action) in
+            self.presentImagePicker("Camera")
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive) { (_) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        alertController.addAction(library)
+        alertController.addAction(camera)
+        alertController.addAction(cancel)
+        
+        present(alertController, animated: true)
+    }
+    
+    private func presentImagePicker(_ chosenSource: String) {
         let imagePicker = UIImagePickerController()
         
-        if sender.tag == 1 {
+        if chosenSource == "Library" {
             imagePicker.sourceType = .photoLibrary
-        } else if sender.tag == 2 {
+        } else if chosenSource == "Camera" {
             imagePicker.sourceType = .camera
         }
         
@@ -225,14 +228,12 @@ extension AddProjectViewController: UIImagePickerControllerDelegate, UINavigatio
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         let image = info[.editedImage] as! UIImage
-        selectedImage = image
-        if picker.sourceType == .camera {
-            addImageCamera.setImage(image, for: .normal)
-        } else {
-            addImagePhotoLibrary.setImage(image, for: .normal)
-        }
         
-        addImagePhotoLibrary.backgroundColor = backgroundColor
+        selectedImage = image
+        addImagebutton.setImage(image, for: .normal)
+        addImagebutton.layer.borderWidth = 0
+        addImagebutton.backgroundColor = backgroundColor
+        
         picker.dismiss(animated: true, completion: nil)
     }
 }
