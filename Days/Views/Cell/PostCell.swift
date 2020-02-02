@@ -27,7 +27,6 @@ class PostCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        print("Reusing cell")
         postedLabel.isHidden = true
         bodyLabel.isHidden = true
         collectionView.isHidden = true
@@ -67,17 +66,16 @@ class PostCell: UITableViewCell {
             collectionView.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: bodyLabel.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
-            collectionView.heightAnchor.constraint(equalToConstant: 100)
         ])
-//        
-//        collectionViewHeight = collectionView.heightAnchor.constraint(equalToConstant: 0)
-//        collectionViewHeight.isActive = true
-//
-//        if imageURLs.isEmpty {
-//            collectionViewHeight.constant = 0
-//        } else {
-//            collectionViewHeight.constant = 100
-//        }
+        
+        collectionViewHeight = collectionView.heightAnchor.constraint(equalToConstant: 0)
+        collectionViewHeight.isActive = true
+
+        if imageURLs.isEmpty {
+            collectionViewHeight.constant = 0
+        } else {
+            collectionViewHeight.constant = 100
+        }
     }
     
     private func createCollectionView() {
