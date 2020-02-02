@@ -15,6 +15,8 @@ class PostCell: UITableViewCell {
     var images: [UIImage] = []
     var imageCache = NSCache<NSString, AnyObject>()
     var collectionViewHeight: NSLayoutConstraint!
+    var postedLabel: BodyLabel!
+    var bodyLabel: BodyLabel!
     
     var containerView: UIView = {
         let view = UIView()
@@ -23,12 +25,20 @@ class PostCell: UITableViewCell {
         return view
     }()
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        print("Reusing cell")
+        postedLabel.isHidden = true
+        bodyLabel.isHidden = true
+        collectionView.isHidden = true
+    }
+    
     func configureCell(_ postedText: String, _ bodyText: String, _ imageURLs: [String]) {
         downloadPostImages(imageURL: imageURLs)
         createCollectionView()
                 
-        let postedLabel = BodyLabel(postedText, 15, .left, .tertiaryLabel)
-        let bodyLabel = BodyLabel(bodyText, 15, .left, .secondaryLabel)
+        postedLabel = BodyLabel(postedText, 15, .left, .tertiaryLabel)
+        bodyLabel = BodyLabel(bodyText, 15, .left, .secondaryLabel)
         bodyLabel.numberOfLines = 0
         
         addSubview(containerView)
@@ -57,16 +67,17 @@ class PostCell: UITableViewCell {
             collectionView.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: bodyLabel.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
+            collectionView.heightAnchor.constraint(equalToConstant: 100)
         ])
-        
-        collectionViewHeight = collectionView.heightAnchor.constraint(equalToConstant: 0)
-        collectionViewHeight.isActive = true
-        
-        if imageURLs.isEmpty {
-            collectionViewHeight.constant = 0
-        } else {
-            collectionViewHeight.constant = 100
-        }
+//        
+//        collectionViewHeight = collectionView.heightAnchor.constraint(equalToConstant: 0)
+//        collectionViewHeight.isActive = true
+//
+//        if imageURLs.isEmpty {
+//            collectionViewHeight.constant = 0
+//        } else {
+//            collectionViewHeight.constant = 100
+//        }
     }
     
     private func createCollectionView() {
@@ -81,13 +92,13 @@ class PostCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
-    
+  
     private func downloadPostImages(imageURL: [String]) {
         images = []
-        
+
         for url in imageURL {
             let downloadUrl = "posts/\(url)"
-            
+
             if let cachedImage = imageCache.object(forKey: downloadUrl as NSString) as? UIImage {
                 images.append(cachedImage)
                 collectionView.reloadData()
@@ -98,7 +109,7 @@ class PostCell: UITableViewCell {
                         print(error.localizedDescription)
                         return
                     }
-                    
+
                     if let data = data {
                         if let downloadedImage = UIImage(data: data) {
                             self.imageCache.setObject(downloadedImage, forKey: downloadUrl as NSString)
@@ -114,22 +125,22 @@ class PostCell: UITableViewCell {
 
 
 extension PostCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PostCollectionViewCell
         let picture = images[indexPath.item]
         cell.configureCollectionViewCell(picture)
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 175, height: 100)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Tapped item \(indexPath.item)")
     }
