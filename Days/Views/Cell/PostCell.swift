@@ -12,7 +12,6 @@ import Firebase
 class PostCell: UITableViewCell {
     
     var collectionView: UICollectionView!
-    var imageURLs: [String] = []
     var images: [UIImage] = []
     var imageCache = NSCache<NSString, AnyObject>()
     var collectionViewHeight: NSLayoutConstraint!
@@ -24,7 +23,7 @@ class PostCell: UITableViewCell {
         return view
     }()
     
-    func configureCell(_ postedText: String, _ bodyText: String) {
+    func configureCell(_ postedText: String, _ bodyText: String, _ imageURLs: [String]) {
         downloadPostImages(imageURL: imageURLs)
         createCollectionView()
                 
@@ -64,7 +63,7 @@ class PostCell: UITableViewCell {
         collectionViewHeight.isActive = true
         
         if imageURLs.isEmpty {
-            collectionViewHeight.constant = 0
+            collectionViewHeight.constant = 100
         } else {
             collectionViewHeight.constant = 100
         }
@@ -109,7 +108,6 @@ class PostCell: UITableViewCell {
                     }
                 }
             }
-
         }
     }
 }

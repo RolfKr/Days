@@ -30,7 +30,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
         super.viewDidLoad()
         configureViews()
         getPosts()
-        
+                
     }
     
     private func getPosts() {
@@ -51,7 +51,6 @@ class PostsViewController: UIViewController, AddPostDelegate {
                     let images = document.data()["images"] as? [String] ?? []
                     
                     let post = Post(created: created, body: postBody, imageURLs: images, postID: postID)
-                    print(post)
                     self.posts.append(post)
                 }
                 
@@ -140,8 +139,8 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = backgroundColor
         
         let post = posts[indexPath.row]
-        cell.imageURLs = post.imageURLs
-        cell.configureCell(post.created, post.body)
+        print(post.body)
+        cell.configureCell(post.created, post.body, post.imageURLs)
         
         return cell
     }
