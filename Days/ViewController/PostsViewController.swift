@@ -28,9 +28,9 @@ class PostsViewController: UIViewController, AddPostDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        createTableView()
         configureViews()
         getPosts()
-                
     }
     
     private func getPosts() {
@@ -55,6 +55,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
                 }
                 
                 // TODO: Add spinner here?
+                print(self.posts)
                 self.tableView.reloadData()
             }
         }
@@ -62,7 +63,6 @@ class PostsViewController: UIViewController, AddPostDelegate {
     
     private func configureViews() {
         view.backgroundColor = backgroundColor
-        createTableView()
         
         let titleLabel = TitleLabel(project.name, 38, .left)
         titleLabel.adjustsFontSizeToFitWidth = true
@@ -112,7 +112,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
         tableView.dataSource = self
         tableView.register(PostCell.self, forCellReuseIdentifier: "Cell")
         tableView.backgroundColor = backgroundColor
-        tableView.allowsSelection = false
+        tableView.allowsSelection = true
     }
     
     @objc private func addPostTapped() {
@@ -139,10 +139,14 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = backgroundColor
         
         let post = posts[indexPath.row]
-        print(post.body)
         cell.configureCell(post.created, post.body, post.imageURLs)
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let post = posts[indexPath.row]
+        print(post.body)
+    }
+    
 }
-

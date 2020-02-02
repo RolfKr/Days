@@ -63,7 +63,7 @@ class PostCell: UITableViewCell {
         collectionViewHeight.isActive = true
         
         if imageURLs.isEmpty {
-            collectionViewHeight.constant = 100
+            collectionViewHeight.constant = 0
         } else {
             collectionViewHeight.constant = 100
         }
