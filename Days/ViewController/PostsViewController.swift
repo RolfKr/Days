@@ -41,7 +41,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
         
         postRef.getDocuments { (snapshot, error) in
             if let error = error {
-                print(error.localizedDescription)
+                self.view.showAlert(alertText: error.localizedDescription)
             } else {
                 
                 for document in snapshot!.documents {
@@ -53,8 +53,6 @@ class PostsViewController: UIViewController, AddPostDelegate {
                     let post = Post(created: created, body: postBody, imageURLs: images, postID: postID)
                     self.posts.append(post)
                 }
-                
-                // TODO: Add spinner here?
                 self.tableView.reloadData()
             }
         }
@@ -97,7 +95,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
                    tableView.topAnchor.constraint(equalTo: projectDetailLabel.bottomAnchor, constant: 8),
                    tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
                    tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
-                   tableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20)
+                   tableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor)
         ])
         
     }
@@ -106,6 +104,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
         tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PostCell.self, forCellReuseIdentifier: "Cell")
@@ -132,9 +131,6 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        //Create two different cells. One containing only text. And one containing both text and image
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PostCell
         cell.backgroundColor = backgroundColor
         
@@ -143,11 +139,4 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
 
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let post = posts[indexPath.row]
-        print(post.body)
-    }
-    
-    
 }
