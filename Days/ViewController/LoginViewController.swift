@@ -34,6 +34,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         emailView = InputView("Enter email")
         emailView.textField.delegate = self
         passwordView = InputView("Enter password")
+        passwordView.textField.isSecureTextEntry = true
         passwordView.textField.delegate = self
         let loginButton = EnterButton(("Login"), 17, .label)
         
@@ -83,13 +84,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func loginUser(email: String, password: String) {
-        showActivityIndicator(view: view)
+        if emailView.textField.text == "" {
+            emailView.shakeAnimation()
+            view.showAlert(alertText: "You need to enter an email")
+        } else if passwordView.textField.text == "" {
+            passwordView.shakeAnimation()
+            view.showAlert(alertText: "You need to enter a password")
+        }
+        
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if let error = error {
-                print(error.localizedDescription)
+                self.view.showAlert(alertText: error.localizedDescription)
             }
             
             if let _ = result {
+                self.showActivityIndicator(view: self.view)
                 let navBar = UINavigationController(rootViewController: TabBarController())
                 navBar.navigationBar.isHidden = true
                 navBar.modalPresentationStyle = .fullScreen

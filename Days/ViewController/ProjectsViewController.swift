@@ -23,6 +23,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         super.viewDidLoad()
         getProjects()
         configureViews()
+        
     }
     
     private func getProjects() {
@@ -69,7 +70,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         view.backgroundColor = backgroundColor
         
         let titleLabel = TitleLabel("Days", 38, .left)
-        let helloLabel = BodyLabel("Good Morning, \(username)", 17, .left, .secondaryLabel)
+        let helloLabel = BodyLabel("Hi there, \(username)", 17, .left, .secondaryLabel)
         let projectsLabel = BodyLabel("My Projects", 22, .left, .label)
         let addProjectButton = EnterButton("Add Project", 20, .secondaryLabel)
         addProjectButton.addTarget(self, action: #selector(addProjectTapped), for: .touchUpInside)
@@ -86,7 +87,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
             titleLabel.heightAnchor.constraint(equalToConstant: 44),
             
             helloLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            helloLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            helloLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 4),
             helloLabel.heightAnchor.constraint(equalToConstant: 20),
             
             projectsLabel.topAnchor.constraint(equalTo: helloLabel.bottomAnchor, constant: 30),
@@ -115,10 +116,10 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     }
     
     func didFinishAddingProject(_ project: Project) {
+        let indexPath = IndexPath(item: projects.count, section: 0)
         projects.append(project)
-        collectionView.reloadData()
+        collectionView.insertItems(at: [indexPath])
     }
-
 }
 
 extension ProjectsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

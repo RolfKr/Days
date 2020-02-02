@@ -28,7 +28,6 @@ class PostsViewController: UIViewController, AddPostDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(project.name)
         configureViews()
         getPosts()
         
@@ -38,7 +37,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
         posts = []
         
         let projectRef = Firestore.firestore().collection("projects").document(project.projectID)
-        let postRef = projectRef.collection("posts")
+        let postRef = projectRef.collection("posts").order(by: "created", descending: true)
         
         postRef.getDocuments { (snapshot, error) in
             if let error = error {
@@ -52,6 +51,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
                     let images = document.data()["images"] as? [String] ?? []
                     
                     let post = Post(created: created, body: postBody, imageURLs: images, postID: postID)
+                    print(post)
                     self.posts.append(post)
                 }
                 
@@ -64,7 +64,12 @@ class PostsViewController: UIViewController, AddPostDelegate {
     private func configureViews() {
         view.backgroundColor = backgroundColor
         createTableView()
+        
         let titleLabel = TitleLabel(project.name, 38, .left)
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.7
+        titleLabel.numberOfLines = 2
+        
         let projectDetailLabel = BodyLabel(project.detail, 17, .left, .secondaryLabel)
         projectDetailLabel.minimumScaleFactor = 0.7
         projectDetailLabel.numberOfLines = 3
@@ -132,10 +137,12 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PostCell
-        cell.backgroundColor = UIColor(named: "backgroundColor")
+        cell.backgroundColor = backgroundColor
+        
         let post = posts[indexPath.row]
         cell.imageURLs = post.imageURLs
         cell.configureCell(post.created, post.body)
+        
         return cell
     }
 }

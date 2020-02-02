@@ -18,6 +18,7 @@ extension UIViewController {
     
     func showActivityIndicator(view: UIView) {
         let indicator = UIActivityIndicatorView(style: .large)
+        
         indicator.startAnimating()
         indicator.color = .label
         indicator.translatesAutoresizingMaskIntoConstraints = false

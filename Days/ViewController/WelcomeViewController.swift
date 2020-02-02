@@ -14,6 +14,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
     var usernameView: InputView!
     var emailView: InputView!
     var passwordView: InputView!
+    var secondPasswordView: InputView!
     
     var bookImageView: UIImageView = {
         let imageView = UIImageView()
@@ -30,14 +31,24 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
 
     
     private func createUser(username: String, password: String, email: String) {
-        showActivityIndicator(view: view)
+        if usernameView.textField.text == "" {
+            view.showAlert(alertText: "You need to enter a username")
+            usernameView.shakeAnimation()
+            return
+        } else if secondPasswordView.textField.text != passwordView.textField.text {
+            view.showAlert(alertText: "Both passwords need to be the same")
+            passwordView.shakeAnimation()
+            secondPasswordView.shakeAnimation()
+            return
+        }
+        
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
-                self.usernameView.shakeAnimation()
                 self.view.showAlert(alertText: error.localizedDescription)
             }
             
             if let result = result {
+                self.showActivityIndicator(view: self.view)
                 let changeRequest = result.user.createProfileChangeRequest()
                 changeRequest.displayName = username
                 changeRequest.commitChanges { (error) in
@@ -74,7 +85,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
         passwordView = InputView("Enter password")
         passwordView.textField.delegate = self
         passwordView.textField.isSecureTextEntry = true
-        let secondPasswordView = InputView("Enter password again")
+        secondPasswordView = InputView("Enter password again")
         secondPasswordView.textField.delegate = self
         secondPasswordView.textField.isSecureTextEntry = true
         let registerButton = EnterButton(("Register"), 17, .label)

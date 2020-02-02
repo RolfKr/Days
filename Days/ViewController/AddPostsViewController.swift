@@ -49,7 +49,6 @@ class AddPostViewController: UIViewController {
         var index = 0
         
         for _ in images {
-            print(index)
             let imageURL = UUID().uuidString + ".jpg"
             let image = images[index]
             uploadImage(imageURL, image)
@@ -64,8 +63,10 @@ class AddPostViewController: UIViewController {
             "images" : imageURLs
         ])
         
-        delegate.didFinishAddingPost()
-        dismiss(animated: true, completion: nil)
+        if images.isEmpty {
+            delegate.didFinishAddingPost()
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     
@@ -80,6 +81,9 @@ class AddPostViewController: UIViewController {
                 print(error.localizedDescription)
                 return
             }
+            
+            self.delegate.didFinishAddingPost()
+            self.dismiss(animated: true, completion: nil)
         }
     }
     

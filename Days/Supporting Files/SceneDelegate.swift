@@ -28,6 +28,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             rootView = WelcomeViewController()
         }
         
+        UITabBar.appearance().tintColor = .label
+        
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = rootView

@@ -39,10 +39,6 @@ class PostCell: UITableViewCell {
         
         let padding: CGFloat = 20
         
-
-        
-//        collectionViewHeight = collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
-        
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
@@ -51,6 +47,7 @@ class PostCell: UITableViewCell {
             
             postedLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: padding),
             postedLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
+            postedLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             postedLabel.heightAnchor.constraint(equalToConstant: 20),
             
             bodyLabel.topAnchor.constraint(equalTo: postedLabel.bottomAnchor, constant: 10),
@@ -67,10 +64,8 @@ class PostCell: UITableViewCell {
         collectionViewHeight.isActive = true
         
         if imageURLs.isEmpty {
-            collectionView.isHidden = true
             collectionViewHeight.constant = 0
         } else {
-            collectionView.isHidden = false
             collectionViewHeight.constant = 100
         }
     }
@@ -95,7 +90,6 @@ class PostCell: UITableViewCell {
             let downloadUrl = "posts/\(url)"
             
             if let cachedImage = imageCache.object(forKey: downloadUrl as NSString) as? UIImage {
-                print("Got a cached image")
                 images.append(cachedImage)
                 collectionView.reloadData()
             } else {
