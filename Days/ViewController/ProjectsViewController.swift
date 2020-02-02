@@ -112,7 +112,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     }
     
     private func addEmptyListView() {
-        emptyView = view.showEmptyListView()
+        emptyView = view.showEmptyListView(titleText: "You have no journals", subTitleText: "Press the button below to add", image: UIImage(named: "emptyBox")!)
         emptyView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(emptyView)
         

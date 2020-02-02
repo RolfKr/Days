@@ -90,18 +90,18 @@ extension UIView {
         }
     }
     
-    func showEmptyListView() -> UIView {
+    func showEmptyListView(titleText: String, subTitleText: String, image: UIImage) -> UIView {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
         addSubview(container)
         
-        let title = TitleLabel("You have no journals.", 16, .center)
+        let title = TitleLabel(titleText, 16, .center)
         title.textColor = .secondaryLabel
-        let boxImage = UIImageView(image: UIImage(named: "emptyBox"))
+        let boxImage = UIImageView(image: image)
         boxImage.translatesAutoresizingMaskIntoConstraints = false
         boxImage.contentMode = .scaleAspectFit
         boxImage.alpha = 0.6
-        let subTitle = TitleLabel("Press the button below to add", 16, .center)
+        let subTitle = TitleLabel(subTitleText, 16, .center)
         subTitle.textColor = .secondaryLabel
         
         let stackView = UIStackView(arrangedSubviews: [title, boxImage, subTitle])

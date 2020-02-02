@@ -35,6 +35,7 @@ class AddPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
+        tapGesture()
         print(project.name)
     }
     
@@ -127,7 +128,7 @@ class AddPostViewController: UIViewController {
                    postText.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
                    postText.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 0),
                    postText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-                   postText.heightAnchor.constraint(equalToConstant: view.frame.size.height * 0.4),
+                   postText.heightAnchor.constraint(equalToConstant: view.frame.size.height * 0.25),
                    
                    addFromLibrary.topAnchor.constraint(equalTo: postText.bottomAnchor, constant: 0),
                    addFromLibrary.leadingAnchor.constraint(equalTo: postText.leadingAnchor, constant: 0),

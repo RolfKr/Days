@@ -16,6 +16,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
     
     var project: Project!
     var posts: [Post]!
+    var emptyView: UIView!
     
     var addButton: UIButton = {
         let button = UIButton()
@@ -54,6 +55,10 @@ class PostsViewController: UIViewController, AddPostDelegate {
                     
                     let post = Post(created: created, body: postBody, imageURLs: images, postID: postID)
                     self.posts.append(post)
+                }
+                
+                if self.posts.isEmpty {
+                    self.addEmptyPostView()
                 }
                 self.tableView.reloadData()
             }
@@ -102,6 +107,19 @@ class PostsViewController: UIViewController, AddPostDelegate {
         
     }
     
+    private func addEmptyPostView() {
+        emptyView = view.showEmptyListView(titleText: "You have no posts", subTitleText: "Press the button in the top right to add", image: UIImage(named: "emptyPost")!)
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emptyView)
+        
+        NSLayoutConstraint.activate([
+            emptyView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 20),
+            emptyView.heightAnchor.constraint(equalTo: tableView.heightAnchor, multiplier: 0.6),
+            emptyView.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
+            emptyView.trailingAnchor.constraint(equalTo: tableView.trailingAnchor),
+        ])
+    }
+    
     private func createTableView() {
         tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -123,6 +141,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
     
     func didFinishAddingPost() {
         getPosts()
+        emptyView.removeFromSuperview()
     }
 }
 
