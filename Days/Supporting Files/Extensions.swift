@@ -89,4 +89,38 @@ extension UIView {
             }
         }
     }
+    
+    func showEmptyListView() -> UIView {
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(container)
+        
+        let title = TitleLabel("You have no projects.", 16, .center)
+        title.textColor = .secondaryLabel
+        let boxImage = UIImageView(image: UIImage(named: "emptyBox"))
+        boxImage.translatesAutoresizingMaskIntoConstraints = false
+        boxImage.contentMode = .scaleAspectFit
+        boxImage.alpha = 0.6
+        let subTitle = TitleLabel("Press the button below to add", 16, .center)
+        subTitle.textColor = .secondaryLabel
+        
+        let stackView = UIStackView(arrangedSubviews: [title, boxImage, subTitle])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+        stackView.axis = .vertical
+        
+        container.addSubview(stackView)
+        
+        NSLayoutConstraint.activate([
+            boxImage.heightAnchor.constraint(equalToConstant: 150),
+            boxImage.widthAnchor.constraint(equalToConstant: 150),
+            stackView.topAnchor.constraint(equalTo: container.topAnchor, constant: 20),
+            stackView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -20)
+        ])
+        
+        return container
+    }
 }

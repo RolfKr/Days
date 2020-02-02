@@ -13,6 +13,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     
     var collectionView: UICollectionView!
     var projects: [Project] = []
+    var emptyView: UIView!
     
     var username: String = {
         guard let user = Auth.auth().currentUser?.displayName else {return "Unkown User"}
@@ -48,7 +49,10 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
                     self.projects.append(project)
                 }
                 
-                // TODO: Add spinner here?
+                if self.projects.isEmpty {
+                    self.addEmptyListView()
+                }
+                
                 self.collectionView.reloadData()
             }
         }
@@ -107,6 +111,19 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         ])
     }
     
+    private func addEmptyListView() {
+        emptyView = view.showEmptyListView()
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emptyView)
+        
+        NSLayoutConstraint.activate([
+            emptyView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            emptyView.heightAnchor.constraint(equalTo: collectionView.heightAnchor, multiplier: 0.6),
+            emptyView.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
+            emptyView.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
+        ])
+    }
+    
     @objc private func addProjectTapped() {
         let childVC = AddProjectViewController()
         childVC.delegate = self
@@ -120,6 +137,8 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         let indexPath = IndexPath(item: projects.count, section: 0)
         projects.append(project)
         collectionView.insertItems(at: [indexPath])
+        
+        emptyView.removeFromSuperview()
     }
 }
 
