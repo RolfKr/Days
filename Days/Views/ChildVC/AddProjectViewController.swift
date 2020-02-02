@@ -47,10 +47,11 @@ class AddProjectViewController: UIViewController {
         heightConstant = view.frame.size.height
         
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+        
         configureViews()
         animateLoadView()
         addSwipeGesture()
-        
+        tapGesture()
     }
 
     private func configureViews() {

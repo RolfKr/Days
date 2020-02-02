@@ -95,7 +95,7 @@ extension UIView {
         container.translatesAutoresizingMaskIntoConstraints = false
         addSubview(container)
         
-        let title = TitleLabel("You have no projects.", 16, .center)
+        let title = TitleLabel("You have no journals.", 16, .center)
         title.textColor = .secondaryLabel
         let boxImage = UIImageView(image: UIImage(named: "emptyBox"))
         boxImage.translatesAutoresizingMaskIntoConstraints = false
