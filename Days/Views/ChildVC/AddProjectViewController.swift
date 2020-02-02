@@ -56,7 +56,7 @@ class AddProjectViewController: UIViewController {
     private func configureViews() {
         view.addSubview(containerView)
         
-        let titleLabel = TitleLabel("Create Project", 32, .left)
+        let titleLabel = TitleLabel("Create Journal", 32, .left)
         containerView.backgroundColor = backgroundColor
         containerView.addSubview(titleLabel)
         

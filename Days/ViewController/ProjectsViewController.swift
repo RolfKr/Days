@@ -24,6 +24,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         getProjects()
         configureViews()
         
+        #warning("Add a background picture if there are no journals")
     }
     
     private func getProjects() {
@@ -71,8 +72,8 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         
         let titleLabel = TitleLabel("Days", 38, .left)
         let helloLabel = BodyLabel("Hi there, \(username)", 17, .left, .secondaryLabel)
-        let projectsLabel = BodyLabel("My Projects", 22, .left, .label)
-        let addProjectButton = EnterButton("Add Project", 20, .secondaryLabel)
+        let projectsLabel = BodyLabel("My Journals", 22, .left, .label)
+        let addProjectButton = EnterButton("Add Journal", 20, .secondaryLabel)
         addProjectButton.addTarget(self, action: #selector(addProjectTapped), for: .touchUpInside)
         
         view.addSubview(titleLabel)

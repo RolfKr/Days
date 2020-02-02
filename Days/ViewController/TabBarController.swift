@@ -15,7 +15,7 @@ class TabBarController: UITabBarController {
         
         let projectsVC = UINavigationController(rootViewController: ProjectsViewController())
         projectsVC.navigationBar.isHidden = true
-        projectsVC.tabBarItem = UITabBarItem(title: "Projects", image: UIImage(systemName: "list.dash"), selectedImage: UIImage(systemName: "list.dash"))
+        projectsVC.tabBarItem = UITabBarItem(title: "Journals", image: UIImage(systemName: "list.dash"), selectedImage: UIImage(systemName: "list.dash"))
         
         let accountVC = AccountViewController()
         accountVC.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.crop.circle"), selectedImage: UIImage(systemName: "person.crop.circle.fill"))
