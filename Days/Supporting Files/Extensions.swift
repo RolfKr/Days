@@ -58,6 +58,7 @@ extension UIView {
         self.layer.add(animation, forKey: "position")
     }
     
+    
     func showAlert(alertText: String) {
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false

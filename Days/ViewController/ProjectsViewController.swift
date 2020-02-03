@@ -14,6 +14,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     var collectionView: UICollectionView!
     var projects: [Project] = []
     var emptyView: UIView?
+    var longPressGesture: UILongPressGestureRecognizer!
     
     var username: String = {
         guard let user = Auth.auth().currentUser?.displayName else {return "Unkown User"}
@@ -66,6 +67,21 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         collectionView.backgroundColor = backgroundColor
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
+        collectionView.addGestureRecognizer(longPressGesture)
+    }
+    
+    @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+        let cells = collectionView.visibleCells as! Array<ProjectCell>
+
+        for cell in cells {
+            cell.layer.removeAllAnimations()
+        }
+        
+        guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {return}
+        let cell = collectionView.cellForItem(at: selectedIndexPath)
+        cell?.deleteView()
     }
     
     private func configureViews() {
