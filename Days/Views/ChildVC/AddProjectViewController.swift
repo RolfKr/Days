@@ -134,13 +134,20 @@ class AddProjectViewController: UIViewController {
     }
     
     @objc private func createProject() {
-        guard let name = nameInputView.textField.text else {return} // TODO: ADD A WARNING IF EMPTY
-        guard let detailText = detailText.text else {return} // TODO: ADD WARNING HERE AS WELL
-        guard let currentUser = Auth.auth().currentUser?.email else {return}
-        
         let uuid = UUID().uuidString
+        uploadImage(uuid: uuid)
+    }
+    
+    private func uploadImage(uuid: String) {
         let storageRef = Storage.storage().reference().child("projects").child("\(uuid).jpg")
-        guard let imageData = selectedImage.jpegData(compressionQuality: 0.75) else {return}
+        var imageData: Data!
+        
+        if let selectedImage = selectedImage {
+            imageData = selectedImage.jpegData(compressionQuality: 0.75)
+        } else {
+            imageData = UIImage(named: "sampleJournal")?.jpegData(compressionQuality: 0.75)
+        }
+        
         let uploadMetadata = StorageMetadata.init()
         uploadMetadata.contentType = "image/jpeg"
         
@@ -149,25 +156,36 @@ class AddProjectViewController: UIViewController {
                 print(error.localizedDescription)
                 return
             }
-                    
-            let randomProjectID = UUID().uuidString
-            let projectsDB = Firestore.firestore().collection("projects").document(randomProjectID)
-            projectsDB.setData([
-                "name" : name,
-                "detailText" : detailText,
-                "addedBy" : currentUser,
-                "created" : self.getTimeNow(),
-                "imageID" : "\(uuid).jpg",
-                "projectID" : randomProjectID
-            ])
             
-            let project = Project(name: name, detail: detailText, addedBy: currentUser, created: self.getTimeNow(), imageURL: "\(uuid).jpg", projectID: randomProjectID)
-            
-            self.delegate?.didFinishAddingProject(project)
-            self.dismissVC()
+            if let _ = metaData {
+                self.createProject1111(uuid: uuid)
+            }
         }
     }
     
+    private func createProject1111(uuid: String) {
+        guard let name = nameInputView.textField.text else {return} // TODO: ADD A WARNING IF EMPTY
+        guard let detailText = detailText.text else {return} // TODO: ADD WARNING HERE AS WELL
+        guard let currentUser = Auth.auth().currentUser?.email else {return}
+        
+        
+        
+        let randomProjectID = UUID().uuidString
+        let projectsDB = Firestore.firestore().collection("projects").document(randomProjectID)
+        projectsDB.setData([
+            "name" : name,
+            "detailText" : detailText,
+            "addedBy" : currentUser,
+            "created" : self.getTimeNow(),
+            "imageID" : "\(uuid).jpg",
+            "projectID" : randomProjectID
+        ])
+        
+        let project = Project(name: name, detail: detailText, addedBy: currentUser, created: self.getTimeNow(), imageURL: "\(uuid).jpg", projectID: randomProjectID)
+        self.delegate?.didFinishAddingProject(project)
+        self.dismissVC()
+    }
+
     private func getTimeNow() -> String {
         let timeNow = Date()
         let dateFormatter = DateFormatter()

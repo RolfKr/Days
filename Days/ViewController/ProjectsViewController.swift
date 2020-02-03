@@ -24,8 +24,6 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         super.viewDidLoad()
         getProjects()
         configureViews()
-        
-        #warning("Add a background picture if there are no journals")
     }
     
     private func getProjects() {
@@ -156,8 +154,19 @@ extension ProjectsViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ProjectCell
         let project = projects[indexPath.item]
+        
         cell.configureCell(title: project.name, imageURL: project.imageURL)
+
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let item = projects.remove(at: sourceIndexPath.item)
+        projects.insert(item, at: destinationIndexPath.item)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
