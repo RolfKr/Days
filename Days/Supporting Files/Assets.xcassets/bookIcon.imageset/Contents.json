@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "bookIcon.png",
+      "filename" : "Book.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "bookIconDark.png",
+      "filename" : "BookDark.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
