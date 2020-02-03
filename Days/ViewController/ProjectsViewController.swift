@@ -13,7 +13,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     
     var collectionView: UICollectionView!
     var projects: [Project] = []
-    var emptyView: UIView!
+    var emptyView: UIView?
     
     var username: String = {
         guard let user = Auth.auth().currentUser?.displayName else {return "Unkown User"}
@@ -89,14 +89,17 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 50),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             titleLabel.heightAnchor.constraint(equalToConstant: 44),
             
             helloLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             helloLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 4),
+            helloLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             helloLabel.heightAnchor.constraint(equalToConstant: 20),
             
             projectsLabel.topAnchor.constraint(equalTo: helloLabel.bottomAnchor, constant: 30),
             projectsLabel.leadingAnchor.constraint(equalTo: helloLabel.leadingAnchor),
+            projectsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             projectsLabel.heightAnchor.constraint(equalToConstant: 22),
             
             collectionView.topAnchor.constraint(equalTo: projectsLabel.bottomAnchor, constant: 25),
@@ -113,14 +116,14 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     
     private func addEmptyListView() {
         emptyView = view.showEmptyListView(titleText: "You have no journals", subTitleText: "Press the button below to add", image: UIImage(named: "emptyBox")!)
-        emptyView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(emptyView)
+        emptyView?.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emptyView!)
         
         NSLayoutConstraint.activate([
-            emptyView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
-            emptyView.heightAnchor.constraint(equalTo: collectionView.heightAnchor, multiplier: 0.6),
-            emptyView.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
-            emptyView.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
+            emptyView!.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            emptyView!.heightAnchor.constraint(equalTo: collectionView.heightAnchor, multiplier: 0.6),
+            emptyView!.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
+            emptyView!.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
         ])
     }
     
@@ -138,7 +141,9 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         projects.append(project)
         collectionView.insertItems(at: [indexPath])
         
-        emptyView.removeFromSuperview()
+        if let view = emptyView {
+            view.removeFromSuperview()
+        }
     }
 }
 
