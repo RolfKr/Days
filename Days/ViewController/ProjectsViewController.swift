@@ -77,11 +77,31 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
 
         for cell in cells {
             cell.layer.removeAllAnimations()
+            cell.deleteButton.isHidden = true
         }
         
         guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {return}
-        let cell = collectionView.cellForItem(at: selectedIndexPath)
-        cell?.deleteView()
+        let cell = collectionView.cellForItem(at: selectedIndexPath) as! ProjectCell
+        cell.deleteButton.isHidden = false
+        cell.deleteButton.tag = selectedIndexPath.item
+        cell.deleteButton.addTarget(self, action: #selector(deleteProject(_:)), for: .touchUpInside)
+        cell.deleteAnimation()
+    }
+    
+    @objc private func deleteProject(_ sender: UIButton) {
+        let project = projects[sender.tag]
+        let projectsDB = Firestore.firestore().collection("projects")
+        
+        projectsDB.document(project.projectID).delete() { error in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print("Document successfully removed!")
+                self.projects.remove(at: sender.tag)
+                self.collectionView.reloadData()
+                
+            }
+        }
     }
     
     private func configureViews() {

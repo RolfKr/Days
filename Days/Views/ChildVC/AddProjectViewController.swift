@@ -21,6 +21,8 @@ class AddProjectViewController: UIViewController {
     var detailText: DetailTextView!
     var selectedImage: UIImage!
     var delegate: AddProjectDelegate?
+    var enterButton: EnterButton!
+    var exitButton: EnterButton!
     
     var containerView: UIView = {
         let view = UIView()
@@ -72,9 +74,9 @@ class AddProjectViewController: UIViewController {
         
         containerView.addSubview(addImagebutton)
         
-        let enterButton = EnterButton("Enter", 20, .label)
+        enterButton = EnterButton("Enter", 20, .label)
         enterButton.addTarget(self, action: #selector(createProject), for: .touchUpInside)
-        let exitButton = EnterButton("Exit", 20, .label)
+        exitButton = EnterButton("Exit", 20, .label)
         exitButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
         
         let buttonStack = UIStackView(arrangedSubviews: [enterButton, exitButton])
@@ -135,6 +137,8 @@ class AddProjectViewController: UIViewController {
     
     @objc private func createProject() {
         let uuid = UUID().uuidString
+        enterButton.isUserInteractionEnabled = false
+        showActivityIndicator(view: view)
         uploadImage(uuid: uuid)
     }
     
@@ -158,17 +162,16 @@ class AddProjectViewController: UIViewController {
             }
             
             if let _ = metaData {
-                self.createProject1111(uuid: uuid)
+                self.addToDatabase(uuid: uuid)
             }
         }
     }
     
-    private func createProject1111(uuid: String) {
+    private func addToDatabase(uuid: String) {
+        
         guard let name = nameInputView.textField.text else {return} // TODO: ADD A WARNING IF EMPTY
         guard let detailText = detailText.text else {return} // TODO: ADD WARNING HERE AS WELL
         guard let currentUser = Auth.auth().currentUser?.email else {return}
-        
-        
         
         let randomProjectID = UUID().uuidString
         let projectsDB = Firestore.firestore().collection("projects").document(randomProjectID)

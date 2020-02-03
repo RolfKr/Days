@@ -12,6 +12,7 @@ import Firebase
 class ProjectCell: UICollectionViewCell {
     
     var titleLabel: TitleLabel!
+    var imageCache = NSCache<NSString, AnyObject>()
     
     var projectImage: UIImageView = {
         let imageView = UIImageView()
@@ -40,6 +41,13 @@ class ProjectCell: UICollectionViewCell {
         return view
     }()
     
+    var deleteButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "closeBtn"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     func configureCell(title: String, imageURL: String) {
         backgroundColor = .systemBackground
         layer.cornerRadius = 6
@@ -53,6 +61,8 @@ class ProjectCell: UICollectionViewCell {
         projectImage.addSubview(activityIndicator)
         addSubview(darkenView)
         addSubview(titleLabel)
+        addSubview(deleteButton)
+        deleteButton.isHidden = true
 
         NSLayoutConstraint.activate([
             projectImage.topAnchor.constraint(equalTo: topAnchor),
@@ -73,31 +83,41 @@ class ProjectCell: UICollectionViewCell {
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 16),
-            titleLabel.heightAnchor.constraint(equalToConstant: 30)
+            titleLabel.heightAnchor.constraint(equalToConstant: 30),
+            
+            deleteButton.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            deleteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            deleteButton.heightAnchor.constraint(equalToConstant: 35),
+            deleteButton.widthAnchor.constraint(equalToConstant: 35)
         ])
     }
     
     private func downloadProjectImage(imageURL: String) {
-        let storageRef = Storage.storage().reference(withPath: "projects/\(imageURL)")
-        activityIndicator.isHidden = false
 
-        storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                
-                return
-            }
-            
-            if let data = data {
-                
-                
-                if let downloadedImage = UIImage(data: data) {
-                    self.projectImage.image = downloadedImage
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.isHidden = true
-                    self.darkenView.isHidden = false
-                    self.titleLabel.isHidden = false
+        if let cachedImage = imageCache.object(forKey: imageURL as NSString) as? UIImage {
+            projectImage.image = cachedImage
+        } else {
+            let storageRef = Storage.storage().reference(withPath: "projects/\(imageURL)")
+            activityIndicator.isHidden = false
 
+            storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    
+                    return
+                }
+                
+                if let data = data {
+                    
+                    
+                    if let downloadedImage = UIImage(data: data) {
+                        self.imageCache.setObject(downloadedImage, forKey: imageURL as NSString)
+                        self.projectImage.image = downloadedImage
+                        self.activityIndicator.stopAnimating()
+                        self.activityIndicator.isHidden = true
+                        self.darkenView.isHidden = false
+                        self.titleLabel.isHidden = false
+                    }
                 }
             }
         }

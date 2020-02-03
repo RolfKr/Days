@@ -32,8 +32,6 @@ class PostsViewController: UIViewController, AddPostDelegate {
         getPosts()
         createTableView()
         configureViews()
-        
-        #warning("Add a background picture if there are no posts")
     }
     
     private func getPosts() {
