@@ -26,7 +26,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        tapGesture()
+        dismissKeyboard(on: view)
     }
 
     

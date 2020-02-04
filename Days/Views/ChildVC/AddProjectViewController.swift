@@ -53,7 +53,7 @@ class AddProjectViewController: UIViewController {
         configureViews()
         animateLoadView()
         addSwipeGesture()
-        tapGesture()
+        dismissKeyboard(on: view)
     }
 
     private func configureViews() {

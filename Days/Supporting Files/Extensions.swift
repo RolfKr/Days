@@ -11,7 +11,7 @@ import UIKit
 extension UIViewController {
     
     //Dismiss keyboard when tapping on the view.
-    func tapGesture() {
+    func dismissKeyboard(on view: UIView) {
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         view.addGestureRecognizer(tap)
     }

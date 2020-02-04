@@ -35,7 +35,7 @@ class AddPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
-        tapGesture()
+        dismissKeyboard(on: view)
         print(project.name)
     }
     

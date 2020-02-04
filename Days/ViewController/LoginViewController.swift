@@ -24,7 +24,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        tapGesture()
+        dismissKeyboard(on: view)
     }
     
     private func configureUI() {
