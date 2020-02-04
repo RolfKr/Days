@@ -20,11 +20,12 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         guard let user = Auth.auth().currentUser?.displayName else {return "Unkown User"}
         return user
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         getProjects()
         configureViews()
+        addTapGesture()
     }
     
     private func getProjects() {
@@ -33,7 +34,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
 
         Firestore.firestore().collection("projects").whereField("addedBy", isEqualTo: currentUserEmail).order(by: "created", descending: true).getDocuments { (snapshot, error) in
             if let error = error {
-                print(error.localizedDescription)
+                self.view.showAlert(alertText: error.localizedDescription)
             } else {
                 
                 for document in snapshot!.documents {
@@ -177,6 +178,21 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         
         if let view = emptyView {
             view.removeFromSuperview()
+        }
+    }
+    
+    private func addTapGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(removeDeleteAnimation))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func removeDeleteAnimation() {
+        let cells = collectionView.visibleCells as! Array<ProjectCell>
+
+        for cell in cells {
+            cell.layer.removeAllAnimations()
+            cell.deleteButton.isHidden = true
         }
     }
 }
