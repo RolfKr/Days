@@ -123,6 +123,8 @@ class PostsViewController: UIViewController, AddPostDelegate {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PostCell.self, forCellReuseIdentifier: "Cell")
@@ -152,10 +154,8 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PostCell
         cell.backgroundColor = backgroundColor
-        
         let post = posts[indexPath.row]
         cell.configureCell(post.created, post.body, post.imageURLs)
-
         return cell
     }
 }

@@ -25,14 +25,16 @@ class PostCell: UITableViewCell {
         return view
     }()
     
+    
     override func prepareForReuse() {
         super.prepareForReuse()
-        postedLabel.isHidden = true
-        bodyLabel.isHidden = true
-        collectionView.isHidden = true
+        postedLabel.removeFromSuperview()
+        bodyLabel.removeFromSuperview()
+        collectionView.removeFromSuperview()
     }
     
     func configureCell(_ postedText: String, _ bodyText: String, _ imageURLs: [String]) {
+        layoutIfNeeded()
         downloadPostImages(imageURL: imageURLs)
         createCollectionView()
                 
@@ -46,6 +48,7 @@ class PostCell: UITableViewCell {
         containerView.addSubview(collectionView)
         
         let padding: CGFloat = 20
+        
         
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
@@ -63,6 +66,7 @@ class PostCell: UITableViewCell {
             bodyLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             bodyLabel.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -20),
             
+            
             collectionView.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: bodyLabel.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
@@ -76,6 +80,7 @@ class PostCell: UITableViewCell {
         } else {
             collectionViewHeight.constant = 100
         }
+        
     }
     
     private func createCollectionView() {

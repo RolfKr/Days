@@ -10,8 +10,15 @@ import UIKit
 
 class PostCollectionViewCell: UICollectionViewCell {
     
+    var imageView: UIImageView!
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.removeFromSuperview()
+    }
+    
     func configureCollectionViewCell(_ image: UIImage) {
-        let imageView = UIImageView()
+        imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         layer.cornerRadius = 6
         imageView.clipsToBounds = true
