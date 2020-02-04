@@ -22,7 +22,6 @@ class AddProjectViewController: UIViewController {
     var selectedImage: UIImage!
     var delegate: AddProjectDelegate?
     var enterButton: EnterButton!
-    var exitButton: EnterButton!
     
     var containerView: UIView = {
         let view = UIView()
@@ -31,12 +30,18 @@ class AddProjectViewController: UIViewController {
         return view
     }()
     
+    var backgroundView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+        return view
+    }()
+    
     var addImagebutton: EnterButton = {
         let button = EnterButton("", 17, .secondaryLabel)
         button.tag = 1
         button.contentHorizontalAlignment = .center
         button.setTitle("Add photo", for: .normal)
-//        button.setImage(UIImage(systemName: "photo"), for: .normal)
         button.tintColor = .label
         button.backgroundColor = viewBackground
         button.imageView?.contentMode = .scaleAspectFit
@@ -57,7 +62,9 @@ class AddProjectViewController: UIViewController {
     }
 
     private func configureViews() {
+        view.addSubview(backgroundView)
         view.addSubview(containerView)
+        dismissView(on: backgroundView)
         
         let titleLabel = TitleLabel("Create Journal", 32, .left)
         containerView.backgroundColor = backgroundColor
@@ -76,7 +83,7 @@ class AddProjectViewController: UIViewController {
         
         enterButton = EnterButton("Enter", 20, .label)
         enterButton.addTarget(self, action: #selector(createProject), for: .touchUpInside)
-        exitButton = EnterButton("Exit", 20, .label)
+        let exitButton = EnterButton("Exit", 20, .label)
         exitButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
         
         let buttonStack = UIStackView(arrangedSubviews: [enterButton, exitButton])
@@ -86,6 +93,11 @@ class AddProjectViewController: UIViewController {
         containerView.addSubview(buttonStack)
         
         NSLayoutConstraint.activate([
+            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
             containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             containerView.heightAnchor.constraint(equalToConstant: 325),
             containerView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.8),
@@ -121,7 +133,6 @@ class AddProjectViewController: UIViewController {
     }
     
     private func animateLoadView() {
-        
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.3, options: .curveEaseInOut, animations: {
             self.view.backgroundColor = UIColor.black.withAlphaComponent(0.65)
             self.centerYConstant.constant = 0
@@ -129,6 +140,11 @@ class AddProjectViewController: UIViewController {
         })
     }
     
+    private func dismissView(on view: UIView) {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissVC))
+        view.addGestureRecognizer(tap)
+    }
+
     private func addSwipeGesture() {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(dismissVC))
         swipeDown.direction = .down
@@ -213,10 +229,10 @@ class AddProjectViewController: UIViewController {
     
     @objc private func chooseImage() {
         let alertController = UIAlertController(title: "From what source?", message: "", preferredStyle: .actionSheet)
-        let library = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+        let library = UIAlertAction(title: "Photo Library", style: .default) { (_) in
             self.presentImagePicker("Library")
         }
-        let camera = UIAlertAction(title: "Camera", style: .default) { (action) in
+        let camera = UIAlertAction(title: "Camera", style: .default) { (_) in
             self.presentImagePicker("Camera")
         }
         let cancel = UIAlertAction(title: "Cancel", style: .destructive) { (_) in
