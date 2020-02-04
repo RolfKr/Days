@@ -139,7 +139,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
     
     func didFinishAddingPost() {
         getPosts()
-        emptyView.removeFromSuperview()
+        emptyView?.removeFromSuperview()
     }
 }
 
