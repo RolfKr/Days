@@ -14,7 +14,7 @@ class PostCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        imageView.removeFromSuperview()
+        imageView.removeFromSuperview() 
     }
     
     func configureCollectionViewCell(_ image: UIImage) {
