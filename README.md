@@ -1,14 +1,11 @@
 # Days
 
-Mobile application that provides the current weather report and UV status.
-The app uses a network API connected to openweathermap.org
+Lets the user create Journals for logging every experience in their life.
 
-Technologies used
-* CoreLocation
-* REST API - https://openweathermap.org/api
-* Networking with Codable
-* CoreAnimation
-* Storyboard UI
+Connects to Firebase backend, using Firestore and Storage, as well as Authentication.
+
+UI is created programmatically.
+No storyboard.
 
 # Registration screen
 
