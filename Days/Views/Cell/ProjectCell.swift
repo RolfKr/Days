@@ -54,6 +54,9 @@ class ProjectCell: UICollectionViewCell {
         clipsToBounds = true
         downloadProjectImage(imageURL: imageURL)
         titleLabel = TitleLabel(title, 30, .left)
+        titleLabel.minimumScaleFactor = 0.7
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.numberOfLines = 2
         titleLabel.textColor = .white
         titleLabel.isHidden = true
         
