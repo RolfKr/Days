@@ -58,7 +58,6 @@ class DiscoverViewController: UIViewController {
         collectionView.backgroundColor = backgroundColor
         collectionView.delegate = self
         collectionView.dataSource = self
-        
     }
 }
 

@@ -48,6 +48,18 @@ class AddProjectViewController: UIViewController {
         button.addTarget(self, action: #selector(chooseImage), for: .touchUpInside)
         return button
     }()
+    
+    
+    var isSharedBtn: UISwitch {
+        let switchBtn = UISwitch()
+        switchBtn.translatesAutoresizingMaskIntoConstraints = false
+        switchBtn.addTarget(self, action: #selector(sharedTapped), for: .touchUpInside)
+        return switchBtn
+    }
+    
+    @objc private func sharedTapped() {
+        print("Shared tapped")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +72,7 @@ class AddProjectViewController: UIViewController {
         addSwipeGesture()
         dismissKeyboard(on: view)
     }
+
 
     private func configureViews() {
         view.addSubview(backgroundView)
@@ -79,7 +92,13 @@ class AddProjectViewController: UIViewController {
         detailText.delegate = self
         containerView.addSubview(detailText)
         
-        containerView.addSubview(addImagebutton)
+        let buttonStack2 = UIStackView(arrangedSubviews: [addImagebutton, isSharedBtn])
+        buttonStack2.translatesAutoresizingMaskIntoConstraints = false
+        buttonStack2.distribution = .fillEqually
+        buttonStack2.alignment = .center
+        buttonStack2.spacing = 20
+        
+        containerView.addSubview(buttonStack2)
         
         enterButton = EnterButton("Enter", 20, .label)
         enterButton.addTarget(self, action: #selector(createProject), for: .touchUpInside)
@@ -116,10 +135,11 @@ class AddProjectViewController: UIViewController {
             detailText.trailingAnchor.constraint(equalTo: nameInputView.trailingAnchor),
             detailText.heightAnchor.constraint(equalToConstant: 75),
             
-            addImagebutton.topAnchor.constraint(equalTo: detailText.bottomAnchor, constant: 15),
-            addImagebutton.leadingAnchor.constraint(equalTo: detailText.leadingAnchor, constant: 50),
-            addImagebutton.trailingAnchor.constraint(equalTo: detailText.trailingAnchor, constant: -50),
-            addImagebutton.heightAnchor.constraint(equalToConstant: 45),
+            buttonStack2.topAnchor.constraint(equalTo: detailText.bottomAnchor, constant: 15),
+            buttonStack2.leadingAnchor.constraint(equalTo: detailText.leadingAnchor, constant: 50),
+            buttonStack2.trailingAnchor.constraint(equalTo: detailText.trailingAnchor, constant: -50),
+            buttonStack2.heightAnchor.constraint(equalToConstant: 45),
+
             
             buttonStack.topAnchor.constraint(equalTo: addImagebutton.bottomAnchor, constant: 20),
             buttonStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 50),
