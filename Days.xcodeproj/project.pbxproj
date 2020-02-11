@@ -11,6 +11,7 @@
 		7E3D04C723E11EB500E60345 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D04C623E11EB500E60345 /* Post.swift */; };
 		7E3D04CA23E1208000E60345 /* AddProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D04C923E1208000E60345 /* AddProjectViewController.swift */; };
 		7E52E10E23E4A66B001B3F53 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E52E10D23E4A66B001B3F53 /* AccountViewController.swift */; };
+		7E9FDB8723F2CF9A00D12B04 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FDB8623F2CF9A00D12B04 /* DiscoverViewController.swift */; };
 		7EB0A5D123DF309F00395F56 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D023DF309F00395F56 /* AppDelegate.swift */; };
 		7EB0A5D323DF309F00395F56 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D223DF309F00395F56 /* SceneDelegate.swift */; };
 		7EB0A5D523DF309F00395F56 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D423DF309F00395F56 /* WelcomeViewController.swift */; };
@@ -42,6 +43,7 @@
 		7E3D04C623E11EB500E60345 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		7E3D04C923E1208000E60345 /* AddProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectViewController.swift; sourceTree = "<group>"; };
 		7E52E10D23E4A66B001B3F53 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		7E9FDB8623F2CF9A00D12B04 /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		7EB0A5CD23DF309F00395F56 /* Days.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Days.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EB0A5D023DF309F00395F56 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EB0A5D223DF309F00395F56 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				B757E14D23DF63BA0093DDB9 /* LoginViewController.swift */,
 				B7CD982723E48AC0005E8505 /* TabBarController.swift */,
 				B757E14F23DF696C0093DDB9 /* ProjectsViewController.swift */,
+				7E9FDB8623F2CF9A00D12B04 /* DiscoverViewController.swift */,
 				B75EC2A223E0D4CD007C8B3A /* PostsViewController.swift */,
 				B770D07D23E36B9400E00B00 /* AddPostsViewController.swift */,
 				7E52E10D23E4A66B001B3F53 /* AccountViewController.swift */,
@@ -367,6 +370,7 @@
 				7EB0A5E723DF3AA700395F56 /* EnterButton.swift in Sources */,
 				B757E15023DF696C0093DDB9 /* ProjectsViewController.swift in Sources */,
 				B75EC2A523E0DCB8007C8B3A /* Constants.swift in Sources */,
+				7E9FDB8723F2CF9A00D12B04 /* DiscoverViewController.swift in Sources */,
 				B770D08323E36BE000E00B00 /* DetailTextView.swift in Sources */,
 				B770D07E23E36B9400E00B00 /* AddPostsViewController.swift in Sources */,
 			);

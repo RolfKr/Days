@@ -13,6 +13,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     var emailView: InputView!
     var passwordView: InputView!
+    var forgotPasswordButton: EnterButton!
 
     var bookImageView: UIImageView = {
         let imageView = UIImageView()
@@ -38,7 +39,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordView.textField.delegate = self
         let loginButton = EnterButton(("Login"), 17, .label)
         loginButton.addTarget(self, action: #selector(goToProjects), for: .touchUpInside)
-        let forgotPasswordButton = EnterButton("Forgot password", 17, .label)
+        forgotPasswordButton = EnterButton("Forgot password", 17, .label)
         forgotPasswordButton.addTarget(self, action: #selector(forgotPassTapped), for: .touchUpInside)
         
         let textfieldStack = UIStackView(arrangedSubviews: [emailView, passwordView])
@@ -104,6 +105,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self?.view.showAlert(alertText: error.localizedDescription)
             } else {
                 self?.view.showAlert(alertText: "Please check your email for a link to reset your password.")
+                self?.forgotPasswordButton.isHidden = true
             }
         }
     }
