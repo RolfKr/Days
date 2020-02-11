@@ -37,8 +37,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordView.textField.isSecureTextEntry = true
         passwordView.textField.delegate = self
         let loginButton = EnterButton(("Login"), 17, .label)
-        
         loginButton.addTarget(self, action: #selector(goToProjects), for: .touchUpInside)
+        let forgotPasswordButton = EnterButton("Forgot password", 17, .label)
+        forgotPasswordButton.addTarget(self, action: #selector(forgotPassTapped), for: .touchUpInside)
         
         let textfieldStack = UIStackView(arrangedSubviews: [emailView, passwordView])
         textfieldStack.translatesAutoresizingMaskIntoConstraints = false
@@ -50,6 +51,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(titleText)
         view.addSubview(textfieldStack)
         view.addSubview(loginButton)
+        view.addSubview(forgotPasswordButton)
         
         let screenHeight = view.frame.height
         let sidePadding: CGFloat = 50
@@ -73,6 +75,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             loginButton.centerXAnchor.constraint(equalTo: textfieldStack.centerXAnchor),
             loginButton.heightAnchor.constraint(equalToConstant: 44),
             loginButton.widthAnchor.constraint(equalToConstant: 200),
+            
+            forgotPasswordButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 10),
+            forgotPasswordButton.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
+            forgotPasswordButton.heightAnchor.constraint(equalToConstant: 44),
+            forgotPasswordButton.widthAnchor.constraint(equalToConstant: 200)
         ])
     }
     
@@ -81,6 +88,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             let password = passwordView.textField.text else {return}
         
         loginUser(email: email, password: password)
+    }
+    
+    @objc private func forgotPassTapped() {
+        print("Tapped forgot password")
+        
+        guard let email = emailView.textField.text else {
+            emailView.shakeAnimation()
+            view.showAlert(alertText: "You need to enter an email")
+            return
+        }
+        
+        Auth.auth().sendPasswordReset(withEmail: email) { [weak self] (error) in
+            if let error = error {
+                self?.view.showAlert(alertText: error.localizedDescription)
+            } else {
+                self?.view.showAlert(alertText: "Please check your email for a link to reset your password.")
+            }
+        }
     }
     
     private func loginUser(email: String, password: String) {

@@ -67,9 +67,9 @@ extension UIView {
         addSubview(containerView)
         
         let alertLabel = BodyLabel(alertText, 16, .center, .red)
-        alertLabel.numberOfLines = 0
         alertLabel.adjustsFontSizeToFitWidth = true
-        alertLabel.minimumScaleFactor = 0.8
+        alertLabel.minimumScaleFactor = 0.6
+        alertLabel.numberOfLines = 2
         containerView.addSubview(alertLabel)
         
         let top = containerView.topAnchor.constraint(equalTo: topAnchor, constant: -50)
@@ -78,7 +78,7 @@ extension UIView {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            containerView.heightAnchor.constraint(equalToConstant: 60),
+            containerView.heightAnchor.constraint(equalToConstant: 80),
             
             alertLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
             alertLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
