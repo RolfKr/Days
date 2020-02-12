@@ -129,7 +129,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
         tableView.dataSource = self
         tableView.register(PostCell.self, forCellReuseIdentifier: "Cell")
         tableView.backgroundColor = backgroundColor
-        tableView.allowsSelection = true
+        tableView.allowsSelection = false
     }
     
     @objc private func addPostTapped() {
