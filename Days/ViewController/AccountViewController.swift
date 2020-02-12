@@ -13,6 +13,8 @@ class AccountViewController: UIViewController {
     
     var cells: [UITableViewCell] = []
     var tableView: UITableView!
+    
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +22,8 @@ class AccountViewController: UIViewController {
     }
     
     private func configureViews() {
-        createStaticCells()
+        createSignOutCell()
+        createLACell()
         createTableView()
         
         view.backgroundColor = backgroundColor
@@ -50,7 +53,7 @@ class AccountViewController: UIViewController {
         view.addSubview(tableView)
     }
     
-    func createStaticCells() {
+    private func createSignOutCell() {
         let signOutCell: UITableViewCell = UITableViewCell()
         signOutCell.backgroundColor = cellBackground
         let height = signOutCell.frame.height
@@ -61,7 +64,32 @@ class AccountViewController: UIViewController {
         signOutButton.setTitle("Sign Out", for: .normal)
         signOutButton.addTarget(self, action: #selector(signOut), for: .touchUpInside)
         signOutCell.addSubview(signOutButton)
+        
         cells.append(signOutCell)
+        
+    }
+    
+    private func createLACell() {
+        let useLocalAuthentication = UITableViewCell()
+        useLocalAuthentication.translatesAutoresizingMaskIntoConstraints = false
+        useLocalAuthentication.backgroundColor = cellBackground
+
+        useLocalAuthentication.textLabel?.text = "Use Face ID"
+        
+        let switchView = UISwitch()
+        let isOn = defaults.bool(forKey: "useFaceID")
+        switchView.setOn(isOn, animated: false)
+        switchView.addTarget(self, action: #selector(switchTapped(sender:)), for: .touchUpInside)
+        
+        useLocalAuthentication.accessoryView = switchView
+        
+        cells.append(useLocalAuthentication)
+    }
+    
+    @objc private func switchTapped(sender: UISwitch){
+        let useFaceID = sender.isOn
+        print(useFaceID)
+        defaults.set(useFaceID, forKey: "useFaceID")
     }
     
     @objc private func signOut() {
