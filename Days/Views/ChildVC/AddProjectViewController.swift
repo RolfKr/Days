@@ -229,7 +229,8 @@ class AddProjectViewController: UIViewController {
             "addedBy" : currentUser,
             "created" : self.getTimeNow(),
             "imageID" : "\(uuid).jpg",
-            "projectID" : randomProjectID
+            "projectID" : randomProjectID,
+            "public" : isShared
         ])
         
         let project = Project(name: name, detail: detailText, addedBy: currentUser, created: self.getTimeNow(), imageURL: "\(uuid).jpg", projectID: randomProjectID)

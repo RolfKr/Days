@@ -7,14 +7,44 @@
 //
 
 import UIKit
+import Firebase
 
 class DiscoverViewController: UIViewController {
     
     var collectionView: UICollectionView!
+    var projects: [Project] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
+        getProjects()
+    }
+    
+    private func getProjects() {
+        projects = []
+
+        let projectsRef = Firestore.firestore().collection("projects")
+        let publicProjects = projectsRef.whereField("public", isEqualTo: true).order(by: "created", descending: true)
+        
+        publicProjects.getDocuments { [weak self] (snapshot, error) in
+            if let error = error {
+                self?.view.showAlert(alertText: error.localizedDescription)
+            } else {
+                for document in snapshot!.documents {
+                    let name = document.data()["name"] as? String ?? "Unkown Name"
+                    let detailText = document.data()["detailText"] as? String ?? "Unknown"
+                    let addedBy = document.data()["addedBy"] as? String ?? "Unkown"
+                    let created = document.data()["created"] as? String ?? "Unkown"
+                    let imageURL = document.data()["imageID"] as? String ?? "Unknown"
+                    let projectID = document.data()["projectID"] as? String ?? "Unknown"
+                    
+                    let project = Project(name: name, detail: detailText, addedBy: addedBy, created: created, imageURL: imageURL, projectID: projectID)
+                    self?.projects.append(project)
+                }
+                
+                self?.collectionView.reloadData()
+            }
+        }
     }
     
     private func configureViews() {
@@ -64,17 +94,25 @@ class DiscoverViewController: UIViewController {
 extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return projects.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        cell.backgroundColor = .green
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ProjectCell
+        let project = projects[indexPath.item]
+        cell.configureCell(title: project.name, imageURL: project.imageURL)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = collectionView.frame.size.width
         return CGSize(width: screenWidth, height: 150)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let postsVC = PostsViewController()
+        postsVC.project = projects[indexPath.item]
+        postsVC.isPublicProject = true
+        navigationController?.pushViewController(postsVC, animated: true)
     }
 }

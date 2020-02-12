@@ -13,10 +13,13 @@ class PostsViewController: UIViewController, AddPostDelegate {
 
     var tableView: UITableView!
     var selectedProject: String!
+    var isPublicProject: Bool!
     
     var project: Project!
     var posts: [Post]!
     var emptyView: UIView!
+    
+    var isFavorited = false
     
     var addButton: UIButton = {
         let button = UIButton()
@@ -24,6 +27,15 @@ class PostsViewController: UIViewController, AddPostDelegate {
         button.setImage(UIImage(named: "addPost"), for: .normal)
         button.backgroundColor = backgroundColor
         button.addTarget(self, action: #selector(addPostTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    var heartButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "heart"), for: .normal)
+        button.backgroundColor = backgroundColor
+        button.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
         return button
     }()
     
@@ -77,7 +89,15 @@ class PostsViewController: UIViewController, AddPostDelegate {
         projectDetailLabel.adjustsFontSizeToFitWidth = true
 
         view.addSubview(titleLabel)
+        view.addSubview(heartButton)
         view.addSubview(addButton)
+        
+        if isPublicProject {
+            addButton.isHidden = true
+        } else {
+            heartButton.isHidden = true
+        }
+        
         view.addSubview(projectDetailLabel)
         view.addSubview(tableView)
         
@@ -91,6 +111,11 @@ class PostsViewController: UIViewController, AddPostDelegate {
                    addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
                    addButton.heightAnchor.constraint(equalToConstant: 50),
                    addButton.widthAnchor.constraint(equalToConstant: 50),
+                   
+                   heartButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 30),
+                   heartButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+                   heartButton.heightAnchor.constraint(equalToConstant: 50),
+                   heartButton.widthAnchor.constraint(equalToConstant: 50),
                    
                    projectDetailLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
                    projectDetailLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
@@ -137,6 +162,16 @@ class PostsViewController: UIViewController, AddPostDelegate {
         addPostVC.project = project
         addPostVC.delegate = self
         present(addPostVC, animated: true)
+    }
+    
+    @objc private func favoriteTapped() {
+        isFavorited = !isFavorited
+        
+        if isFavorited {
+            heartButton.setImage(UIImage(named: "heartFilled"), for: .normal)
+        } else {
+            heartButton.setImage(UIImage(named: "heart"), for: .normal)
+        }
     }
     
     func didFinishAddingPost() {

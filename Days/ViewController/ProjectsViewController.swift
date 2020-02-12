@@ -227,9 +227,9 @@ extension ProjectsViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Tapped project")
         let postsVC = PostsViewController()
         postsVC.project = projects[indexPath.item]
+        postsVC.isPublicProject = false
         navigationController?.pushViewController(postsVC, animated: true)
     }
     
