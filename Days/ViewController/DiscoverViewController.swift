@@ -38,10 +38,13 @@ class DiscoverViewController: UIViewController {
                     let imageURL = document.data()["imageID"] as? String ?? "Unknown"
                     let projectID = document.data()["projectID"] as? String ?? "Unknown"
                     
+                    if addedBy == Auth.auth().currentUser?.email {
+                        continue
+                    }
+                    
                     let project = Project(name: name, detail: detailText, addedBy: addedBy, created: created, imageURL: imageURL, projectID: projectID)
                     self?.projects.append(project)
                 }
-                
                 self?.collectionView.reloadData()
             }
         }
