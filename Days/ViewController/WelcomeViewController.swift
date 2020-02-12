@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import GoogleSignIn
 
 class WelcomeViewController: UIViewController, UITextFieldDelegate {
     
@@ -93,6 +94,9 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
         registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(goToLogin), for: .touchUpInside)
         
+        let googleSignIn = GIDSignInButton()
+        googleSignIn.translatesAutoresizingMaskIntoConstraints = false
+        googleSignIn.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
         
         let textFieldStack = UIStackView(arrangedSubviews: [usernameView, emailView, passwordView, secondPasswordView])
         textFieldStack.translatesAutoresizingMaskIntoConstraints = false
@@ -105,6 +109,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(textFieldStack)
         view.addSubview(registerButton)
         view.addSubview(loginButton)
+        view.addSubview(googleSignIn)
         
         let screenHeight = view.frame.height
         let sidePadding: CGFloat = 50
@@ -129,16 +134,26 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
             registerButton.heightAnchor.constraint(equalToConstant: 44),
             registerButton.widthAnchor.constraint(equalToConstant: 200),
             
+            googleSignIn.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 20),
+            googleSignIn.centerXAnchor.constraint(equalTo: registerButton.centerXAnchor),
+            
             loginButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -8),
             loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             loginButton.heightAnchor.constraint(equalToConstant: 30),
             loginButton.widthAnchor.constraint(equalToConstant: 150)
+            
+            
         ])
     }
     
     @objc private func goToLogin() {
         present(LoginViewController(), animated: true)
     }
+    
+    @objc private func signInTapped() {
+        
+    }
+
     
     @objc private func register() {
         guard let username = usernameView.textField.text,
@@ -147,6 +162,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
         
         createUser(username: username, password: password, email: email)
     }
+
     
     private func goToProjects() {
         let navBar = UINavigationController(rootViewController: TabBarController())
