@@ -80,15 +80,19 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
         let titleText = TitleLabel("Welcome to Days", 32, .center)
         usernameView = InputView("Enter name")
         usernameView.textField.delegate = self
+        
         emailView = InputView("Enter email")
         emailView.textField.delegate = self
         emailView.textField.keyboardType = .emailAddress
+        
         passwordView = InputView("Enter password")
         passwordView.textField.delegate = self
         passwordView.textField.isSecureTextEntry = true
+        
         secondPasswordView = InputView("Enter password again")
         secondPasswordView.textField.delegate = self
         secondPasswordView.textField.isSecureTextEntry = true
+        
         let registerButton = EnterButton(("Register"), 17, .label)
         let loginButton = EnterButton("Already have an account?", 12, .label)
         registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
