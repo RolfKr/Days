@@ -80,7 +80,6 @@ class AccountViewController: UIViewController {
         let isOn = defaults.bool(forKey: "useFaceID")
         switchView.setOn(isOn, animated: false)
         switchView.addTarget(self, action: #selector(switchTapped(sender:)), for: .touchUpInside)
-        
         useLocalAuthentication.accessoryView = switchView
         
         cells.append(useLocalAuthentication)

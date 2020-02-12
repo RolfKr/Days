@@ -32,13 +32,15 @@ class AuthenticationViewController: UIViewController {
                     print("Access denied!")
                     DispatchQueue.main.async {
                         let loginVC = LoginViewController()
-                        self.navigationController?.pushViewController(loginVC, animated: true)
+                        loginVC.modalPresentationStyle = .fullScreen
+                        self.present(loginVC, animated: true)
                     }
                 }
             }
         } else {
             let welcomeVC = WelcomeViewController()
-            self.navigationController?.pushViewController(welcomeVC, animated: true)
+            welcomeVC.modalPresentationStyle = .fullScreen
+            present(welcomeVC, animated: true)
             view.showAlert(alertText: "Local authentication is not configured. Please check settings on iPhone.")
         }
     }
