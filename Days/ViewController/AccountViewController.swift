@@ -96,6 +96,7 @@ class AccountViewController: UIViewController {
         do {
             print("Signing out")
             try Auth.auth().signOut()
+            defaults.set(false, forKey: "useFaceID")
             let welcomeVC = WelcomeViewController()
             welcomeVC.modalPresentationStyle = .fullScreen
             present(welcomeVC, animated: true)
