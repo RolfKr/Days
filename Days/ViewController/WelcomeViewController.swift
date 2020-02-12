@@ -69,7 +69,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
         let usersRef = Firestore.firestore().collection("users")
         usersRef.document(email).setData([
             "username": username,
-            "email": email,
+            "email": email.lowercased(),
             "uid": Auth.auth().currentUser!.uid
         ])
     }

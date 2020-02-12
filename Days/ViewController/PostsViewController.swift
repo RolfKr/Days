@@ -169,10 +169,25 @@ class PostsViewController: UIViewController, AddPostDelegate {
         
         if isFavorited {
             heartButton.setImage(UIImage(named: "heartFilled"), for: .normal)
+            favoriteProject()
         } else {
             heartButton.setImage(UIImage(named: "heart"), for: .normal)
         }
     }
+    
+    private func favoriteProject() {
+        guard let currentUser = Auth.auth().currentUser?.email else {return}
+        let userRef = Firestore.firestore().collection("users").document(currentUser)
+//        let favoriteProjectRef = userRef.collection("favoritedprojects")
+        
+        userRef.updateData([
+            "favoriteProjects" : FieldValue.arrayUnion([project.projectID])
+        ])
+        
+        print("Project added to favorites")
+    }
+    
+    
     
     func didFinishAddingPost() {
         getPosts()
