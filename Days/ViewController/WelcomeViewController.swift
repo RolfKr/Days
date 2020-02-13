@@ -164,8 +164,6 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
             loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             loginButton.heightAnchor.constraint(equalToConstant: 30),
             loginButton.widthAnchor.constraint(equalToConstant: 150)
-            
-            
         ])
     }
     
@@ -268,24 +266,15 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate, ASAuthorizat
             // Error. If error.code == .MissingOrInvalidNonce, make sure
             // you're sending the SHA256-hashed nonce as a hex string with
             // your request to Apple.
-            print(error.localizedDescription)
+            self?.view.showAlert(alertText: error.localizedDescription)
             return
           }
           
             //Perform login
-            print("User logged in")
-        
-            
-           
             let username = appleIDCredential.fullName?.givenName ?? "No name"
             let email = appleIDCredential.email ?? "No email"
-            
             guard let uid = Auth.auth().currentUser?.uid else {return}
-            
-            print(username)
-            print(email)
-            
-            
+
             self?.addUserToDatabase(uid: uid, email: email, username: username)
             self?.goToProjects()
         }
@@ -293,8 +282,7 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate, ASAuthorizat
     }
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-      // Handle error.
-      print("Sign in with Apple errored: \(error)")
+        view.showAlert(alertText: error.localizedDescription)
     }
     
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
