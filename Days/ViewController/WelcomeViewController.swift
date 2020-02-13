@@ -115,9 +115,6 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
         registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(goToLogin), for: .touchUpInside)
         
-        let googleSignIn = GIDSignInButton()
-        googleSignIn.translatesAutoresizingMaskIntoConstraints = false
-        
         let appleSignIn = ASAuthorizationAppleIDButton()
         appleSignIn.translatesAutoresizingMaskIntoConstraints = false
         appleSignIn.addTarget(self, action: #selector(didTapAppleButton), for: .touchUpInside)

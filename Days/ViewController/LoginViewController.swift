@@ -54,7 +54,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(loginButton)
         view.addSubview(forgotPasswordButton)
         
-        let screenHeight = view.frame.height
         let sidePadding: CGFloat = 50
         
         NSLayoutConstraint.activate([
