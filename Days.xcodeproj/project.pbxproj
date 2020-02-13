@@ -19,6 +19,7 @@
 		7EB0A5DD23DF30A000395F56 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EB0A5DB23DF30A000395F56 /* LaunchScreen.storyboard */; };
 		7EB0A5E523DF327E00395F56 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5E423DF327E00395F56 /* InputView.swift */; };
 		7EB0A5E723DF3AA700395F56 /* EnterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5E623DF3AA700395F56 /* EnterButton.swift */; };
+		7EB2E39E23F55C3A00B55E34 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB2E39D23F55C3A00B55E34 /* Helper.swift */; };
 		8E540F4E38E0E4986FB685D8 /* Pods_Days.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD004EAD03A8A39C1498392 /* Pods_Days.framework */; };
 		B72B008223DF6FB600C45279 /* BodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72B008123DF6FB600C45279 /* BodyLabel.swift */; };
 		B757E14E23DF63BA0093DDB9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757E14D23DF63BA0093DDB9 /* LoginViewController.swift */; };
@@ -54,6 +55,8 @@
 		7EB0A5DE23DF30A000395F56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EB0A5E423DF327E00395F56 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		7EB0A5E623DF3AA700395F56 /* EnterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterButton.swift; sourceTree = "<group>"; };
+		7EB2E39C23F55AF800B55E34 /* Days.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Days.entitlements; sourceTree = "<group>"; };
+		7EB2E39D23F55C3A00B55E34 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		83B44EFC63B367F1EBDE77D9 /* Pods-Days.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Days.release.xcconfig"; path = "Target Support Files/Pods-Days/Pods-Days.release.xcconfig"; sourceTree = "<group>"; };
 		B72B008123DF6FB600C45279 /* BodyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyLabel.swift; sourceTree = "<group>"; };
 		B757E14D23DF63BA0093DDB9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -132,6 +135,7 @@
 		7EB0A5CF23DF309F00395F56 /* Days */ = {
 			isa = PBXGroup;
 			children = (
+				7EB2E39C23F55AF800B55E34 /* Days.entitlements */,
 				7E3D04C323E118D200E60345 /* Model */,
 				B72B008623DF744E00C45279 /* ViewController */,
 				B72B008723DF745E00C45279 /* Views */,
@@ -205,6 +209,7 @@
 				7EB0A5DB23DF30A000395F56 /* LaunchScreen.storyboard */,
 				B75EC2A423E0DCB8007C8B3A /* Constants.swift */,
 				B7CD982523E48926005E8505 /* Extensions.swift */,
+				7EB2E39D23F55C3A00B55E34 /* Helper.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -393,6 +398,7 @@
 				B757E15023DF696C0093DDB9 /* ProjectsViewController.swift in Sources */,
 				B75EC2A523E0DCB8007C8B3A /* Constants.swift in Sources */,
 				7E9FDB8723F2CF9A00D12B04 /* DiscoverViewController.swift in Sources */,
+				7EB2E39E23F55C3A00B55E34 /* Helper.swift in Sources */,
 				B770D08323E36BE000E00B00 /* DetailTextView.swift in Sources */,
 				B770D07E23E36B9400E00B00 /* AddPostsViewController.swift in Sources */,
 			);
@@ -531,6 +537,7 @@
 			baseConfigurationReference = 243E753D3701711F51FAEA12 /* Pods-Days.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Days/Days.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3H92NGE9SW;
 				INFOPLIST_FILE = Days/Info.plist;
@@ -550,6 +557,7 @@
 			baseConfigurationReference = 83B44EFC63B367F1EBDE77D9 /* Pods-Days.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Days/Days.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3H92NGE9SW;
 				INFOPLIST_FILE = Days/Info.plist;

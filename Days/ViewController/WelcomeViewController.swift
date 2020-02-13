@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import AuthenticationServices
+import CryptoKit
 
 class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDelegate {
     
@@ -16,6 +18,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
     var emailView: InputView!
     var passwordView: InputView!
     var secondPasswordView: InputView!
+    var currentNonce: String?
     
     var bookImageView: UIImageView = {
         let imageView = UIImageView()
@@ -106,6 +109,10 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
         let googleSignIn = GIDSignInButton()
         googleSignIn.translatesAutoresizingMaskIntoConstraints = false
         
+        let appleButton = ASAuthorizationAppleIDButton()
+        appleButton.translatesAutoresizingMaskIntoConstraints = false
+        appleButton.addTarget(self, action: #selector(didTapAppleButton), for: .touchUpInside)
+        
         let textFieldStack = UIStackView(arrangedSubviews: [usernameView, emailView, passwordView, secondPasswordView])
         textFieldStack.translatesAutoresizingMaskIntoConstraints = false
         textFieldStack.axis = .vertical
@@ -118,6 +125,8 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
         view.addSubview(registerButton)
         view.addSubview(loginButton)
         view.addSubview(googleSignIn)
+        view.addSubview(appleButton)
+        
         
         let screenHeight = view.frame.height
         let sidePadding: CGFloat = 50
@@ -144,6 +153,9 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
             
             googleSignIn.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 20),
             googleSignIn.centerXAnchor.constraint(equalTo: registerButton.centerXAnchor),
+            
+            appleButton.topAnchor.constraint(equalTo: googleSignIn.bottomAnchor, constant: 20),
+            appleButton.centerXAnchor.constraint(equalTo: googleSignIn.centerXAnchor),
             
             loginButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -8),
             loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -202,7 +214,89 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
             self?.goToProjects()
         }
     }
+    
+    @objc private func didTapAppleButton() {
+        let nonce = randomNonceString()
+        currentNonce = nonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(nonce)
+
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    
+    private func sha256(_ input: String) -> String {
+      let inputData = Data(input.utf8)
+      let hashedData = SHA256.hash(data: inputData)
+      let hashString = hashedData.compactMap {
+        return String(format: "%02x", $0)
+      }.joined()
+
+      return hashString
+    }
 }
 
+extension WelcomeViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+      if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+        guard let nonce = currentNonce else {
+          fatalError("Invalid state: A login callback was received, but no login request was sent.")
+        }
+        guard let appleIDToken = appleIDCredential.identityToken else {
+          print("Unable to fetch identity token")
+          return
+        }
+        guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+          print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+          return
+        }
+        // Initialize a Firebase credential.
+        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
+        //let credential = OAuthProvider.credential(withProviderID: "apple.com", IDToken: idTokenString, rawNonce: nonce)
+        
+        // Sign in with Firebase.
+        Auth.auth().signIn(with: credential) { [weak self] (authResult, error) in
+          if let error = error {
+            // Error. If error.code == .MissingOrInvalidNonce, make sure
+            // you're sending the SHA256-hashed nonce as a hex string with
+            // your request to Apple.
+            print(error.localizedDescription)
+            return
+          }
+          
+            //Perform login
+            print("User logged in")
+        
+            
+           
+            let username = appleIDCredential.fullName?.givenName ?? "No name"
+            let email = appleIDCredential.email ?? "No email"
+            
+            guard let uid = Auth.auth().currentUser?.uid else {return}
+            
+            print(username)
+            print(email)
+            
+            
+            self?.addUserToDatabase(uid: uid, email: email, username: username)
+            self?.goToProjects()
+        }
+      }
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+      // Handle error.
+      print("Sign in with Apple errored: \(error)")
+    }
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return view.window!
+    }
+}
 
 

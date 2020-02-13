@@ -41,7 +41,7 @@ class AuthenticationViewController: UIViewController {
             let welcomeVC = WelcomeViewController()
             welcomeVC.modalPresentationStyle = .fullScreen
             present(welcomeVC, animated: true)
-            view.showAlert(alertText: "Local authentication is not configured. Please check settings on iPhone.")
+            view.showAlert(alertText: "Local authentication is not configured. Please check settings on iPhone.")   
         }
     }
     

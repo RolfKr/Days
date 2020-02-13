@@ -16,11 +16,6 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     var emptyView: UIView?
     var longPressGesture: UILongPressGestureRecognizer!
     
-    var username: String = {
-        guard let user = Auth.auth().currentUser?.displayName else {return "Unkown User"}
-        return user
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         getProjects()
@@ -110,13 +105,11 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         view.backgroundColor = backgroundColor
         
         let titleLabel = TitleLabel("Days", 38, .left)
-        let helloLabel = BodyLabel("Hi there, \(username)", 17, .left, .secondaryLabel)
         let projectsLabel = BodyLabel("My Journals", 22, .left, .label)
         let addProjectButton = EnterButton("Add Journal", 20, .secondaryLabel)
         addProjectButton.addTarget(self, action: #selector(addProjectTapped), for: .touchUpInside)
         
         view.addSubview(titleLabel)
-        view.addSubview(helloLabel)
         view.addSubview(projectsLabel)
         view.addSubview(addProjectButton)
         view.addSubview(collectionView)
@@ -127,13 +120,8 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             titleLabel.heightAnchor.constraint(equalToConstant: 44),
             
-            helloLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            helloLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 4),
-            helloLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            helloLabel.heightAnchor.constraint(equalToConstant: 20),
-            
-            projectsLabel.topAnchor.constraint(equalTo: helloLabel.bottomAnchor, constant: 30),
-            projectsLabel.leadingAnchor.constraint(equalTo: helloLabel.leadingAnchor),
+            projectsLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
+            projectsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             projectsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             projectsLabel.heightAnchor.constraint(equalToConstant: 22),
             
