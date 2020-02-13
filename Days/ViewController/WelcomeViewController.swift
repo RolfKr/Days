@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-class WelcomeViewController: UIViewController, UITextFieldDelegate {
+class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDelegate {
     
     var usernameView: InputView!
     var emailView: InputView!
@@ -28,6 +28,9 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         configureUI()
         dismissKeyboard(on: view)
+        
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.delegate = self
     }
 
     
@@ -100,7 +103,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
         
         let googleSignIn = GIDSignInButton()
         googleSignIn.translatesAutoresizingMaskIntoConstraints = false
-        googleSignIn.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
+        //googleSignIn.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
         
         let textFieldStack = UIStackView(arrangedSubviews: [usernameView, emailView, passwordView, secondPasswordView])
         textFieldStack.translatesAutoresizingMaskIntoConstraints = false
@@ -177,6 +180,24 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            print(error.localizedDescription)
+        }
+        
+        guard let authentication = user.authentication else {return}
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+        
+        Auth.auth().signIn(with: credential) { [weak self] (authResult, error) in
+            if let error = error {
+                self?.view.showAlert(alertText: error.localizedDescription)
+                return
+            }
+        
+            self?.goToProjects()
+        }
     }
 }
 
