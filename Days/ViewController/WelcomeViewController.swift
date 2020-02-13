@@ -61,7 +61,9 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
                         print(error.localizedDescription)
                     }
                     
-                    self.addUserToDatabase(email: email, username: username)
+                    guard let uid = Auth.auth().currentUser?.uid else {return}
+                    
+                    self.addUserToDatabase(uid: uid, email: email, username: username)
                     self.goToProjects()
                 }
                 
@@ -69,9 +71,9 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
         }
     }
     
-    private func addUserToDatabase(email: String, username: String) {
+    private func addUserToDatabase(uid: String, email: String, username: String) {
         let usersRef = Firestore.firestore().collection("users")
-        usersRef.document(email).setData([
+        usersRef.document(uid).setData([
             "username": username,
             "email": email.lowercased(),
             "uid": Auth.auth().currentUser!.uid
@@ -192,10 +194,11 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
             }
         
             guard let email = user.profile.email,
-                let username = user.profile.name else {return}
+                let username = user.profile.name,
+                let uid = Auth.auth().currentUser?.uid else {return}
             
             
-            self?.addUserToDatabase(email: email, username: username)
+            self?.addUserToDatabase(uid: uid, email: email, username: username)
             self?.goToProjects()
         }
     }

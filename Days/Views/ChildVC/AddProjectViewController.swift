@@ -219,21 +219,21 @@ class AddProjectViewController: UIViewController {
         
         guard let name = nameInputView.textField.text else {return} // TODO: ADD A WARNING IF EMPTY
         guard let detailText = detailText.text else {return} // TODO: ADD WARNING HERE AS WELL
-        guard let currentUser = Auth.auth().currentUser?.email else {return}
+        guard let currentUID = Auth.auth().currentUser?.uid else {return}
         
         let randomProjectID = UUID().uuidString
         let projectsDB = Firestore.firestore().collection("projects").document(randomProjectID)
         projectsDB.setData([
             "name" : name,
             "detailText" : detailText,
-            "addedBy" : currentUser,
+            "addedBy" : currentUID,
             "created" : self.getTimeNow(),
             "imageID" : "\(uuid).jpg",
             "projectID" : randomProjectID,
             "public" : isShared
         ])
         
-        let project = Project(name: name, detail: detailText, addedBy: currentUser, created: self.getTimeNow(), imageURL: "\(uuid).jpg", projectID: randomProjectID)
+        let project = Project(name: name, detail: detailText, addedBy: currentUID, created: self.getTimeNow(), imageURL: "\(uuid).jpg", projectID: randomProjectID)
         self.delegate?.didFinishAddingProject(project)
         self.dismissVC()
     }

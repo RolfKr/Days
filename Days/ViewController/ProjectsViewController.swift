@@ -30,9 +30,9 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     
     private func getProjects() {
         projects = []
-        guard let currentUserEmail = Auth.auth().currentUser?.email else {return}
+        guard let currentUID = Auth.auth().currentUser?.uid else {return}
 
-        Firestore.firestore().collection("projects").whereField("addedBy", isEqualTo: currentUserEmail).order(by: "created", descending: true).getDocuments { (snapshot, error) in
+        Firestore.firestore().collection("projects").whereField("addedBy", isEqualTo: currentUID).order(by: "created", descending: true).getDocuments { (snapshot, error) in
             if let error = error {
                 self.view.showAlert(alertText: error.localizedDescription)
             } else {
