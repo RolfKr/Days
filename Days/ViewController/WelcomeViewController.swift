@@ -109,9 +109,15 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
         let googleSignIn = GIDSignInButton()
         googleSignIn.translatesAutoresizingMaskIntoConstraints = false
         
-        let appleButton = ASAuthorizationAppleIDButton()
-        appleButton.translatesAutoresizingMaskIntoConstraints = false
-        appleButton.addTarget(self, action: #selector(didTapAppleButton), for: .touchUpInside)
+        let appleSignIn = ASAuthorizationAppleIDButton()
+        appleSignIn.translatesAutoresizingMaskIntoConstraints = false
+        appleSignIn.addTarget(self, action: #selector(didTapAppleButton), for: .touchUpInside)
+        
+        let customSignInStack = UIStackView(arrangedSubviews: [googleSignIn, appleSignIn])
+        customSignInStack.axis = .horizontal
+        customSignInStack.distribution = .fillEqually
+        customSignInStack.spacing = 20
+        customSignInStack.translatesAutoresizingMaskIntoConstraints = false
         
         let textFieldStack = UIStackView(arrangedSubviews: [usernameView, emailView, passwordView, secondPasswordView])
         textFieldStack.translatesAutoresizingMaskIntoConstraints = false
@@ -124,9 +130,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
         view.addSubview(textFieldStack)
         view.addSubview(registerButton)
         view.addSubview(loginButton)
-        view.addSubview(googleSignIn)
-        view.addSubview(appleButton)
-        
+        view.addSubview(customSignInStack)
         
         let screenHeight = view.frame.height
         let sidePadding: CGFloat = 50
@@ -151,11 +155,10 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
             registerButton.heightAnchor.constraint(equalToConstant: 44),
             registerButton.widthAnchor.constraint(equalToConstant: 200),
             
-            googleSignIn.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 20),
-            googleSignIn.centerXAnchor.constraint(equalTo: registerButton.centerXAnchor),
-            
-            appleButton.topAnchor.constraint(equalTo: googleSignIn.bottomAnchor, constant: 20),
-            appleButton.centerXAnchor.constraint(equalTo: googleSignIn.centerXAnchor),
+            customSignInStack.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 20),
+            customSignInStack.leadingAnchor.constraint(equalTo: textFieldStack.leadingAnchor, constant: 0),
+            customSignInStack.trailingAnchor.constraint(equalTo: textFieldStack.trailingAnchor, constant: 0),
+            customSignInStack.heightAnchor.constraint(equalToConstant: 44),
             
             loginButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -8),
             loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
