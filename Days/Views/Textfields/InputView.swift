@@ -20,7 +20,7 @@ class InputView: UIView {
     var textField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.font = UIFont(name: "AvenirNextCondensed-Medium", size: 17)
+        textField.font = UIFont(name: "AvenirNextCondensed-Medium", size: 15)
         textField.textColor = .label
         return textField
     }()

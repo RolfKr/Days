@@ -27,6 +27,15 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
         return imageView
     }()
     
+    var googleSignInButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "googleLogo"), for: .normal)
+        button.layer.cornerRadius = 4
+        button.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        button.addTarget(self, action: #selector(googleSignInTapped), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -85,7 +94,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
     
     private func configureUI() {
         view.backgroundColor = backgroundColor
-        let titleText = TitleLabel("Welcome to Days", 32, .center)
+        let titleText = TitleLabel("Welcome to Days", 26, .center)
         usernameView = InputView("Enter name")
         usernameView.textField.delegate = self
         
@@ -113,9 +122,10 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
         appleSignIn.translatesAutoresizingMaskIntoConstraints = false
         appleSignIn.addTarget(self, action: #selector(didTapAppleButton), for: .touchUpInside)
         
-        let customSignInStack = UIStackView(arrangedSubviews: [googleSignIn, appleSignIn])
+        let customSignInStack = UIStackView(arrangedSubviews: [googleSignInButton, appleSignIn])
         customSignInStack.axis = .horizontal
-        customSignInStack.distribution = .fillEqually
+        customSignInStack.distribution = .fillProportionally
+        customSignInStack.alignment = .center
         customSignInStack.spacing = 20
         customSignInStack.translatesAutoresizingMaskIntoConstraints = false
         
@@ -137,11 +147,11 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
         
         NSLayoutConstraint.activate([
             bookImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            bookImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            bookImageView.heightAnchor.constraint(equalToConstant: 100),
-            bookImageView.widthAnchor.constraint(equalToConstant: 100),
+            bookImageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 30),
+            bookImageView.heightAnchor.constraint(lessThanOrEqualTo: view.heightAnchor, multiplier: 0.15),
+            bookImageView.widthAnchor.constraint(equalTo: bookImageView.heightAnchor),
             
-            titleText.topAnchor.constraint(equalTo: bookImageView.bottomAnchor, constant: 40),
+            titleText.topAnchor.constraint(equalTo: bookImageView.bottomAnchor, constant: 25),
             titleText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sidePadding),
             titleText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sidePadding),
             
@@ -156,9 +166,9 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
             registerButton.widthAnchor.constraint(equalToConstant: 200),
             
             customSignInStack.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 20),
-            customSignInStack.leadingAnchor.constraint(equalTo: textFieldStack.leadingAnchor, constant: 0),
-            customSignInStack.trailingAnchor.constraint(equalTo: textFieldStack.trailingAnchor, constant: 0),
-            customSignInStack.heightAnchor.constraint(equalToConstant: 44),
+            customSignInStack.leadingAnchor.constraint(equalTo: registerButton.leadingAnchor, constant: 0),
+            customSignInStack.trailingAnchor.constraint(equalTo: registerButton.trailingAnchor, constant: 0),
+            customSignInStack.heightAnchor.constraint(equalToConstant: 40),
             
             loginButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -8),
             loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -169,6 +179,10 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
     
     @objc private func goToLogin() {
         present(LoginViewController(), animated: true)
+    }
+    
+    @objc private func googleSignInTapped() {
+        GIDSignIn.sharedInstance()?.signIn()
     }
 
     

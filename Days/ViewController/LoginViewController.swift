@@ -31,7 +31,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private func configureUI() {
         view.backgroundColor = backgroundColor
         
-        let titleText = TitleLabel("Login to Days", 32, .center)
+        let titleText = TitleLabel("Login to Days", 26, .center)
         emailView = InputView("Enter email")
         emailView.textField.delegate = self
         passwordView = InputView("Enter password")
@@ -59,18 +59,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         NSLayoutConstraint.activate([
             bookImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            bookImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            bookImageView.heightAnchor.constraint(equalToConstant: 100),
-            bookImageView.widthAnchor.constraint(equalToConstant: 100),
-                        
-            titleText.topAnchor.constraint(equalTo: bookImageView.bottomAnchor, constant: 40),
+            bookImageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 30),
+            bookImageView.heightAnchor.constraint(lessThanOrEqualTo: view.heightAnchor, multiplier: 0.15),
+            bookImageView.widthAnchor.constraint(equalTo: bookImageView.heightAnchor),
+            
+            titleText.topAnchor.constraint(equalTo: bookImageView.bottomAnchor, constant: 25),
             titleText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sidePadding),
             titleText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sidePadding),
             
             textfieldStack.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 20),
             textfieldStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sidePadding),
             textfieldStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sidePadding),
-            textfieldStack.heightAnchor.constraint(equalToConstant: screenHeight * 0.12),
+            textfieldStack.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.15, constant: 0),
             
             loginButton.topAnchor.constraint(equalTo: textfieldStack.bottomAnchor, constant: 20),
             loginButton.centerXAnchor.constraint(equalTo: textfieldStack.centerXAnchor),

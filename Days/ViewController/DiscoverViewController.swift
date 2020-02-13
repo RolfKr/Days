@@ -57,6 +57,8 @@ class DiscoverViewController: UIViewController {
         
         let titleLabel = TitleLabel("Discover", 38, .left)
         let subTitle = BodyLabel("Find Journals created by others", 17, .left, .secondaryLabel)
+        subTitle.minimumScaleFactor = 0.6
+        subTitle.adjustsFontSizeToFitWidth = true
         
         view.addSubview(titleLabel)
         view.addSubview(subTitle)
