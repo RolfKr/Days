@@ -65,7 +65,7 @@ class DiscoverViewController: UIViewController {
         view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 50),
+            titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             titleLabel.heightAnchor.constraint(equalToConstant: 44),

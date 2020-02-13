@@ -102,7 +102,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-                   titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 50),
+                   titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20),
                    titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
                    titleLabel.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -20),
                    titleLabel.heightAnchor.constraint(equalToConstant: 40),

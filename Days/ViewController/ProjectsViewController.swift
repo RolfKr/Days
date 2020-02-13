@@ -115,17 +115,17 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 50),
+            titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             titleLabel.heightAnchor.constraint(equalToConstant: 44),
             
-            projectsLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
+            projectsLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
             projectsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             projectsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             projectsLabel.heightAnchor.constraint(equalToConstant: 22),
             
-            collectionView.topAnchor.constraint(equalTo: projectsLabel.bottomAnchor, constant: 25),
+            collectionView.topAnchor.constraint(equalTo: projectsLabel.bottomAnchor, constant: 15),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             collectionView.bottomAnchor.constraint(equalTo: addProjectButton.topAnchor, constant: -20),
