@@ -38,7 +38,7 @@ class DiscoverViewController: UIViewController {
                     let imageURL = document.data()["imageID"] as? String ?? "Unknown"
                     let projectID = document.data()["projectID"] as? String ?? "Unknown"
                     
-                    if addedBy == Auth.auth().currentUser?.email {
+                    if addedBy == Auth.auth().currentUser?.uid {
                         continue
                     }
                     
