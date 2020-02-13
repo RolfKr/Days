@@ -103,7 +103,6 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
         
         let googleSignIn = GIDSignInButton()
         googleSignIn.translatesAutoresizingMaskIntoConstraints = false
-        //googleSignIn.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
         
         let textFieldStack = UIStackView(arrangedSubviews: [usernameView, emailView, passwordView, secondPasswordView])
         textFieldStack.translatesAutoresizingMaskIntoConstraints = false
@@ -156,10 +155,6 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
     @objc private func goToLogin() {
         present(LoginViewController(), animated: true)
     }
-    
-    @objc private func signInTapped() {
-        
-    }
 
     
     @objc private func register() {
@@ -196,6 +191,11 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate, GIDSignInDel
                 return
             }
         
+            guard let email = user.profile.email,
+                let username = user.profile.name else {return}
+            
+            
+            self?.addUserToDatabase(email: email, username: username)
             self?.goToProjects()
         }
     }
