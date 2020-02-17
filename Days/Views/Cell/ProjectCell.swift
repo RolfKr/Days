@@ -62,8 +62,8 @@ class ProjectCell: UICollectionViewCell {
         clipsToBounds = true
         downloadProjectImage(imageURL: imageURL)
         titleLabel = TitleLabel(title, 30, .left)
-        titleLabel.minimumScaleFactor = 0.7
         titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.3
         titleLabel.numberOfLines = 2
         titleLabel.textColor = .white
         
@@ -92,8 +92,8 @@ class ProjectCell: UICollectionViewCell {
 
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 16),
-            titleLabel.heightAnchor.constraint(equalToConstant: 30),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            titleLabel.heightAnchor.constraint(equalToConstant: 60),
             
             deleteButton.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             deleteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),

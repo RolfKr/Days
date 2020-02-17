@@ -146,11 +146,13 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
             ownJournals = true
             getProjects()
             addProjectButton.isHidden = false
+            collectionView.addGestureRecognizer(longPressGesture)
         case 1:
             ownJournals = false
             getFavorites()
             emptyView?.isHidden = true
             addProjectButton.isHidden = true
+            self.collectionView.removeGestureRecognizer(longPressGesture)
         default:
             break
         }

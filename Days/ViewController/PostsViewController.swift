@@ -104,7 +104,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
         titleLabel.minimumScaleFactor = 0.5
         titleLabel.numberOfLines = 2
         
-        let projectDetailLabel = BodyLabel(project.detail, 17, .left, .secondaryLabel)
+        let projectDetailLabel = BodyLabel(project.detail, 15, .left, .secondaryLabel)
         projectDetailLabel.minimumScaleFactor = 0.7
         projectDetailLabel.numberOfLines = 3
         projectDetailLabel.adjustsFontSizeToFitWidth = true
@@ -126,7 +126,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
                    titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20),
                    titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
                    titleLabel.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -20),
-                   titleLabel.heightAnchor.constraint(equalToConstant: 40),
+                   titleLabel.heightAnchor.constraint(equalToConstant: 60),
                    
                    addButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 30),
                    addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
