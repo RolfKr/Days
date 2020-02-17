@@ -17,6 +17,8 @@ class EnterButton: UIButton {
     
     init(_ buttonText: String, _ fontSize: CGFloat, _ fontColor: UIColor) {
         super.init(frame: .zero)
+        titleLabel?.adjustsFontSizeToFitWidth = true
+        
         setTitle(buttonText, for: .normal)
         titleLabel?.font = UIFont(name: "AvenirNextCondensed-Medium", size: fontSize)
         setTitleColor(fontColor, for: .normal)

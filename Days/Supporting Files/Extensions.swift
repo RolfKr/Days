@@ -110,12 +110,16 @@ extension UIView {
         
         let title = TitleLabel(titleText, 16, .center)
         title.textColor = .secondaryLabel
+        title.adjustsFontSizeToFitWidth = true
+        title.minimumScaleFactor = 0.6
         let boxImage = UIImageView(image: image)
         boxImage.translatesAutoresizingMaskIntoConstraints = false
         boxImage.contentMode = .scaleAspectFit
         boxImage.alpha = 0.6
         let subTitle = TitleLabel(subTitleText, 16, .center)
         subTitle.textColor = .secondaryLabel
+        subTitle.adjustsFontSizeToFitWidth = true
+        subTitle.minimumScaleFactor = 0.6
         
         let stackView = UIStackView(arrangedSubviews: [title, boxImage, subTitle])
         stackView.translatesAutoresizingMaskIntoConstraints = false

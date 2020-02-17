@@ -23,10 +23,19 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         addTapGesture()
     }
     
+    var segmentedControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["My Journals", "Favorited Journals"])
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.selectedSegmentIndex = 0
+        control.tintColor = backgroundColor
+        control.addTarget(self, action: #selector(handleSegmentedControl(_:)), for: .valueChanged)
+        return control
+    }()
+    
     private func getProjects() {
         projects = []
         guard let currentUID = Auth.auth().currentUser?.uid else {return}
-
+        
         Firestore.firestore().collection("projects").whereField("addedBy", isEqualTo: currentUID).order(by: "created", descending: true).getDocuments { (snapshot, error) in
             if let error = error {
                 self.view.showAlert(alertText: error.localizedDescription)
@@ -48,7 +57,52 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
                     self.addEmptyListView()
                 }
                 
+                self.collectionView.addGestureRecognizer(self.longPressGesture)
                 self.collectionView.reloadData()
+            }
+        }
+    }
+    
+    private func getFavorites() {
+        projects = []
+        
+        guard let currentUserID = Auth.auth().currentUser?.uid else { return }
+        let userRef = Firestore.firestore().collection("users").document(currentUserID)
+        
+        var favoritedProjects = [String]()
+        
+        userRef.getDocument { (snapshot, error) in
+            if let error = error {
+                self.view.showAlert(alertText: error.localizedDescription)
+            } else {
+                favoritedProjects = snapshot?.data()?["favoriteProjects"] as? [String] ?? [""]
+                
+                
+                for project in favoritedProjects {                    
+                    Firestore.firestore().collection("projects").whereField("projectID", isEqualTo: project).getDocuments { (snapshot, error) in
+                        if let error = error {
+                            self.view.showAlert(alertText: error.localizedDescription)
+                        } else {
+                            
+                            
+                            for document in snapshot!.documents {
+                                
+                                let name = document.data()["name"] as? String ?? "Unkown Name"
+                                let detailText = document.data()["detailText"] as? String ?? "Unknown"
+                                let addedBy = document.data()["addedBy"] as? String ?? "Unkown"
+                                let created = document.data()["created"] as? String ?? "Unkown"
+                                let imageURL = document.data()["imageID"] as? String ?? "Unknown"
+                                let projectID = document.data()["projectID"] as? String ?? "Unknown"
+                                
+                                let project = Project(name: name, detail: detailText, addedBy: addedBy, created: created, imageURL: imageURL, projectID: projectID)
+                                self.projects.append(project)
+                            }
+                            
+                            self.collectionView.removeGestureRecognizer(self.longPressGesture)
+                            self.collectionView.reloadData()
+                        }
+                    }
+                }
             }
         }
     }
@@ -65,12 +119,11 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         collectionView.dataSource = self
         
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
-        collectionView.addGestureRecognizer(longPressGesture)
     }
     
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
         let cells = collectionView.visibleCells as! Array<ProjectCell>
-
+        
         for cell in cells {
             cell.layer.removeAllAnimations()
             cell.deleteButton.isHidden = true
@@ -84,6 +137,20 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         cell.deleteAnimation()
     }
     
+    
+    @objc private func handleSegmentedControl(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            getProjects()
+        case 1:
+            getFavorites()
+            emptyView?.isHidden = true
+        default:
+            break
+        }
+    }
+    
+    
     @objc private func deleteProject(_ sender: UIButton) {
         let project = projects[sender.tag]
         let projectsDB = Firestore.firestore().collection("projects")
@@ -95,7 +162,6 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
                 print("Document successfully removed!")
                 self.projects.remove(at: sender.tag)
                 self.collectionView.reloadData()
-                
             }
         }
     }
@@ -105,14 +171,13 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         view.backgroundColor = backgroundColor
         
         let titleLabel = TitleLabel("Days", 38, .left)
-        let projectsLabel = BodyLabel("My Journals", 22, .left, .label)
         let addProjectButton = EnterButton("Add Journal", 20, .secondaryLabel)
         addProjectButton.addTarget(self, action: #selector(addProjectTapped), for: .touchUpInside)
         
         view.addSubview(titleLabel)
-        view.addSubview(projectsLabel)
         view.addSubview(addProjectButton)
         view.addSubview(collectionView)
+        view.addSubview(segmentedControl)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20),
@@ -120,12 +185,12 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             titleLabel.heightAnchor.constraint(equalToConstant: 44),
             
-            projectsLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
-            projectsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            projectsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            projectsLabel.heightAnchor.constraint(equalToConstant: 22),
+            segmentedControl.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
+            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            segmentedControl.heightAnchor.constraint(equalToConstant: 35),
             
-            collectionView.topAnchor.constraint(equalTo: projectsLabel.bottomAnchor, constant: 15),
+            collectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 15),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             collectionView.bottomAnchor.constraint(equalTo: addProjectButton.topAnchor, constant: -20),
@@ -143,10 +208,9 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         view.addSubview(emptyView!)
         
         NSLayoutConstraint.activate([
-            emptyView!.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
-            emptyView!.heightAnchor.constraint(equalTo: collectionView.heightAnchor, multiplier: 0.6),
-            emptyView!.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
-            emptyView!.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
+            emptyView!.topAnchor.constraint(equalTo: collectionView.topAnchor, constant: 20),
+            emptyView!.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            emptyView!.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -20)
         ])
     }
     
@@ -177,7 +241,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     
     @objc private func removeDeleteAnimation() {
         let cells = collectionView.visibleCells as! Array<ProjectCell>
-
+        
         for cell in cells {
             cell.layer.removeAllAnimations()
             cell.deleteButton.isHidden = true
@@ -193,10 +257,14 @@ extension ProjectsViewController: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ProjectCell
-        let project = projects[indexPath.item]
         
+        for view in cell.contentView.subviews {
+           view.removeFromSuperview()
+        }
+        
+        let project = projects[indexPath.item]
         cell.configureCell(title: project.name, imageURL: project.imageURL)
-
+        
         return cell
     }
     

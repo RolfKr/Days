@@ -48,6 +48,14 @@ class ProjectCell: UICollectionViewCell {
         return button
     }()
     
+    override func prepareForReuse() {
+        titleLabel.removeFromSuperview()
+        projectImage.removeFromSuperview()
+        deleteButton.removeFromSuperview()
+        activityIndicator.removeFromSuperview()
+        darkenView.removeFromSuperview()
+    }
+
     func configureCell(title: String, imageURL: String) {
         backgroundColor = .systemBackground
         layer.cornerRadius = 6
@@ -58,7 +66,6 @@ class ProjectCell: UICollectionViewCell {
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.numberOfLines = 2
         titleLabel.textColor = .white
-        titleLabel.isHidden = true
         
         addSubview(projectImage)
         projectImage.addSubview(activityIndicator)
@@ -96,23 +103,24 @@ class ProjectCell: UICollectionViewCell {
     }
     
     private func downloadProjectImage(imageURL: String) {
-
+        
         if let cachedImage = imageCache.object(forKey: imageURL as NSString) as? UIImage {
+            
             projectImage.image = cachedImage
+            titleLabel.isHidden = false
+            bringSubviewToFront(titleLabel)
         } else {
+            
             let storageRef = Storage.storage().reference(withPath: "projects/\(imageURL)")
             activityIndicator.isHidden = false
 
             storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
                 if let error = error {
                     print(error.localizedDescription)
-                    
                     return
                 }
                 
                 if let data = data {
-                    
-                    
                     if let downloadedImage = UIImage(data: data) {
                         self.imageCache.setObject(downloadedImage, forKey: imageURL as NSString)
                         self.projectImage.image = downloadedImage
