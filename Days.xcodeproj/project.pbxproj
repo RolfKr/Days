@@ -12,9 +12,10 @@
 		7E3D04CA23E1208000E60345 /* AddProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D04C923E1208000E60345 /* AddProjectViewController.swift */; };
 		7E52E10E23E4A66B001B3F53 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E52E10D23E4A66B001B3F53 /* AccountViewController.swift */; };
 		7E9FDB8723F2CF9A00D12B04 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FDB8623F2CF9A00D12B04 /* DiscoverViewController.swift */; };
+		7EAB9E9623FAAA5E0008FE4B /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAB9E9523FAAA5E0008FE4B /* WelcomeViewController.swift */; };
 		7EB0A5D123DF309F00395F56 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D023DF309F00395F56 /* AppDelegate.swift */; };
 		7EB0A5D323DF309F00395F56 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D223DF309F00395F56 /* SceneDelegate.swift */; };
-		7EB0A5D523DF309F00395F56 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D423DF309F00395F56 /* WelcomeViewController.swift */; };
+		7EB0A5D523DF309F00395F56 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D423DF309F00395F56 /* RegisterViewController.swift */; };
 		7EB0A5DA23DF30A000395F56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D923DF30A000395F56 /* Assets.xcassets */; };
 		7EB0A5DD23DF30A000395F56 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EB0A5DB23DF30A000395F56 /* LaunchScreen.storyboard */; };
 		7EB0A5E523DF327E00395F56 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5E423DF327E00395F56 /* InputView.swift */; };
@@ -46,10 +47,11 @@
 		7E3D04C923E1208000E60345 /* AddProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectViewController.swift; sourceTree = "<group>"; };
 		7E52E10D23E4A66B001B3F53 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		7E9FDB8623F2CF9A00D12B04 /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
+		7EAB9E9523FAAA5E0008FE4B /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		7EB0A5CD23DF309F00395F56 /* Days.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Days.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EB0A5D023DF309F00395F56 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EB0A5D223DF309F00395F56 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7EB0A5D423DF309F00395F56 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		7EB0A5D423DF309F00395F56 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		7EB0A5D923DF30A000395F56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7EB0A5DC23DF30A000395F56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7EB0A5DE23DF30A000395F56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -175,7 +177,8 @@
 			isa = PBXGroup;
 			children = (
 				B7A6378723F488AD006BF7CF /* AuthenticationViewController.swift */,
-				7EB0A5D423DF309F00395F56 /* WelcomeViewController.swift */,
+				7EAB9E9523FAAA5E0008FE4B /* WelcomeViewController.swift */,
+				7EB0A5D423DF309F00395F56 /* RegisterViewController.swift */,
 				B757E14D23DF63BA0093DDB9 /* LoginViewController.swift */,
 				B7CD982723E48AC0005E8505 /* TabBarController.swift */,
 				B757E14F23DF696C0093DDB9 /* ProjectsViewController.swift */,
@@ -375,11 +378,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EAB9E9623FAAA5E0008FE4B /* WelcomeViewController.swift in Sources */,
 				B72B008223DF6FB600C45279 /* BodyLabel.swift in Sources */,
 				B757E14E23DF63BA0093DDB9 /* LoginViewController.swift in Sources */,
 				B7A6378823F488AD006BF7CF /* AuthenticationViewController.swift in Sources */,
 				B75EC2A723E0DDD7007C8B3A /* PostCell.swift in Sources */,
-				7EB0A5D523DF309F00395F56 /* WelcomeViewController.swift in Sources */,
+				7EB0A5D523DF309F00395F56 /* RegisterViewController.swift in Sources */,
 				B7F013D023DF7B3800A209DA /* ProjectCell.swift in Sources */,
 				7E3D04C523E118DC00E60345 /* Project.swift in Sources */,
 				7EB0A5D123DF309F00395F56 /* AppDelegate.swift in Sources */,
