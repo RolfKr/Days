@@ -126,7 +126,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             textFieldStack.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 10),
             textFieldStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sidePadding),
             textFieldStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sidePadding),
-            textFieldStack.heightAnchor.constraint(equalToConstant: screenHeight * 0.3),
+            textFieldStack.heightAnchor.constraint(equalToConstant: screenHeight * 0.35),
             
             registerButton.topAnchor.constraint(equalTo: textFieldStack.bottomAnchor, constant: 20),
             registerButton.centerXAnchor.constraint(equalTo: textFieldStack.centerXAnchor),
