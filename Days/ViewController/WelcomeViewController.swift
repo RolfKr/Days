@@ -79,12 +79,12 @@ class WelcomeViewController: UIViewController, GIDSignInDelegate {
             bodyText.trailingAnchor.constraint(equalTo: titleText.trailingAnchor),
             bodyText.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.15),
             
-            appleSignIn.bottomAnchor.constraint(equalTo: googleSignInButton.topAnchor, constant: -25),
+            appleSignIn.bottomAnchor.constraint(equalTo: googleSignInButton.topAnchor, constant: -10),
             appleSignIn.leadingAnchor.constraint(equalTo: bodyText.leadingAnchor),
             appleSignIn.trailingAnchor.constraint(equalTo: bodyText.trailingAnchor),
             appleSignIn.heightAnchor.constraint(equalToConstant: 44),
             
-            googleSignInButton.bottomAnchor.constraint(equalTo: otherSignIn.topAnchor, constant: -25),
+            googleSignInButton.bottomAnchor.constraint(equalTo: otherSignIn.topAnchor, constant: -10),
             googleSignInButton.leadingAnchor.constraint(equalTo: bodyText.leadingAnchor),
             googleSignInButton.trailingAnchor.constraint(equalTo: bodyText.trailingAnchor),
             googleSignInButton.heightAnchor.constraint(equalToConstant: 44),

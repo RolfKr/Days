@@ -82,7 +82,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     private func configureUI() {
         view.backgroundColor = backgroundColor
-        let titleText = TitleLabel("Welcome to Days", 26, .center)
+        let titleText = TitleLabel("Register", 26, .left)
         usernameView = InputView("Enter name")
         usernameView.textField.delegate = self
         
@@ -109,9 +109,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         textFieldStack.spacing = 15
         textFieldStack.distribution = .fillEqually
         
-        
-        
-        view.addSubview(bookImageView)
         view.addSubview(titleText)
         view.addSubview(textFieldStack)
         view.addSubview(registerButton)
@@ -121,16 +118,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let sidePadding: CGFloat = 50
         
         NSLayoutConstraint.activate([
-            bookImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            bookImageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 30),
-            bookImageView.heightAnchor.constraint(lessThanOrEqualTo: view.heightAnchor, multiplier: 0.15),
-            bookImageView.widthAnchor.constraint(equalTo: bookImageView.heightAnchor),
-            
-            titleText.topAnchor.constraint(equalTo: bookImageView.bottomAnchor, constant: 25),
+            titleText.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 25),
             titleText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sidePadding),
             titleText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sidePadding),
+            titleText.heightAnchor.constraint(equalToConstant: 44),
             
-            textFieldStack.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 20),
+            textFieldStack.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 10),
             textFieldStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sidePadding),
             textFieldStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sidePadding),
             textFieldStack.heightAnchor.constraint(equalToConstant: screenHeight * 0.3),

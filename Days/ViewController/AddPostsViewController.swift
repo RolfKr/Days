@@ -104,6 +104,7 @@ class AddPostViewController: UIViewController {
         createCollectionView()
         
         let titleLabel = TitleLabel("Create Post", 38, .left)
+        titleLabel.adjustsFontSizeToFitWidth = true
         view.addSubview(titleLabel)
         
         view.addSubview(doneButton)
@@ -120,10 +121,10 @@ class AddPostViewController: UIViewController {
                    titleLabel.trailingAnchor.constraint(equalTo: doneButton.leadingAnchor, constant: -20),
                    titleLabel.heightAnchor.constraint(equalToConstant: 44),
                    
-                   doneButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 30),
+                   doneButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20),
                    doneButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-                   doneButton.widthAnchor.constraint(equalToConstant: 60),
-                   doneButton.heightAnchor.constraint(equalToConstant: 60),
+                   doneButton.widthAnchor.constraint(equalToConstant: 40),
+                   doneButton.heightAnchor.constraint(equalToConstant: 40),
                    
                    postText.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
                    postText.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 0),

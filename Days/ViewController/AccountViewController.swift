@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import StoreKit
 
 class AccountViewController: UIViewController {
     
@@ -23,6 +24,7 @@ class AccountViewController: UIViewController {
     
     private func configureViews() {
         createSignOutCell()
+        createRateAppCell()
         createLACell()
         createTableView()
         
@@ -84,6 +86,35 @@ class AccountViewController: UIViewController {
         useLocalAuthentication.accessoryView = switchView
         
         cells.append(useLocalAuthentication)
+    }
+    
+    private func createRateAppCell() {
+        let rateTheApp = UITableViewCell()
+        rateTheApp.translatesAutoresizingMaskIntoConstraints = false
+        rateTheApp.backgroundColor = cellBackground
+        
+        let rateButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: rateTheApp.frame.height))
+        rateButton.setTitle("Rate us!", for: .normal)
+        rateButton.setTitleColor(.label, for: .normal)
+        rateButton.addTarget(self, action: #selector(rateApp), for: .touchUpInside)
+        
+        rateTheApp.addSubview(rateButton)
+        
+        cells.append(rateTheApp)
+    }
+    
+    @objc private func rateApp() {
+        if #available(iOS 10.3, *) {
+            SKStoreReviewController.requestReview()
+
+        } else if let url = URL(string: "itms-apps://itunes.apple.com/app/" + "appId") {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
     }
     
     @objc private func switchTapped(sender: UISwitch){

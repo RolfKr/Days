@@ -12,6 +12,7 @@ import Firebase
 class ProjectsViewController: UIViewController, AddProjectDelegate {
     
     var collectionView: UICollectionView!
+    var addProjectButton: EnterButton!
     var projects: [Project] = []
     var emptyView: UIView?
     var longPressGesture: UILongPressGestureRecognizer!
@@ -144,10 +145,12 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         case 0:
             ownJournals = true
             getProjects()
+            addProjectButton.isHidden = false
         case 1:
             ownJournals = false
             getFavorites()
             emptyView?.isHidden = true
+            addProjectButton.isHidden = true
         default:
             break
         }
@@ -174,7 +177,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         view.backgroundColor = backgroundColor
         
         let titleLabel = TitleLabel("Days", 38, .left)
-        let addProjectButton = EnterButton("Add Journal", 20, .secondaryLabel)
+        addProjectButton = EnterButton("Add Journal", 20, .secondaryLabel)
         addProjectButton.addTarget(self, action: #selector(addProjectTapped), for: .touchUpInside)
         
         view.addSubview(titleLabel)
@@ -193,7 +196,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
             segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             segmentedControl.heightAnchor.constraint(equalToConstant: 35),
             
-            collectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 15),
+            collectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 25),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             collectionView.bottomAnchor.constraint(equalTo: addProjectButton.topAnchor, constant: -20),
