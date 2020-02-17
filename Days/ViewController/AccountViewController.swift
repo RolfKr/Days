@@ -50,6 +50,7 @@ class AccountViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = backgroundColor
+        tableView.allowsSelection = false
         view.addSubview(tableView)
     }
     
