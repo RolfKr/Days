@@ -24,7 +24,7 @@ class TabBarController: UITabBarController {
         let accountVC = AccountViewController()
         accountVC.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.crop.circle"), selectedImage: UIImage(systemName: "person.crop.circle.fill"))
         
-        let tabBarList = [discoverVC, projectsVC, accountVC]
+        let tabBarList = [projectsVC, discoverVC, accountVC]
         viewControllers = tabBarList
     }
 }

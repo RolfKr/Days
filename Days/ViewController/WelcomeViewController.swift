@@ -15,6 +15,7 @@ import CryptoKit
 class WelcomeViewController: UIViewController, GIDSignInDelegate {
     
     var currentNonce: String?
+    var googleSignInButton: GIDSignInButton!
     
     var bookImageView: UIImageView = {
         let imageView = UIImageView()
@@ -34,17 +35,20 @@ class WelcomeViewController: UIViewController, GIDSignInDelegate {
     private func configureUI() {
         view.backgroundColor = backgroundColor
         let titleText = TitleLabel("Welcome to Days", 26, .center)
-        let bodyText = BodyLabel("Keep track of all the exciting events in your life. \n  \n Share them with the world, or keep them private just for yourself.", 18, .center, .secondaryLabel)
+        let bodyText = BodyLabel("Keep track of all the exciting events in your life. \n  \n Share them with the world, \n or keep them private just for yourself.", 18, .center, .secondaryLabel)
         bodyText.numberOfLines = 0
         bodyText.adjustsFontSizeToFitWidth = true
-        bodyText.minimumScaleFactor = 1.0
+        bodyText.minimumScaleFactor = 0.5
         
         let appleSignIn = ASAuthorizationAppleIDButton()
         appleSignIn.translatesAutoresizingMaskIntoConstraints = false
         appleSignIn.addTarget(self, action: #selector(didTapAppleButton), for: .touchUpInside)
         
-        let googleSignInButton = GIDSignInButton()
+        googleSignInButton = GIDSignInButton()
         googleSignInButton.translatesAutoresizingMaskIntoConstraints = false
+        googleSignInButton.style = .wide
+        
+
         
         let otherSignIn = EnterButton("Other sign in method", 17, .label)
         otherSignIn.addTarget(self, action: #selector(otherSignInTapped), for: .touchUpInside)
@@ -73,6 +77,7 @@ class WelcomeViewController: UIViewController, GIDSignInDelegate {
             bodyText.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 15),
             bodyText.leadingAnchor.constraint(equalTo: titleText.leadingAnchor),
             bodyText.trailingAnchor.constraint(equalTo: titleText.trailingAnchor),
+            bodyText.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.15),
             
             appleSignIn.bottomAnchor.constraint(equalTo: googleSignInButton.topAnchor, constant: -25),
             appleSignIn.leadingAnchor.constraint(equalTo: bodyText.leadingAnchor),
@@ -90,6 +95,14 @@ class WelcomeViewController: UIViewController, GIDSignInDelegate {
             otherSignIn.heightAnchor.constraint(equalToConstant: 44)
             
         ])
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.userInterfaceStyle == .light {
+            googleSignInButton.colorScheme = .light
+        } else if traitCollection.userInterfaceStyle == .dark {
+            googleSignInButton.colorScheme = .dark
+        }
     }
 
     @objc private func didTapAppleButton() {

@@ -41,9 +41,30 @@ class PostsViewController: UIViewController, AddPostDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkIfFavorited()
         getPosts()
         createTableView()
         configureViews()
+    }
+    
+    private func checkIfFavorited() {
+        guard let currentUserID = Auth.auth().currentUser?.uid else { return }
+        let userRef = Firestore.firestore().collection("users").document(currentUserID)
+        
+        
+        
+        userRef.getDocument { (snapshot, error) in
+            if let error = error {
+                self.view.showAlert(alertText: error.localizedDescription)
+            } else {
+                let favoriteProjects = snapshot?.data()?["favoriteProjects"] as? [String] ?? [""]
+                
+                if favoriteProjects.contains(self.project.projectID) {
+                    self.isFavorited = true
+                    self.heartButton.setImage(UIImage(named: "heartFilled"), for: .normal)
+                }
+            }
+        }
     }
     
     private func getPosts() {
@@ -172,22 +193,25 @@ class PostsViewController: UIViewController, AddPostDelegate {
             favoriteProject()
         } else {
             heartButton.setImage(UIImage(named: "heart"), for: .normal)
+            favoriteProject()
         }
     }
     
     private func favoriteProject() {
-        guard let currentUser = Auth.auth().currentUser?.email else {return}
+        guard let currentUser = Auth.auth().currentUser?.uid else {return}
         let userRef = Firestore.firestore().collection("users").document(currentUser)
-//        let favoriteProjectRef = userRef.collection("favoritedprojects")
         
-        userRef.updateData([
-            "favoriteProjects" : FieldValue.arrayUnion([project.projectID])
-        ])
-        
-        print("Project added to favorites")
+        if isFavorited {
+            userRef.updateData([
+                "favoriteProjects" : FieldValue.arrayUnion([project.projectID])
+            ])
+        } else {
+            userRef.updateData([
+                "favoriteProjects" : FieldValue.arrayRemove([project.projectID])
+            ])
+        }
+
     }
-    
-    
     
     func didFinishAddingPost() {
         getPosts()

@@ -105,7 +105,7 @@ class AddProjectViewController: UIViewController {
         let exitButton = EnterButton("Exit", 20, .label)
         exitButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
         
-        let buttonStack = UIStackView(arrangedSubviews: [enterButton, exitButton])
+        let buttonStack = UIStackView(arrangedSubviews: [exitButton, enterButton])
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
         buttonStack.distribution = .fillEqually
         buttonStack.spacing = 20
