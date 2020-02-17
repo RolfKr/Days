@@ -8,10 +8,11 @@
 
 import UIKit
 import Firebase
+import GoogleSignIn
 import AuthenticationServices
 import CryptoKit
 
-class WelcomeViewController: UIViewController {
+class WelcomeViewController: UIViewController, GIDSignInDelegate {
     
     var currentNonce: String?
     
@@ -26,6 +27,8 @@ class WelcomeViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
 
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.delegate = self
     }
     
     private func configureUI() {
@@ -40,6 +43,9 @@ class WelcomeViewController: UIViewController {
         appleSignIn.translatesAutoresizingMaskIntoConstraints = false
         appleSignIn.addTarget(self, action: #selector(didTapAppleButton), for: .touchUpInside)
         
+        let googleSignInButton = GIDSignInButton()
+        googleSignInButton.translatesAutoresizingMaskIntoConstraints = false
+        
         let otherSignIn = EnterButton("Other sign in method", 17, .label)
         otherSignIn.addTarget(self, action: #selector(otherSignInTapped), for: .touchUpInside)
         
@@ -48,6 +54,7 @@ class WelcomeViewController: UIViewController {
         view.addSubview(titleText)
         view.addSubview(bodyText)
         view.addSubview(appleSignIn)
+        view.addSubview(googleSignInButton)
         view.addSubview(otherSignIn)
 
         let sidePadding: CGFloat = 50
@@ -67,10 +74,15 @@ class WelcomeViewController: UIViewController {
             bodyText.leadingAnchor.constraint(equalTo: titleText.leadingAnchor),
             bodyText.trailingAnchor.constraint(equalTo: titleText.trailingAnchor),
             
-            appleSignIn.bottomAnchor.constraint(equalTo: otherSignIn.topAnchor, constant: -25),
+            appleSignIn.bottomAnchor.constraint(equalTo: googleSignInButton.topAnchor, constant: -25),
             appleSignIn.leadingAnchor.constraint(equalTo: bodyText.leadingAnchor),
             appleSignIn.trailingAnchor.constraint(equalTo: bodyText.trailingAnchor),
             appleSignIn.heightAnchor.constraint(equalToConstant: 44),
+            
+            googleSignInButton.bottomAnchor.constraint(equalTo: otherSignIn.topAnchor, constant: -25),
+            googleSignInButton.leadingAnchor.constraint(equalTo: bodyText.leadingAnchor),
+            googleSignInButton.trailingAnchor.constraint(equalTo: bodyText.trailingAnchor),
+            googleSignInButton.heightAnchor.constraint(equalToConstant: 44),
             
             otherSignIn.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -30),
             otherSignIn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sidePadding),
@@ -123,6 +135,30 @@ class WelcomeViewController: UIViewController {
         navBar.navigationBar.isHidden = true
         navBar.modalPresentationStyle = .fullScreen
         present(navBar, animated: true)
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            print(error.localizedDescription)
+        }
+        
+        guard let authentication = user.authentication else {return}
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+        
+        Auth.auth().signIn(with: credential) { [weak self] (authResult, error) in
+            if let error = error {
+                self?.view.showAlert(alertText: error.localizedDescription)
+                return
+            }
+        
+            guard let email = user.profile.email,
+                let username = user.profile.name,
+                let uid = Auth.auth().currentUser?.uid else {return}
+            
+            
+            self?.addUserToDatabase(uid: uid, email: email, username: username)
+            self?.goToProjects()
+        }
     }
 
 }

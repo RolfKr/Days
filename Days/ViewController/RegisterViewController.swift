@@ -8,11 +8,10 @@
 
 import UIKit
 import Firebase
-import GoogleSignIn
 import AuthenticationServices
 import CryptoKit
 
-class RegisterViewController: UIViewController, UITextFieldDelegate, GIDSignInDelegate {
+class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     var usernameView: InputView!
     var emailView: InputView!
@@ -27,22 +26,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, GIDSignInDe
         return imageView
     }()
     
-    var googleSignInButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "googleLogo"), for: .normal)
-        button.layer.cornerRadius = 4
-        button.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        button.addTarget(self, action: #selector(googleSignInTapped), for: .touchUpInside)
-        return button
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         dismissKeyboard(on: view)
-        
-        GIDSignIn.sharedInstance()?.presentingViewController = self
-        GIDSignIn.sharedInstance()?.delegate = self
     }
 
     
@@ -115,29 +103,19 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, GIDSignInDe
         registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(goToLogin), for: .touchUpInside)
         
-        let appleSignIn = ASAuthorizationAppleIDButton()
-        appleSignIn.translatesAutoresizingMaskIntoConstraints = false
-        appleSignIn.addTarget(self, action: #selector(didTapAppleButton), for: .touchUpInside)
-        
-        let customSignInStack = UIStackView(arrangedSubviews: [googleSignInButton, appleSignIn])
-        customSignInStack.axis = .horizontal
-        customSignInStack.distribution = .fillProportionally
-        customSignInStack.alignment = .center
-        customSignInStack.spacing = 20
-        customSignInStack.translatesAutoresizingMaskIntoConstraints = false
-        
         let textFieldStack = UIStackView(arrangedSubviews: [usernameView, emailView, passwordView, secondPasswordView])
         textFieldStack.translatesAutoresizingMaskIntoConstraints = false
         textFieldStack.axis = .vertical
         textFieldStack.spacing = 15
         textFieldStack.distribution = .fillEqually
         
+        
+        
         view.addSubview(bookImageView)
         view.addSubview(titleText)
         view.addSubview(textFieldStack)
         view.addSubview(registerButton)
         view.addSubview(loginButton)
-        view.addSubview(customSignInStack)
         
         let screenHeight = view.frame.height
         let sidePadding: CGFloat = 50
@@ -162,11 +140,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, GIDSignInDe
             registerButton.heightAnchor.constraint(equalToConstant: 44),
             registerButton.widthAnchor.constraint(equalToConstant: 200),
             
-            customSignInStack.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 20),
-            customSignInStack.leadingAnchor.constraint(equalTo: registerButton.leadingAnchor, constant: 0),
-            customSignInStack.trailingAnchor.constraint(equalTo: registerButton.trailingAnchor, constant: 0),
-            customSignInStack.heightAnchor.constraint(equalToConstant: 40),
-            
             loginButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -8),
             loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             loginButton.heightAnchor.constraint(equalToConstant: 30),
@@ -178,10 +151,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, GIDSignInDe
         present(LoginViewController(), animated: true)
     }
     
-    @objc private func googleSignInTapped() {
-        GIDSignIn.sharedInstance()?.signIn()
-    }
-
     
     @objc private func register() {
         guard let username = usernameView.textField.text,
@@ -202,103 +171,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, GIDSignInDe
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if let error = error {
-            print(error.localizedDescription)
-        }
-        
-        guard let authentication = user.authentication else {return}
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-        
-        Auth.auth().signIn(with: credential) { [weak self] (authResult, error) in
-            if let error = error {
-                self?.view.showAlert(alertText: error.localizedDescription)
-                return
-            }
-        
-            guard let email = user.profile.email,
-                let username = user.profile.name,
-                let uid = Auth.auth().currentUser?.uid else {return}
-            
-            
-            self?.addUserToDatabase(uid: uid, email: email, username: username)
-            self?.goToProjects()
-        }
-    }
-    
-    @objc private func didTapAppleButton() {
-        let nonce = randomNonceString()
-        currentNonce = nonce
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        request.nonce = sha256(nonce)
-
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
-    }
-    
-    private func sha256(_ input: String) -> String {
-      let inputData = Data(input.utf8)
-      let hashedData = SHA256.hash(data: inputData)
-      let hashString = hashedData.compactMap {
-        return String(format: "%02x", $0)
-      }.joined()
-
-      return hashString
-    }
 }
 
-extension RegisterViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-      if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-        guard let nonce = currentNonce else {
-          fatalError("Invalid state: A login callback was received, but no login request was sent.")
-        }
-        guard let appleIDToken = appleIDCredential.identityToken else {
-          print("Unable to fetch identity token")
-          return
-        }
-        guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-          print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
-          return
-        }
-        // Initialize a Firebase credential.
-        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
-        //let credential = OAuthProvider.credential(withProviderID: "apple.com", IDToken: idTokenString, rawNonce: nonce)
-        
-        // Sign in with Firebase.
-        Auth.auth().signIn(with: credential) { [weak self] (authResult, error) in
-          if let error = error {
-            // Error. If error.code == .MissingOrInvalidNonce, make sure
-            // you're sending the SHA256-hashed nonce as a hex string with
-            // your request to Apple.
-            self?.view.showAlert(alertText: error.localizedDescription)
-            return
-          }
-          
-            //Perform login
-            let username = appleIDCredential.fullName?.givenName ?? "No name"
-            let email = appleIDCredential.email ?? "No email"
-            guard let uid = Auth.auth().currentUser?.uid else {return}
 
-            self?.addUserToDatabase(uid: uid, email: email, username: username)
-            self?.goToProjects()
-        }
-      }
-    }
-
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        view.showAlert(alertText: error.localizedDescription)
-    }
-    
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return view.window!
-    }
-}
 
 
