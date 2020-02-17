@@ -15,6 +15,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     var projects: [Project] = []
     var emptyView: UIView?
     var longPressGesture: UILongPressGestureRecognizer!
+    var ownJournals = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,8 +142,10 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     @objc private func handleSegmentedControl(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
+            ownJournals = true
             getProjects()
         case 1:
+            ownJournals = false
             getFavorites()
             emptyView?.isHidden = true
         default:
@@ -285,7 +288,14 @@ extension ProjectsViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let postsVC = PostsViewController()
         postsVC.project = projects[indexPath.item]
-        postsVC.isPublicProject = false
+        
+        if ownJournals {
+            postsVC.isPublicProject = false
+        } else {
+            postsVC.isPublicProject = true
+        }
+        
+        
         navigationController?.pushViewController(postsVC, animated: true)
     }
     

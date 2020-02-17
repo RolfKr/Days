@@ -35,7 +35,7 @@ class ProjectCell: UICollectionViewCell {
     var activityIndicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
         view.style = .large
-        view.color = .label
+        view.color = .white
         view.startAnimating()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
