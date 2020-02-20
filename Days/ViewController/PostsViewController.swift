@@ -235,6 +235,28 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = backgroundColor
         let post = posts[indexPath.row]
         cell.configureCell(post.created, post.body, post.imageURLs)
+        cell.delegate = self
         return cell
+    }
+}
+
+extension PostsViewController: PostCellDelegate {
+    
+    func showImageFullscreen(image: UIImage) {
+        let imageView = UIImageView()
+        imageView.image = image
+        imageView.frame = UIScreen.main.bounds
+        imageView.backgroundColor = .black
+        imageView.contentMode = .scaleAspectFit
+        imageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+        imageView.addGestureRecognizer(tap)
+        self.view.addSubview(imageView)
+        self.tabBarController?.tabBar.isHidden = true
+    }
+
+    @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+        self.tabBarController?.tabBar.isHidden = false
+        sender.view?.removeFromSuperview()
     }
 }

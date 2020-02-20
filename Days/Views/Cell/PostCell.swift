@@ -9,6 +9,10 @@
 import UIKit
 import Firebase
 
+protocol PostCellDelegate {
+    func showImageFullscreen(image: UIImage)
+}
+
 class PostCell: UITableViewCell {
     
     var collectionView: UICollectionView!
@@ -17,6 +21,8 @@ class PostCell: UITableViewCell {
     var collectionViewHeight: NSLayoutConstraint!
     var postedLabel: BodyLabel!
     var bodyLabel: BodyLabel!
+    
+    var delegate: PostCellDelegate!
     
     var containerView: UIView = {
         let view = UIView()
@@ -48,7 +54,6 @@ class PostCell: UITableViewCell {
         containerView.addSubview(collectionView)
         
         let padding: CGFloat = 20
-        
         
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
@@ -145,6 +150,7 @@ extension PostCell: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Tapped item \(indexPath.item)")
+        let image = images[indexPath.item]
+        delegate.showImageFullscreen(image: image)
     }
 }

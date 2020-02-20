@@ -19,6 +19,7 @@ class PostCollectionViewCell: UICollectionViewCell {
     
     func configureCollectionViewCell(_ image: UIImage) {
         imageView = UIImageView()
+        imageView.isUserInteractionEnabled = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         layer.cornerRadius = 6
         imageView.clipsToBounds = true
