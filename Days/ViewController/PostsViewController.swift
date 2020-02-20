@@ -152,7 +152,12 @@ class PostsViewController: UIViewController, AddPostDelegate {
     }
     
     private func addEmptyPostView() {
-        emptyView = view.showEmptyListView(titleText: "You have no posts", subTitleText: "Press the button in the top right to add", image: UIImage(named: "emptyPost")!)
+        if isPublicProject {
+            emptyView = view.showEmptyListView(titleText: "User have not posted anything yet!", subTitleText: "Heart this journal by tapping in the top right to follow their story.", image: UIImage(named: "emptyPost")!)
+        } else {
+            emptyView = view.showEmptyListView(titleText: "You have no posts", subTitleText: "Press the button in the top right to add", image: UIImage(named: "emptyPost")!)
+        }
+        
         emptyView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(emptyView)
         

@@ -105,6 +105,9 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
                                 }
                             }
                         }
+                        if self.projects.isEmpty {
+                            self.addEmptyListView()
+                        }
                         self.collectionView.reloadData()
                     }
                 }
@@ -145,6 +148,11 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     
     
     @objc private func handleSegmentedControl(_ sender: UISegmentedControl) {
+        
+        if let emptyView = view.viewWithTag(999) {
+            emptyView.removeFromSuperview()
+        }
+        
         switch sender.selectedSegmentIndex {
         case 0:
             ownJournals = true
@@ -215,7 +223,12 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     }
     
     private func addEmptyListView() {
-        emptyView = view.showEmptyListView(titleText: "You have no journals", subTitleText: "Press the button below to add", image: UIImage(named: "emptyBox")!)
+        if ownJournals {
+            emptyView = view.showEmptyListView(titleText: "You have no journals", subTitleText: "Press the button below to add", image: UIImage(named: "emptyBox")!)
+        } else {
+            emptyView = view.showEmptyListView(titleText: "You have no favorites", subTitleText: "Check the Discover tab to find someone to follow!", image: UIImage(named: "emptyBox")!)
+        }
+        
         emptyView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(emptyView!)
         

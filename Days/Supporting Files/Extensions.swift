@@ -105,6 +105,7 @@ extension UIView {
     
     func showEmptyListView(titleText: String, subTitleText: String, image: UIImage) -> UIView {
         let container = UIView()
+        container.tag = 999
         container.translatesAutoresizingMaskIntoConstraints = false
         addSubview(container)
         
@@ -120,6 +121,7 @@ extension UIView {
         subTitle.textColor = .secondaryLabel
         subTitle.adjustsFontSizeToFitWidth = true
         subTitle.minimumScaleFactor = 0.6
+        subTitle.numberOfLines = 2
         
         let stackView = UIStackView(arrangedSubviews: [title, boxImage, subTitle])
         stackView.translatesAutoresizingMaskIntoConstraints = false
