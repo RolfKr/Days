@@ -12,6 +12,7 @@ import Firebase
 class DiscoverViewController: UIViewController {
     
     var collectionView: UICollectionView!
+    var searchBar: UISearchBar!
     var projects: [Project] = []
 
     override func viewDidLoad() {
@@ -54,6 +55,7 @@ class DiscoverViewController: UIViewController {
         view.backgroundColor = backgroundColor
         
         createCollectionView()
+        createSearchBar()
         
         let titleLabel = TitleLabel("Discover", 38, .left)
         let subTitle = BodyLabel("Find Journals created by others", 17, .left, .secondaryLabel)
@@ -75,7 +77,12 @@ class DiscoverViewController: UIViewController {
             subTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             subTitle.heightAnchor.constraint(equalToConstant: 20),
             
-            collectionView.topAnchor.constraint(equalTo: subTitle.bottomAnchor, constant: 20),
+            searchBar.topAnchor.constraint(equalTo: subTitle.bottomAnchor, constant: 10),
+            searchBar.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
+            searchBar.heightAnchor.constraint(equalToConstant: 44),
+            
+            collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 20),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             collectionView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: 0)
@@ -93,6 +100,15 @@ class DiscoverViewController: UIViewController {
         collectionView.backgroundColor = backgroundColor
         collectionView.delegate = self
         collectionView.dataSource = self
+    }
+    
+    private func createSearchBar() {
+        searchBar = UISearchBar()
+        searchBar.autocorrectionType = .yes
+        searchBar.barTintColor = backgroundColor
+        searchBar.placeholder = "Search by title or content"
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(searchBar)
     }
 }
 
