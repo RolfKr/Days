@@ -14,20 +14,30 @@ class DiscoverViewController: UIViewController {
     var collectionView: UICollectionView!
     var searchBar: UISearchBar!
     var projects: [Project] = []
+    var nonFilteredProjects: [Project] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
-        getProjects()
+        initialSetup()
+        
+        print(nonFilteredProjects.count)
     }
     
-    private func getProjects() {
+    private func initialSetup() {
         projects = []
 
         let projectsRef = Firestore.firestore().collection("projects")
         let publicProjects = projectsRef.whereField("public", isEqualTo: true).order(by: "created", descending: true)
         
-        publicProjects.getDocuments { [weak self] (snapshot, error) in
+        getProjects(forQuery: publicProjects)
+        nonFilteredProjects = projects
+    }
+    
+    private func getProjects(forQuery query: Query) {
+        projects = []
+        
+        query.getDocuments { [weak self] (snapshot, error) in
             if let error = error {
                 self?.view.showAlert(alertText: error.localizedDescription)
             } else {
@@ -45,8 +55,11 @@ class DiscoverViewController: UIViewController {
                     
                     let project = Project(name: name, detail: detailText, addedBy: addedBy, created: created, imageURL: imageURL, projectID: projectID)
                     self?.projects.append(project)
+                    self?.nonFilteredProjects.append(project)
+                    
                 }
                 self?.collectionView.reloadData()
+                
             }
         }
     }
@@ -104,6 +117,7 @@ class DiscoverViewController: UIViewController {
     
     private func createSearchBar() {
         searchBar = UISearchBar()
+        searchBar.delegate = self
         searchBar.autocorrectionType = .yes
         searchBar.barTintColor = backgroundColor
         searchBar.placeholder = "Search by title or content"
@@ -135,5 +149,34 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
         postsVC.project = projects[indexPath.item]
         postsVC.isPublicProject = true
         navigationController?.pushViewController(postsVC, animated: true)
+    }
+}
+
+extension DiscoverViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let searchText = searchBar.text else {
+            view.showAlert(alertText: "You need to enter text in the searchbar")
+            return
+        }
+        
+        updateCollectionView(with: searchText)
+    }
+    
+    private func updateCollectionView(with searchText: String) {
+        if searchText.isEmpty {
+            projects = nonFilteredProjects
+            print(projects.count)
+        } else {
+            let filteredArray = nonFilteredProjects.filter { (project) -> Bool in
+                if project.name.contains(searchText) || project.detail.contains(searchText) {
+                    return true
+                }
+                return false
+            }
+            projects = filteredArray
+        }
+        
+        collectionView.reloadData()
     }
 }

@@ -67,20 +67,23 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
     
     private func getFavorites() {
         projects = []
-        
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
         let userRef = Firestore.firestore().collection("users").document(currentUserID)
         
         var favoritedProjects = [String]()
         
         userRef.getDocument { (snapshot, error) in
+            
             if let error = error {
                 self.view.showAlert(alertText: error.localizedDescription)
             } else {
                 favoritedProjects = snapshot?.data()?["favoriteProjects"] as? [String] ?? [""]
                 
+                if favoritedProjects.isEmpty {
+                    self.projects = []
+                }
                 
-                for project in favoritedProjects {                    
+                for project in favoritedProjects {
                     Firestore.firestore().collection("projects").whereField("projectID", isEqualTo: project).getDocuments { (snapshot, error) in
                         if let error = error {
                             self.view.showAlert(alertText: error.localizedDescription)
@@ -97,14 +100,15 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
                                 let projectID = document.data()["projectID"] as? String ?? "Unknown"
                                 
                                 let project = Project(name: name, detail: detailText, addedBy: addedBy, created: created, imageURL: imageURL, projectID: projectID)
-                                self.projects.append(project)
+                                if project.addedBy != currentUserID {
+                                    self.projects.append(project)
+                                }                                
                             }
-                            
-                            self.collectionView.removeGestureRecognizer(self.longPressGesture)
-                            self.collectionView.reloadData()
                         }
+                        self.collectionView.reloadData()
                     }
                 }
+                self.collectionView.reloadData()
             }
         }
     }
@@ -152,7 +156,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
             getFavorites()
             emptyView?.isHidden = true
             addProjectButton.isHidden = true
-            self.collectionView.removeGestureRecognizer(longPressGesture)
+            collectionView.removeGestureRecognizer(longPressGesture)
         default:
             break
         }
