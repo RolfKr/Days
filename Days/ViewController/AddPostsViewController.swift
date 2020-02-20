@@ -35,7 +35,7 @@ class AddPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
-        dismissKeyboard(on: view)
+        dismissKeyboard(on: view, searchbar: nil)
         print(project.name)
     }
     

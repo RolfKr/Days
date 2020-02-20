@@ -25,7 +25,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        dismissKeyboard(on: view)
+        dismissKeyboard(on: view, searchbar: nil)
     }
     
     private func configureUI() {

@@ -11,10 +11,17 @@ import UIKit
 extension UIViewController {
     
     //Dismiss keyboard when tapping on the view.
-    func dismissKeyboard(on view: UIView) {
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+    func dismissKeyboard(on view: UIView, searchbar: UISearchBar?) {
+        let dismissKeyboard = UITapGestureRecognizer(target: view, action: #selector(view.endEditing(_:)))
+        if let searchBar = searchbar {
+            let dismissSearchBar = UITapGestureRecognizer(target: view, action: #selector(searchBar.endEditing(_:)))
+            dismissSearchBar.cancelsTouchesInView = false
+            view.addGestureRecognizer(dismissSearchBar)
+        }
+        
+        dismissKeyboard.cancelsTouchesInView = false
+        view.addGestureRecognizer(dismissKeyboard)
+        
     }
     
     func showActivityIndicator(view: UIView) {

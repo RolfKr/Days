@@ -69,7 +69,7 @@ class AddProjectViewController: UIViewController {
         configureViews()
         animateLoadView()
         addSwipeGesture()
-        dismissKeyboard(on: view)
+        dismissKeyboard(on: view, searchbar: nil)
     }
 
 

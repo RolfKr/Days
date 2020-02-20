@@ -23,6 +23,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
         getProjects()
         configureViews()
         addTapGesture()
+        
     }
     
     var segmentedControl: UISegmentedControl = {

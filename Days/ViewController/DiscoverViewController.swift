@@ -21,7 +21,7 @@ class DiscoverViewController: UIViewController {
         configureViews()
         initialSetup()
         
-        print(nonFilteredProjects.count)
+        dismissKeyboard(on: view, searchbar: searchBar)
     }
     
     private func initialSetup() {
