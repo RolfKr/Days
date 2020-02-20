@@ -73,7 +73,7 @@ class AddPostViewController: UIViewController {
     
     private func uploadImage(_ imageURL: String, _ image: UIImage) {
         let storageRef = Storage.storage().reference().child("posts").child(imageURL)
-        guard let imageData = image.jpegData(compressionQuality: 0.5) else {return}
+        guard let imageData = image.jpegData(compressionQuality: 0.3) else {return}
         let uploadMetadata = StorageMetadata.init()
         uploadMetadata.contentType = "image/jpeg"
         

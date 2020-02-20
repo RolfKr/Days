@@ -102,7 +102,7 @@ class ProjectsViewController: UIViewController, AddProjectDelegate {
                                 let project = Project(name: name, detail: detailText, addedBy: addedBy, created: created, imageURL: imageURL, projectID: projectID)
                                 if project.addedBy != currentUserID {
                                     self.projects.append(project)
-                                }                                
+                                }
                             }
                         }
                         self.collectionView.reloadData()

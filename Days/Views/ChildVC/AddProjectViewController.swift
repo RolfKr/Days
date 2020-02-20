@@ -195,9 +195,9 @@ class AddProjectViewController: UIViewController {
         var imageData: Data!
         
         if let selectedImage = selectedImage {
-            imageData = selectedImage.jpegData(compressionQuality: 0.75)
+            imageData = selectedImage.jpegData(compressionQuality: 0.3)
         } else {
-            imageData = UIImage(named: "sampleJournal")?.jpegData(compressionQuality: 0.4)
+            imageData = UIImage(named: "sampleJournal")?.jpegData(compressionQuality: 0.3)
         }
         
         let uploadMetadata = StorageMetadata.init()
