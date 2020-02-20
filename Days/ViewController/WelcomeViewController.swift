@@ -151,10 +151,11 @@ class WelcomeViewController: UIViewController, GIDSignInDelegate {
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if let error = error {
-            print(error.localizedDescription)
+        if error != nil {
+            return
         }
         
+        guard let user = user else {return}
         guard let authentication = user.authentication else {return}
         let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
         

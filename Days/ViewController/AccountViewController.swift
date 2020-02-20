@@ -23,9 +23,10 @@ class AccountViewController: UIViewController {
     }
     
     private func configureViews() {
-        createSignOutCell()
+        
         createRateAppCell()
         createLACell()
+        createSignOutCell()
         createTableView()
         
         view.backgroundColor = backgroundColor
@@ -94,7 +95,7 @@ class AccountViewController: UIViewController {
         rateTheApp.backgroundColor = cellBackground
         
         let rateButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: rateTheApp.frame.height))
-        rateButton.setTitle("Rate us!", for: .normal)
+        rateButton.setTitle("Rate Days ★ ", for: .normal)
         rateButton.setTitleColor(.label, for: .normal)
         rateButton.addTarget(self, action: #selector(rateApp), for: .touchUpInside)
         
@@ -108,12 +109,7 @@ class AccountViewController: UIViewController {
             SKStoreReviewController.requestReview()
 
         } else if let url = URL(string: "itms-apps://itunes.apple.com/app/" + "appId") {
-            if #available(iOS 10, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-
-            } else {
-                UIApplication.shared.openURL(url)
-            }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
@@ -125,7 +121,6 @@ class AccountViewController: UIViewController {
     
     @objc private func signOut() {
         do {
-            print("Signing out")
             try Auth.auth().signOut()
             defaults.set(false, forKey: "useFaceID")
             let welcomeVC = WelcomeViewController()

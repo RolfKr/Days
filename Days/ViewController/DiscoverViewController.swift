@@ -118,6 +118,8 @@ class DiscoverViewController: UIViewController {
     private func createSearchBar() {
         searchBar = UISearchBar()
         searchBar.delegate = self
+        searchBar.searchTextField.adjustsFontSizeToFitWidth = true
+        searchBar.searchTextField.minimumFontSize = 0.4
         searchBar.autocorrectionType = .yes
         searchBar.barTintColor = backgroundColor
         searchBar.placeholder = "Search by title or content"
