@@ -107,9 +107,6 @@ class AccountViewController: UIViewController {
     @objc private func rateApp() {
         if #available(iOS 10.3, *) {
             SKStoreReviewController.requestReview()
-
-        } else if let url = URL(string: "itms-apps://itunes.apple.com/app/" + "appId") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     

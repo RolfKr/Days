@@ -21,6 +21,8 @@ class PostsViewController: UIViewController, AddPostDelegate {
     
     var isFavorited = false
     
+    var imageForZooming: UIImageView!
+    
     var addButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -240,23 +242,35 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension PostsViewController: PostCellDelegate {
+extension PostsViewController: PostCellDelegate, UIScrollViewDelegate {
     
     func showImageFullscreen(image: UIImage) {
-        let imageView = UIImageView()
-        imageView.image = image
-        imageView.frame = UIScreen.main.bounds
-        imageView.backgroundColor = .black
-        imageView.contentMode = .scaleAspectFit
-        imageView.isUserInteractionEnabled = true
+        let scrollView = UIScrollView()
+        scrollView.delegate = self
+        scrollView.frame = UIScreen.main.bounds
+        scrollView.backgroundColor = .black
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 6.0
+        scrollView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
-        imageView.addGestureRecognizer(tap)
-        self.view.addSubview(imageView)
+        scrollView.addGestureRecognizer(tap)
+        view.addSubview(scrollView)
+        
+        imageForZooming = UIImageView()
+        imageForZooming.frame = scrollView.frame
+        imageForZooming.image = image
+        imageForZooming.contentMode = .scaleAspectFit
+
+        scrollView.addSubview(imageForZooming)
         self.tabBarController?.tabBar.isHidden = true
     }
-
+    
     @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
         self.tabBarController?.tabBar.isHidden = false
         sender.view?.removeFromSuperview()
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.imageForZooming
     }
 }

@@ -12,6 +12,7 @@
 		7E3D04CA23E1208000E60345 /* AddProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D04C923E1208000E60345 /* AddProjectViewController.swift */; };
 		7E52E10E23E4A66B001B3F53 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E52E10D23E4A66B001B3F53 /* AccountViewController.swift */; };
 		7E9FDB8723F2CF9A00D12B04 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FDB8623F2CF9A00D12B04 /* DiscoverViewController.swift */; };
+		7EA7C64123FF190A00B8BCE9 /* Pods_Days.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD004EAD03A8A39C1498392 /* Pods_Days.framework */; };
 		7EAB9E9623FAAA5E0008FE4B /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAB9E9523FAAA5E0008FE4B /* WelcomeViewController.swift */; };
 		7EB0A5D123DF309F00395F56 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D023DF309F00395F56 /* AppDelegate.swift */; };
 		7EB0A5D323DF309F00395F56 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5D223DF309F00395F56 /* SceneDelegate.swift */; };
@@ -21,7 +22,6 @@
 		7EB0A5E523DF327E00395F56 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5E423DF327E00395F56 /* InputView.swift */; };
 		7EB0A5E723DF3AA700395F56 /* EnterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB0A5E623DF3AA700395F56 /* EnterButton.swift */; };
 		7EB2E39E23F55C3A00B55E34 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB2E39D23F55C3A00B55E34 /* Helper.swift */; };
-		8E540F4E38E0E4986FB685D8 /* Pods_Days.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD004EAD03A8A39C1498392 /* Pods_Days.framework */; };
 		B72B008223DF6FB600C45279 /* BodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72B008123DF6FB600C45279 /* BodyLabel.swift */; };
 		B757E14E23DF63BA0093DDB9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757E14D23DF63BA0093DDB9 /* LoginViewController.swift */; };
 		B757E15023DF696C0093DDB9 /* ProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757E14F23DF696C0093DDB9 /* ProjectsViewController.swift */; };
@@ -84,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E540F4E38E0E4986FB685D8 /* Pods_Days.framework in Frameworks */,
+				7EA7C64123FF190A00B8BCE9 /* Pods_Days.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +258,7 @@
 				7EB0A5CB23DF309F00395F56 /* Resources */,
 				954D00B0BE848EB4E9A9F097 /* [CP] Embed Pods Frameworks */,
 				283991147DEC007FF7677659 /* [CP] Copy Pods Resources */,
+				7EA7C64424001D3000B8BCE9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -353,6 +354,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		7EA7C64424001D3000B8BCE9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		954D00B0BE848EB4E9A9F097 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -543,6 +561,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Days/Days.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 3H92NGE9SW;
 				INFOPLIST_FILE = Days/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -563,6 +582,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Days/Days.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 3H92NGE9SW;
 				INFOPLIST_FILE = Days/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -65,16 +65,16 @@ class WelcomeViewController: UIViewController, GIDSignInDelegate {
         
         NSLayoutConstraint.activate([
             bookImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            bookImageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 30),
+            bookImageView.bottomAnchor.constraint(equalTo: titleText.topAnchor, constant: -25),
             bookImageView.heightAnchor.constraint(lessThanOrEqualTo: view.heightAnchor, multiplier: 0.15),
             bookImageView.widthAnchor.constraint(equalTo: bookImageView.heightAnchor),
             
-            titleText.topAnchor.constraint(equalTo: bookImageView.bottomAnchor, constant: 25),
+            titleText.bottomAnchor.constraint(equalTo: bodyText.topAnchor, constant: -15),
             titleText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sidePadding),
             titleText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sidePadding),
             titleText.heightAnchor.constraint(equalToConstant: 44),
             
-            bodyText.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 15),
+            bodyText.bottomAnchor.constraint(equalTo: appleSignIn.topAnchor, constant: -80),
             bodyText.leadingAnchor.constraint(equalTo: titleText.leadingAnchor),
             bodyText.trailingAnchor.constraint(equalTo: titleText.trailingAnchor),
             bodyText.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.15),
