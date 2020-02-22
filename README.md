@@ -1,6 +1,7 @@
 # Days
 
 Lets the user create Journals for logging every experience in their life.
+User can share their journals, or keep them private.
 
 Connects to Firebase backend, using Firestore and Storage, as well as Authentication.
 
@@ -13,7 +14,7 @@ No storyboard.
 
 # Discover screen
 
-![alt test](Screenshots/Snapshot 2.png) 
+![alt test](Screenshots/Snapshot 3.png) 
 
 # Supports Darkmode
 
