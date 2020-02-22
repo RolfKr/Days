@@ -34,6 +34,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let titleText = TitleLabel("Login to Days", 26, .center)
         emailView = InputView("Enter email")
         emailView.textField.delegate = self
+        emailView.textField.keyboardType = .emailAddress
         passwordView = InputView("Enter password")
         passwordView.textField.isSecureTextEntry = true
         passwordView.textField.delegate = self
