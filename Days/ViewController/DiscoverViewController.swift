@@ -20,7 +20,7 @@ class DiscoverViewController: UIViewController {
         super.viewDidLoad()
         configureViews()
         initialSetup()
-        
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         dismissKeyboard(on: view, searchbar: searchBar)
     }
     
