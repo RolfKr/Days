@@ -9,11 +9,11 @@ No storyboard.
 
 # Posts Screen
 
-!(Screenshots/Snapshot 2.png) 
+![alt test](Screenshots/Snapshot 2.png)
 
 # Discover screen
 
-![alt test](Screenshots/Snapshot 3.png) 
+![alt test](Screenshots/Snapshot 2.png) 
 
 # Supports Darkmode
 
