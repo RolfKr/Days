@@ -7,18 +7,14 @@ Connects to Firebase backend, using Firestore and Storage, as well as Authentica
 UI is created programmatically.
 No storyboard.
 
-# Registration screen
+# Posts Screen
 
-![alt test](Screenshots/Menu.png) 
+![alt test](Screenshots/Snapshot 2.png) 
 
-# Journals Screen
+# Discover screen
 
-![alt test](Screenshots/Journals.png) 
-
-# Posts screen
-
-![alt test](Screenshots/Posts.png) 
+![alt test](Screenshots/Snapshot 3.png) 
 
 # Supports Darkmode
 
-![alt test](Screenshots/Darkmode.png) 
+![alt test](Screenshots/Snapshot 4.png) 
