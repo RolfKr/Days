@@ -47,6 +47,7 @@ class PostsViewController: UIViewController, AddPostDelegate {
         getPosts()
         createTableView()
         configureViews()
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     private func checkIfFavorited() {
