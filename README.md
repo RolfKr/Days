@@ -9,7 +9,7 @@ No storyboard.
 
 # Posts Screen
 
-![alt test](Screenshots/Snapshot 2.png) 
+!(Screenshots/Snapshot 2.png) 
 
 # Discover screen
 
