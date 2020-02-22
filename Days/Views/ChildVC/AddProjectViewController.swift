@@ -48,7 +48,7 @@ class AddProjectViewController: UIViewController {
         button.tintColor = .label
         button.backgroundColor = viewBackground
         button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(chooseImage), for: .touchUpInside)
+        button.addTarget(self, action: #selector(chooseImage(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -260,7 +260,8 @@ class AddProjectViewController: UIViewController {
         }
     }
     
-    @objc private func chooseImage() {
+    @objc private func chooseImage(_ sender: UIButton) {
+        
         let alertController = UIAlertController(title: "From what source?", message: "", preferredStyle: .actionSheet)
         let library = UIAlertAction(title: "Photo Library", style: .default) { (_) in
             self.presentImagePicker("Library")
@@ -275,6 +276,10 @@ class AddProjectViewController: UIViewController {
         alertController.addAction(library)
         alertController.addAction(camera)
         alertController.addAction(cancel)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = sender
+        }
         
         present(alertController, animated: true)
     }
